@@ -310,6 +310,46 @@ textarea.io{
 .lockline{font-size:11px;color:var(--mut)}
 .lockline .pct{font-family:var(--num);color:var(--pu)}
 @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+
+/* ---------- シネマティック演出 ---------- */
+.mbox.cine{padding:18px;overflow:hidden;}
+.cine-box{display:grid;gap:14px;}
+.cine-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;}
+.cine-top .cine-title{display:flex;flex-direction:column;gap:4px;}
+.cine-top .cine-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--mut);}
+.cine-meta span{background:rgba(63,217,255,.08);border:1px solid rgba(63,217,255,.15);border-radius:999px;padding:4px 9px;}
+.cine-stage{position:relative;height:190px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#06101e,#071625);border:1px solid rgba(63,217,255,.16);box-shadow:inset 0 0 40px rgba(63,217,255,.08);}
+.cine-sky{position:absolute;inset:0;background:radial-gradient(circle at 20% 10%, rgba(255,255,255,.18), transparent 18%),radial-gradient(circle at 80% 20%, rgba(164,123,255,.16), transparent 12%),radial-gradient(circle at 60% 80%, rgba(63,217,255,.14), transparent 14%);}
+.cine-ground{position:absolute;left:50%;bottom:0;width:120%;height:50%;transform:translateX(-50%);background:radial-gradient(ellipse at center, rgba(63,217,255,.16), transparent 55%);}
+.cine-diamond{position:absolute;left:50%;bottom:18px;width:140px;height:110px;transform:translateX(-50%) rotate(45deg);border:1px solid rgba(255,255,255,.08);}
+.cine-base{position:absolute;width:16px;height:16px;border-radius:50%;background:rgba(63,217,255,.12);border:1px solid rgba(63,217,255,.28);box-shadow:0 0 12px rgba(63,217,255,.12);}
+.cine-base.b1{left:28%;bottom:28%;}
+.cine-base.b2{left:50%;bottom:60%;}
+.cine-base.b3{left:72%;bottom:28%;}
+.cine-base.on{background:var(--cy);border-color:rgba(63,217,255,.7);box-shadow:0 0 16px rgba(63,217,255,.45);}
+.cine-ball{position:absolute;left:10%;top:58%;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg, #fff, var(--cy));box-shadow:0 0 20px rgba(63,217,255,.8);animation:cineBallArc 1.2s ease infinite;}
+.cine-label{position:absolute;left:50%;top:18px;transform:translateX(-50%);padding:10px 16px;border-radius:999px;background:rgba(3,6,12,.88);color:#fff;font-size:15px;font-weight:800;letter-spacing:.05em;text-align:center;white-space:nowrap;}
+.cine-tag-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.cine-tag{font-size:11px;color:var(--tx);background:rgba(63,217,255,.08);border:1px solid rgba(63,217,255,.15);border-radius:999px;padding:4px 8px;}
+.cine-vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
+.cine-card{border:1px solid rgba(63,217,255,.16);border-radius:14px;background:linear-gradient(180deg,rgba(63,217,255,.04),rgba(10,17,32,.92));padding:10px;}
+.cine-card .cine-stat{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-top:8px;}
+.cine-stat span{color:var(--mut);}
+.cine-stat strong{color:#eef7ff;}
+.cine-call{font-size:13px;color:var(--cy);font-weight:700;margin-top:10px;}
+.cine-result{font-size:15px;color:#eef7ff;font-weight:800;line-height:1.5;margin-top:8px;}
+.cine-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.cine-actions .btn{flex:1;min-width:140px;}
+.cine-actions .btn.ghost{background:rgba(255,255,255,.06);}
+.cine.t-homerun .cine-stage{background:linear-gradient(180deg,#250c18,#070b1a);}
+.cine.t-walkoff .cine-label{background:rgba(255,196,77,.95);color:#111;}
+.cine.t-steal .cine-stage{border-color:#54e0a5;}
+.cine.t-change .cine-label{background:rgba(164,123,255,.9);}
+.cine.t-k .cine-label{background:rgba(164,123,255,.9);}
+.cine.t-score .cine-label{background:rgba(63,217,255,.9);}
+@keyframes cineBallArc{0%{transform:translate(-50%,-50%) scale(1);left:12%;top:70%;opacity:1;}50%{left:50%;top:18%;transform:translate(-50%,-50%) scale(1.2);}100%{left:88%;top:72%;transform:translate(-50%,-50%) scale(1);opacity:.2;}}
+@keyframes cineLabelPop{0%{transform:translateX(-50%) scale(.92);opacity:0;}60%{transform:translateX(-50%) scale(1.05);opacity:1;}100%{transform:translateX(-50%) scale(1);opacity:1;}}
+.cine-label{animation:cineLabelPop .6s ease both;}
 </style>
 </head>
 <body>
@@ -677,6 +717,7 @@ function switchPitcher(ms,pid,why){
   if(!ms.usedPitchers.includes(pid)) ms.usedPitchers.push(pid);
   ensureP(ms,pid);
   mlog(ms,ms.inning,'sys','【継投】'+getPlayer(pid).name+'がマウンドへ('+why+')',false);
+  cineCaptureChange(ms,'継投',getPlayer(pid).name,why);
 }
 function pAvail(ms,pid){ return pid && !ms.usedPitchers.includes(pid); }
 
@@ -716,6 +757,7 @@ function defenseSubCheck(ms){
   ms.order[worstIdx]=cand.id; slot.used=true; ensureB(ms,cand.id);
   ms.benchEvents.push({inn:ms.inning,type:'守備固め',inP:cand.name,outP:getPlayer(outPid).name});
   mlog(ms,ms.inning,'sys','【守備固め】'+cand.name+'('+getPlayer(outPid).name+'に代えて)',false);
+  cineCaptureChange(ms,'守備固め',cand.name,getPlayer(outPid).name+'に代えて');
 }
 function pinchHitCheck(ms){
   if(ms.inning<7) return;
@@ -731,6 +773,7 @@ function pinchHitCheck(ms){
   ms.order[idx]=cand.id; slot.used=true; ensureB(ms,cand.id);
   ms.benchEvents.push({inn:ms.inning,type:'代打',inP:cand.name,outP:cur.name});
   mlog(ms,ms.inning,'sys','【代打】'+cand.name+'('+cur.name+'に代えて)',false);
+  cineCaptureChange(ms,'代打',cand.name,cur.name+'に代えて');
 }
 function pinchRunCheck(ms,batPid){
   if(ms.inning<7) return;
@@ -753,6 +796,7 @@ function pinchRunCheck(ms,batPid){
   slot.used=true; ensureB(ms,cand.id);
   ms.benchEvents.push({inn:ms.inning,type:'代走',inP:cand.name,outP:runner.name});
   mlog(ms,ms.inning,'sys','【代走】'+cand.name+'('+runner.name+'に代えて)',false);
+  cineCaptureChange(ms,'代走',cand.name,runner.name+'に代えて');
 }
 
 function resolvePA(bt,pit,fat){
@@ -783,6 +827,7 @@ function doPA(ms,half){
   const playerBat = half==='bottom';
   const opp=oppData(ms.oppId);
   const baseState = ms.bases.map(r=>r? (r.side==='p'?getPlayer(r.pid).name:r.name) : '-').join(' / ');
+  const scoreBefore = pTot(ms) - nTot(ms);
   // 投手側
   let pit,fat,pitPid=null,pitRole='starter',pitSta;
   if(playerBat){ pit=opp.pit; pitSta=opp.pit.stamina; fat=fatF(ms.npcStamina); }
@@ -806,15 +851,18 @@ function doPA(ms,half){
   // 盗塁試行(1塁のみ・2アウト未満・俊足)
   const B=ms.bases;
   if(B[0] && !B[1] && !B[2] && ms.outs<2 && B[0].speed>=68 && rnd()<0.08){
+    const stealRunner = B[0];
     const ok=rnd()<clampN(0.45+B[0].speed*0.004,0.5,0.85);
     if(ok){
       mlog(ms,ms.inning,half,B[0].name+'が二盗成功！',false);
       if(B[0].side==='p') ensureB(ms,B[0].pid).sb++;
       B[1]=B[0]; B[0]=null;
+      cineCaptureSteal(ms,half,stealRunner,true);
     }else{
       mlog(ms,ms.inning,half,B[0].name+'は盗塁失敗…',false);
       if(B[0].side==='p') ensureB(ms,B[0].pid).cs++;
       B[0]=null; ms.outs++;
+      cineCaptureSteal(ms,half,stealRunner,false);
       if(ms.outs>=3){ if(!playerBat&&ps)ps.outs++; consumeStamina(ms,playerBat,pitRole,pitSta,1,false,0); ms.batIdxNote=true; return; }
       if(!playerBat&&ps)ps.outs++;
     }
@@ -918,6 +966,7 @@ function doPA(ms,half){
   }
   if(runsPA>0){ text+='（'+runsPA+'点）'; hl=true; }
   mlog(ms,ms.inning,half,bt.name+'：'+text,hl,baseState);
+  cineSnap(ms,half,bt,res,{runs:runsPA,baseState,scoreBefore,pitcherName: playerBat ? opp.pit.name : getPlayer(ms.pitcher).name, outcomeText:text, wasDP:isDP, wasSF:isSF, isWalkoff:ms._wo});
 
   consumeStamina(ms,playerBat,pitRole,pitSta,outsGained,reached,runsPA);
 
@@ -994,7 +1043,7 @@ function advanceMatch(full){
     // 延長: fullの場合は決着まで1イニングずつ
   }
   if(ms.log.length>startLog){
-    buildMatchEffects(ms,startLog);
+    buildCinematicQueue(ms,startLog);
     if(ms.effectQueue && ms.effectQueue.length){
       UI.modal={kind:'matchEffect'};
     }
@@ -1109,6 +1158,134 @@ function nextMatchEffect(){
   persist(); render();
 }
 function closeMatchSummary(){ UI.modal=null; render(); }
+
+const CINE_MAX_EVENTS = 3;
+const CINE_MIN_PRIO = 35;
+const CINE_SIGNATURES = {};
+
+function ensureCinematic(ms){
+  if(!ms) return;
+  if(!Object.prototype.hasOwnProperty.call(ms,'cineRaw')){
+    Object.defineProperty(ms,'cineRaw',{value:[],enumerable:false,writable:true,configurable:true});
+  }
+}
+function randChoice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function pushCinematicEvent(ms,evt){
+  ensureCinematic(ms);
+  if(!evt || typeof evt !== 'object') return;
+  evt.cine = true;
+  evt.seq = ms.cineRaw.length;
+  ms.cineRaw.push(evt);
+}
+function cineCapturePA(ms,half,bt,res,info){
+  ensureCinematic(ms);
+  if(!ms || !bt) return;
+  const scoreBefore = info.scoreBefore || 0;
+  const scoreAfter = pTot(ms) - nTot(ms);
+  const actor = bt.name || '打者';
+  const pitcher = info.pitcherName || '相手投手';
+  const baseAfter = ms.bases.map((r,i)=> r? `${i+1}塁:${r.name}` : `${i+1}塁:―`).join(' / ');
+  const tags = [];
+  let label = 'PLAY';
+  let type = 'calm';
+  let prio = 0;
+  let theme = '';
+  if(info.isWalkoff){ label='WALK-OFF'; type='walkoff'; prio=130; theme='t-walkoff'; tags.push('サヨナラ'); }
+  else if(res==='HR'){ label=info.runs>=4?'満塁HR':'HOMERUN'; type='homerun'; prio=100 + (bt.power>=62?10:0); theme='t-homerun'; }
+  else if(res==='3B'){ label='TRIPLE'; type='triple'; prio=60; }
+  else if(res==='2B'){ label='DOUBLE'; type='double'; prio=52; }
+  else if(info.runs>0){ label='SCORE'; type='score'; prio=48 + Math.min(info.runs*4,12); theme='t-score'; }
+  else if(info.wasSF){ label='SAC FLY'; type='sf'; prio=50; }
+  else if(info.wasDP){ label='DOUBLE PLAY'; type='dp'; prio=48; }
+  else if(res==='K' && /1塁|2塁|3塁/.test(info.baseState || '')){ label='STRIKEOUT'; type='k'; prio=44; theme='t-k'; }
+  else { return; }
+  if(scoreBefore < 0 && scoreAfter >= 0){ tags.push('逆転'); prio += 25; }
+  else if(scoreBefore === 0 && scoreAfter > 0){ tags.push('先制'); prio += 10; }
+  else if(scoreBefore > 0 && scoreAfter === 0){ tags.push('同点'); prio += 10; }
+  if(info.runs > 0) tags.push('得点');
+  const desc = `${actor} が ${info.outcomeText || info.resultText || res}。${info.runs? `${info.runs}点をもたらした。` : ''}`;
+  const result = `現在: ${pTot(ms)} - ${nTot(ms)} | ${baseAfter}`;
+  pushCinematicEvent(ms,{label,type,actor,pitcher,bases:baseAfter,desc,result,prio,theme,tags});
+}
+function cineSnap(ms,half,bt,res,info){ cineCapturePA(ms,half,bt,res,info); }
+function cineCaptureSteal(ms,half,runner,ok){
+  ensureCinematic(ms);
+  if(!ms || !runner) return;
+  const pitcher = half==='bottom' ? oppData(ms.oppId).pit.name : getPlayer(ms.pitcher).name;
+  const label = ok ? '二盗成功' : '盗塁失敗';
+  const type = ok ? 'steal' : 'stealFail';
+  const prio = 46;
+  const theme = 't-steal';
+  const baseAfter = ms.bases.map((r,i)=> r? `${i+1}塁:${r.name}` : `${i+1}塁:―`).join(' / ');
+  const desc = ok ? `${runner.name} が勢いよく二塁をうかがった。` : `${runner.name} の盗塁はアウトになった。`;
+  const result = baseAfter;
+  pushCinematicEvent(ms,{label,type,actor:runner.name,pitcher,bases:baseAfter,desc,result,prio,theme,tags:['盗塁']});
+}
+function cineCaptureChange(ms,kind,actor,note){
+  ensureCinematic(ms);
+  if(!ms) return;
+  const label = kind;
+  const type = 'change';
+  const prio = 36;
+  const theme = 't-change';
+  const desc = `${actor} が ${kind} で登場。${note || ''}`;
+  const result = note || '';
+  pushCinematicEvent(ms,{label,type,actor,pitcher:'—',bases:'',desc,result,prio,theme,tags:[kind]});
+}
+function buildCinematicQueue(ms,startIndex){
+  ensureCinematic(ms);
+  const candidates = (ms.cineRaw||[]).filter(evt=>typeof evt.prio==='number' && evt.prio>=CINE_MIN_PRIO);
+  ms.cineRaw.length = 0;
+  if(candidates.length){
+    candidates.sort((a,b)=>{ const diff=b.prio-a.prio; return diff || (a.seq - b.seq); });
+    ms.effectQueue = candidates.slice(0,CINE_MAX_EVENTS);
+    ms.effectIndex = 0;
+    return;
+  }
+  buildMatchEffects(ms,startIndex);
+}
+function renderCinematicStage(evt,ms){
+  const progress = `${(ms.effectIndex||0)+1}/${ms.effectQueue.length||1}`;
+  const score = `${pTot(ms)} - ${nTot(ms)}`;
+  const baseText = evt.bases || '―';
+  const tagsHtml = (evt.tags||[]).map(t=>`<span class="cine-tag">${esc(t)}</span>`).join('');
+  return `
+      <div class="mback" onclick="skipCinematics()"></div>
+      <div class="mbox cine ${evt.theme||''}">
+        <div class="cine-box">
+          <div class="cine-top">
+            <div class="cine-title"><span class="eyebrow">演出ステージ</span><h2>${esc(evt.label)}</h2></div>
+            <div class="cine-meta"><span>スコア ${esc(score)}</span><span>${esc(progress)}</span></div>
+          </div>
+          <div class="cine-stage">
+            <div class="cine-sky"></div>
+            <div class="cine-ground"></div>
+            <div class="cine-diamond">
+              <span class="cine-base b1${baseText.includes('1塁')?' on':''}"></span>
+              <span class="cine-base b2${baseText.includes('2塁')?' on':''}"></span>
+              <span class="cine-base b3${baseText.includes('3塁')?' on':''}"></span>
+            </div>
+            <div class="cine-ball"></div>
+            <div class="cine-label">${esc(evt.label)}</div>
+          </div>
+          <div class="cine-tag-wrap">${tagsHtml || '<span class="cine-tag">重要場面</span>'}</div>
+          <div class="cine-vs">
+            <div class="cine-card"><strong>${esc(evt.actor||'打者')}</strong><div class="cine-stat"><span>投手</span><strong>${esc(evt.pitcher||'—')}</strong></div></div>
+            <div class="cine-card"><strong>塁状況</strong><div class="cine-stat"><span>状態</span><strong>${esc(baseText)}</strong></div></div>
+          </div>
+          <div class="cine-call">${esc(evt.desc||'')}</div>
+          <div class="cine-result">${esc(evt.result||'')}</div>
+          <div class="cine-actions"><button class="btn pri" onclick="nextMatchEffect()">次の演出へ</button><button class="btn ghost" onclick="skipCinematics()">スキップ</button></div>
+        </div>
+      </div>
+    `;
+}
+function skipCinematics(){
+  const ms = save.activeMatch;
+  if(!ms || !ms.effectQueue) return;
+  ms.effectIndex = (ms.effectQueue.length||1) - 1;
+  nextMatchEffect();
+}
 
 /* ===== 6. 探索エンジン ===================================== */
 function aptFactor(planet,pids){
@@ -1586,21 +1763,25 @@ function renderModal(){
     const idx = ms.effectIndex||0;
     const evt = ms.effectQueue && ms.effectQueue[idx] ? ms.effectQueue[idx] : null;
     if(evt){
-      const effectBg = evt.type==='pinch' ? 'background:radial-gradient(circle at top, rgba(196,77,255,.18), transparent);' : evt.type==='homerun' ? 'background:radial-gradient(circle at top left, rgba(255,196,77,.18), transparent);' : '';
-      html = `
-      <div class="mback" onclick="closeModal()"></div>
-      <div class="mbox" style="${effectBg}">
-        <div class="ph"><div><span class="eyebrow">演出ステージ</span><h2>${esc(evt.label)}</h2></div></div>
-        <div class="effect-card">
-          <div class="effect-row"><span>打者</span><strong>${esc(evt.actor||'—')}</strong></div>
-          <div class="effect-row"><span>投手</span><strong>${esc(evt.pitcher||'—')}</strong></div>
-          <div class="effect-row"><span>塁状況</span><strong>${esc(evt.bases||'—')}</strong></div>
-          <div class="effect-text">${esc(evt.desc)}</div>
-          <div class="effect-result">${esc(evt.result)}</div>
+      if(evt.cine){
+        html = renderCinematicStage(evt,ms);
+      } else {
+        const effectBg = evt.type==='pinch' ? 'background:radial-gradient(circle at top, rgba(196,77,255,.18), transparent);' : evt.type==='homerun' ? 'background:radial-gradient(circle at top left, rgba(255,196,77,.18), transparent);' : '';
+        html = `
+        <div class="mback" onclick="closeModal()"></div>
+        <div class="mbox" style="${effectBg}">
+          <div class="ph"><div><span class="eyebrow">演出ステージ</span><h2>${esc(evt.label)}</h2></div></div>
+          <div class="effect-card">
+            <div class="effect-row"><span>打者</span><strong>${esc(evt.actor||'—')}</strong></div>
+            <div class="effect-row"><span>投手</span><strong>${esc(evt.pitcher||'—')}</strong></div>
+            <div class="effect-row"><span>塁状況</span><strong>${esc(evt.bases||'—')}</strong></div>
+            <div class="effect-text">${esc(evt.desc)}</div>
+            <div class="effect-result">${esc(evt.result)}</div>
+          </div>
+          <div class="btnrow"><button class="btn pri" onclick="nextMatchEffect()">次の演出へ</button></div>
         </div>
-        <div class="btnrow"><button class="btn pri" onclick="nextMatchEffect()">次の演出へ</button></div>
-      </div>
-      `;
+        `;
+      }
     }
   } else if(UI.modal.kind==='matchSummary'){
     const ms = save.activeMatch;
