@@ -116,6 +116,7 @@ h3.sec{font-size:12px;color:var(--bl);letter-spacing:.12em;margin:12px 0 6px;fon
   box-shadow:0 0 14px rgba(63,217,255,.35);
 }
 .btn.ghost{background:transparent}
+.btn.danger{border-color:rgba(255,122,107,.55);background:linear-gradient(180deg,#3a1720,#1b0d14);color:#ffd8d2;}
 .btn.sm{min-height:34px;padding:5px 10px;font-size:12px;border-radius:8px}
 .btn:disabled{opacity:.35;pointer-events:none}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
@@ -312,44 +313,91 @@ textarea.io{
 @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
 
 /* ---------- シネマティック演出 ---------- */
-.mbox.cine{padding:18px;overflow:hidden;}
-.cine-box{display:grid;gap:14px;}
-.cine-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;}
-.cine-top .cine-title{display:flex;flex-direction:column;gap:4px;}
-.cine-top .cine-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--mut);}
-.cine-meta span{background:rgba(63,217,255,.08);border:1px solid rgba(63,217,255,.15);border-radius:999px;padding:4px 9px;}
-.cine-stage{position:relative;height:190px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#06101e,#071625);border:1px solid rgba(63,217,255,.16);box-shadow:inset 0 0 40px rgba(63,217,255,.08);}
-.cine-sky{position:absolute;inset:0;background:radial-gradient(circle at 20% 10%, rgba(255,255,255,.18), transparent 18%),radial-gradient(circle at 80% 20%, rgba(164,123,255,.16), transparent 12%),radial-gradient(circle at 60% 80%, rgba(63,217,255,.14), transparent 14%);}
-.cine-ground{position:absolute;left:50%;bottom:0;width:120%;height:50%;transform:translateX(-50%);background:radial-gradient(ellipse at center, rgba(63,217,255,.16), transparent 55%);}
-.cine-diamond{position:absolute;left:50%;bottom:18px;width:140px;height:110px;transform:translateX(-50%) rotate(45deg);border:1px solid rgba(255,255,255,.08);}
-.cine-base{position:absolute;width:16px;height:16px;border-radius:50%;background:rgba(63,217,255,.12);border:1px solid rgba(63,217,255,.28);box-shadow:0 0 12px rgba(63,217,255,.12);}
-.cine-base.b1{left:28%;bottom:28%;}
-.cine-base.b2{left:50%;bottom:60%;}
-.cine-base.b3{left:72%;bottom:28%;}
-.cine-base.on{background:var(--cy);border-color:rgba(63,217,255,.7);box-shadow:0 0 16px rgba(63,217,255,.45);}
-.cine-ball{position:absolute;left:10%;top:58%;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg, #fff, var(--cy));box-shadow:0 0 20px rgba(63,217,255,.8);animation:cineBallArc 1.2s ease infinite;}
-.cine-label{position:absolute;left:50%;top:18px;transform:translateX(-50%);padding:10px 16px;border-radius:999px;background:rgba(3,6,12,.88);color:#fff;font-size:15px;font-weight:800;letter-spacing:.05em;text-align:center;white-space:nowrap;}
-.cine-tag-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
-.cine-tag{font-size:11px;color:var(--tx);background:rgba(63,217,255,.08);border:1px solid rgba(63,217,255,.15);border-radius:999px;padding:4px 8px;}
-.cine-vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
-.cine-card{border:1px solid rgba(63,217,255,.16);border-radius:14px;background:linear-gradient(180deg,rgba(63,217,255,.04),rgba(10,17,32,.92));padding:10px;}
-.cine-card .cine-stat{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-top:8px;}
+.mbox.cine{width:min(720px,94vw);padding:16px;overflow:hidden;}
+.cine-box{display:grid;gap:12px;}
+.cine-scorebar{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;}
+.cine-inning,.cine-score,.cine-count{border:1px solid rgba(63,217,255,.18);border-radius:8px;background:rgba(6,14,28,.78);padding:8px 10px;}
+.cine-inning{font-size:12px;color:#d8ebff;font-weight:800;letter-spacing:.04em;}
+.cine-score{font-family:var(--num);font-size:18px;font-weight:900;color:#fff;min-width:104px;text-align:center;}
+.cine-count{font-family:var(--num);font-size:11px;color:var(--mut);display:grid;gap:3px;min-width:110px;}
+.cine-count-row{display:flex;align-items:center;gap:5px;justify-content:space-between;}
+.cine-dot{width:8px;height:8px;border-radius:50%;background:rgba(220,235,255,.16);border:1px solid rgba(220,235,255,.22);display:inline-block;}
+.cine-dot.on{background:var(--imp);border-color:var(--imp);box-shadow:0 0 10px rgba(255,196,77,.55);}
+.cine-titleband{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(255,196,77,.18);border-radius:10px;background:linear-gradient(90deg,rgba(255,196,77,.13),rgba(63,217,255,.05));padding:10px 12px;}
+.cine-titleband h2{font-size:clamp(24px,3.5vw,38px);line-height:1;font-family:var(--num);letter-spacing:.08em;color:#fff;text-shadow:0 0 16px rgba(255,196,77,.28);}
+.cine-progress{font-family:var(--num);font-size:12px;color:var(--mut);white-space:nowrap;}
+.cine-stage{position:relative;min-height:310px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#06101e,#071625);border:1px solid rgba(63,217,255,.16);box-shadow:inset 0 0 40px rgba(63,217,255,.08);display:grid;grid-template-columns:minmax(0,1fr) 252px;gap:14px;align-items:stretch;padding:14px;}
+.cine-sky{position:absolute;inset:0;background:radial-gradient(circle at 18% 12%, rgba(255,255,255,.11), transparent 16%),radial-gradient(circle at 80% 18%, rgba(164,123,255,.11), transparent 15%),radial-gradient(circle at 54% 84%, rgba(63,217,255,.1), transparent 18%);pointer-events:none;}
+.cine-summary{position:relative;z-index:1;display:grid;gap:10px;align-content:center;min-width:0;}
+.cine-actor{font-size:clamp(23px,3.2vw,34px);line-height:1.15;font-weight:900;color:#fff;text-shadow:0 0 16px rgba(63,217,255,.36);overflow-wrap:anywhere;}
+.cine-headline{font-size:clamp(18px,2.5vw,28px);line-height:1.35;font-weight:900;color:var(--imp);text-shadow:0 0 14px rgba(255,196,77,.3);overflow-wrap:anywhere;}
+.cine-current{font-family:var(--num);font-size:18px;color:#dff8ff;font-weight:900;}
+.cine-subline{font-size:13px;color:#c9d8ee;line-height:1.55;overflow-wrap:anywhere;}
+.cine-field{position:relative;z-index:1;align-self:center;justify-self:center;width:236px;height:236px;border-radius:50%;overflow:hidden;background:
+  radial-gradient(ellipse at 50% 78%, rgba(157,106,54,.35) 0 24%, transparent 25%),
+  radial-gradient(ellipse at 50% 42%, rgba(36,115,88,.34) 0 61%, transparent 62%),
+  radial-gradient(circle at 50% 66%, rgba(63,217,255,.12), transparent 58%),
+  linear-gradient(180deg,rgba(6,28,32,.9),rgba(5,13,26,.95));border:1px solid rgba(63,217,255,.16);}
+.cine-field::before{content:'';position:absolute;left:8%;top:7%;width:84%;height:84%;border-top:3px solid rgba(255,196,77,.26);border-radius:50%;box-shadow:0 -5px 18px rgba(255,196,77,.08);}
+.cine-field::after{content:'';position:absolute;left:50%;top:83%;width:160px;height:160px;transform:translate(-50%,-50%) rotate(45deg);border-left:1px solid rgba(210,235,255,.28);border-top:1px solid rgba(210,235,255,.28);pointer-events:none;}
+.cine-zone{position:absolute;font-family:var(--num);font-size:10px;color:rgba(217,230,247,.36);font-weight:800;letter-spacing:.08em;}
+.cine-zone.lf{left:20%;top:25%;}.cine-zone.cf{left:50%;top:12%;transform:translateX(-50%);}.cine-zone.rf{right:20%;top:25%;}
+.cine-infield{position:absolute;left:50%;top:57%;width:128px;height:128px;transform:translate(-50%,-50%) rotate(45deg);border:1px solid rgba(210,235,255,.22);background:linear-gradient(135deg,rgba(157,106,54,.42),rgba(255,196,77,.05));}
+.cine-mound{position:absolute;left:50%;top:54%;width:20px;height:20px;border-radius:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,196,77,.35);background:rgba(255,196,77,.12);}
+.cine-home{position:absolute;left:50%;top:84%;transform:translate(-50%,-50%);font-family:var(--num);font-size:10px;color:#dff8ff;background:rgba(3,6,12,.8);border:1px solid rgba(210,235,255,.25);border-radius:5px;padding:2px 5px;}
+.cine-base{position:absolute;width:22px;height:22px;border-radius:4px;transform:translate(-50%,-50%) rotate(45deg);background:rgba(210,230,255,.13);border:1px solid rgba(210,230,255,.28);display:flex;align-items:center;justify-content:center;}
+.cine-base::after{content:attr(data-label);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-45deg);font-family:var(--num);font-size:9px;color:var(--mut);font-weight:800;}
+.cine-base.b1{left:78%;top:57%;}
+.cine-base.b2{left:50%;top:28%;}
+.cine-base.b3{left:22%;top:57%;}
+.cine-base.on{width:34px;height:34px;background:var(--cy);border-color:rgba(63,217,255,.9);box-shadow:0 0 20px rgba(63,217,255,.76);}
+.cine-base.on::after{content:'RUN';color:#04141c;font-size:9px;}
+.cine-run-name{position:absolute;font-size:10px;color:#dff8ff;background:rgba(3,6,12,.76);border:1px solid rgba(63,217,255,.18);border-radius:999px;padding:1px 6px;max-width:86px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cine-run-name.r1{left:74%;top:69%;}.cine-run-name.r2{left:50%;top:16%;transform:translateX(-50%);}.cine-run-name.r3{right:74%;top:69%;}
+.cine-traj{position:absolute;z-index:2;left:50%;top:84%;width:4px;height:4px;pointer-events:none;}
+.cine-traj::before{content:'';position:absolute;left:0;top:0;width:var(--len,118px);height:0;border-top:3px solid rgba(255,196,77,.86);border-radius:999px;box-shadow:0 0 12px rgba(255,196,77,.45);transform:rotate(var(--rot,-90deg));transform-origin:left center;}
+.cine-traj::after{content:'';position:absolute;left:calc(var(--x,0px) - 6px);top:calc(var(--y,-118px) - 6px);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 15px rgba(255,196,77,.9);}
+.cine-traj.batted.grounder::before{border-top-style:dashed;border-color:rgba(255,196,77,.7);box-shadow:0 0 8px rgba(255,196,77,.3);}
+.cine-traj.batted.grounder::after{width:10px;height:10px;background:var(--imp);}
+.cine-traj.batted.liner::before{border-top-width:3px;border-color:rgba(255,242,185,.9);}
+.cine-traj.batted.fly::before{height:34px;border-top:2px solid rgba(255,196,77,.9);border-radius:50% 50% 0 0;transform:rotate(var(--rot,-90deg)) scaleY(.72);}
+.cine-traj.batted.homer::before{height:58px;border-top:3px solid rgba(255,196,77,.95);border-radius:55% 55% 0 0;transform:rotate(var(--rot,-90deg)) scaleY(.9);}
+.cine-traj.batted.homer::after{background:var(--imp);box-shadow:0 0 22px rgba(255,196,77,1);}
+.cine-traj.k::before{border-color:rgba(63,217,255,.9);transform:rotate(90deg);width:76px;}
+.cine-traj.k::after{left:-4px;top:auto;bottom:-4px;background:var(--cy);}
+.cine-traj.steal{left:78%;top:57%;}
+.cine-traj.steal::before{border-color:rgba(84,224,165,.9);transform:rotate(-135deg);width:88px;}
+.cine-traj.steal::after{left:-67px;top:auto;bottom:61px;background:var(--ok);}
+.cine-traj.dp{left:22%;top:57%;}
+.cine-traj.dp::before{border-color:rgba(255,122,107,.9);transform:rotate(0deg);width:130px;}
+.cine-traj.dp::after{left:122px;top:auto;bottom:-4px;background:var(--warn);}
+.cine-traj.score-glow::before{display:none;}
+.cine-traj.score-glow::after{left:-21px;top:auto;bottom:-22px;width:44px;height:44px;background:rgba(255,196,77,.22);box-shadow:0 0 28px rgba(255,196,77,.7);}
+.cine-landing{position:absolute;z-index:3;left:calc(50% + var(--x,0px) - 7px);top:calc(84% + var(--y,-118px) - 7px);width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.78);background:rgba(255,196,77,.2);box-shadow:0 0 18px rgba(255,196,77,.62);pointer-events:none;}
+.cine-landing::after{content:'落下点';position:absolute;left:13px;top:-7px;font-size:9px;color:#fff;background:rgba(3,6,12,.7);border-radius:999px;padding:1px 5px;white-space:nowrap;}
+.cine-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cine-card{border:1px solid rgba(63,217,255,.16);border-radius:8px;background:linear-gradient(180deg,rgba(63,217,255,.04),rgba(10,17,32,.92));padding:10px;}
+.cine-card strong{display:block;font-size:15px;color:#eef7ff;overflow-wrap:anywhere;}
+.cine-stat{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-top:8px;}
 .cine-stat span{color:var(--mut);}
-.cine-stat strong{color:#eef7ff;}
-.cine-call{font-size:13px;color:var(--cy);font-weight:700;margin-top:10px;}
-.cine-result{font-size:15px;color:#eef7ff;font-weight:800;line-height:1.5;margin-top:8px;}
-.cine-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.cine-stat strong{font-size:12px;color:#eef7ff;text-align:right;}
+.cine-result{border:1px solid rgba(255,196,77,.18);border-radius:8px;background:rgba(255,196,77,.06);padding:10px 12px;font-size:15px;color:#eef7ff;font-weight:800;line-height:1.45;}
+.cine-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.cine-tag{font-size:11px;color:var(--tx);background:rgba(63,217,255,.08);border:1px solid rgba(63,217,255,.15);border-radius:999px;padding:4px 8px;}
+.cine-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px;}
 .cine-actions .btn{flex:1;min-width:140px;}
 .cine-actions .btn.ghost{background:rgba(255,255,255,.06);}
-.cine.t-homerun .cine-stage{background:linear-gradient(180deg,#250c18,#070b1a);}
-.cine.t-walkoff .cine-label{background:rgba(255,196,77,.95);color:#111;}
-.cine.t-steal .cine-stage{border-color:#54e0a5;}
-.cine.t-change .cine-label{background:rgba(164,123,255,.9);}
-.cine.t-k .cine-label{background:rgba(164,123,255,.9);}
-.cine.t-score .cine-label{background:rgba(63,217,255,.9);}
-@keyframes cineBallArc{0%{transform:translate(-50%,-50%) scale(1);left:12%;top:70%;opacity:1;}50%{left:50%;top:18%;transform:translate(-50%,-50%) scale(1.2);}100%{left:88%;top:72%;transform:translate(-50%,-50%) scale(1);opacity:.2;}}
-@keyframes cineLabelPop{0%{transform:translateX(-50%) scale(.92);opacity:0;}60%{transform:translateX(-50%) scale(1.05);opacity:1;}100%{transform:translateX(-50%) scale(1);opacity:1;}}
-.cine-label{animation:cineLabelPop .6s ease both;}
+.cine.t-homerun .cine-titleband,.cine.t-walkoff .cine-titleband{border-color:rgba(255,196,77,.45);background:linear-gradient(90deg,rgba(255,196,77,.2),rgba(255,122,107,.08));}
+.cine.t-steal .cine-titleband{border-color:rgba(84,224,165,.35);}
+.cine.t-k .cine-titleband{border-color:rgba(164,123,255,.34);}
+@media (max-width:760px){
+  .mbox.cine{width:94vw;}
+  .cine-scorebar{grid-template-columns:1fr 1fr;}
+  .cine-count{grid-column:1/-1;}
+  .cine-stage{grid-template-columns:1fr;min-height:0;}
+  .cine-field{width:214px;height:214px;}
+  .cine-info{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -1128,7 +1176,7 @@ function buildMatchEffects(ms,startIndex){
     } else if(/ピンチ|三振|併殺/.test(txt)){
       meta.label='PINCH'; meta.type='pinch';
     } else if(/点/.test(txt) && /点/.test(txt)){
-      meta.label='SCORE'; meta.type='score';
+      meta.label='+RUNS'; meta.type='score';
     } else if(/代打|継投|代走/.test(txt)){
       meta.label='CHANGE'; meta.type='change';
     } else {
@@ -1170,9 +1218,122 @@ function ensureCinematic(ms){
   }
 }
 function randChoice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function cineScoreSnap(ms){ return {p:pTot(ms),n:nTot(ms)}; }
+function cineBasesSnap(ms){
+  return (ms.bases||[]).map(r=>r ? (r.name || (r.pid ? getPlayer(r.pid).name : 'RUNNER')) : null);
+}
+function cineBaseTextFromSnap(bases){
+  const b = Array.isArray(bases) ? bases : [null,null,null];
+  return [0,1,2].map(i=>`${i+1}塁:${b[i] || '--'}`).join(' / ');
+}
+function cineHalfText(half){
+  if(half==='top') return '表';
+  if(half==='bottom') return '裏';
+  return '';
+}
+function cineBasesFromText(text){
+  const bases = [null,null,null];
+  const s = String(text||'');
+  [1,2,3].forEach(n=>{
+    const m = s.match(new RegExp(n+'塁[:：]?([^/]+)'));
+    if(m){
+      const name = m[1].trim();
+      if(name && name !== '--' && name !== '-' && name !== '—') bases[n-1] = name;
+    }
+  });
+  return bases;
+}
+function cineDisplayLabel(evt){
+  if(!evt) return 'PLAY';
+  if(evt.displayLabel) return evt.displayLabel;
+  if(evt.type==='walkoff') return 'WALK-OFF';
+  if(evt.type==='homerun') return evt.runs>=4 ? 'GRAND SLAM' : 'HOME RUN';
+  if(evt.type==='score') return evt.runs ? `${evt.runs}-RUN HIT` : '+RUNS';
+  if(evt.type==='sf') return 'SAC FLY';
+  if(evt.type==='dp') return 'DOUBLE PLAY';
+  if(evt.type==='k') return 'STRIKEOUT';
+  if(evt.type==='steal') return 'STEAL';
+  if(evt.type==='stealFail') return 'CAUGHT STEALING';
+  if(evt.type==='change') return evt.label || 'CHANGE';
+  return evt.label || 'PLAY';
+}
+function cineHeadline(evt){
+  const runs = evt && evt.runs ? Number(evt.runs) : 0;
+  const raw = String(evt.desc || evt.result || '');
+  const play = raw.includes('が ') ? raw.split('が ').slice(1).join('が ').split('。')[0] : raw.split('。')[0];
+  if(evt.type==='homerun') return runs>1 ? `${runs}点ホームラン` : 'ホームラン';
+  if(evt.type==='score') return runs>0 ? `${play.replace(/（.*?）/g,'')}で${runs}点追加` : '得点';
+  if(evt.type==='sf') return runs>0 ? `犠牲フライで${runs}点` : '犠牲フライ';
+  if(evt.type==='dp') return '併殺打';
+  if(evt.type==='k') return '三振';
+  if(evt.type==='steal') return '盗塁成功';
+  if(evt.type==='stealFail') return '盗塁失敗';
+  return play || evt.desc || evt.result || cineDisplayLabel(evt);
+}
+function cineTrajectoryClass(evt){
+  if(!evt) return '';
+  if(evt.type==='homerun') return 'homerun';
+  if(['triple','double','score','sf'].includes(evt.type)) return 'hit';
+  if(evt.type==='k') return 'k';
+  if(evt.type==='steal' || evt.type==='stealFail') return 'steal';
+  if(evt.type==='dp') return 'dp';
+  return '';
+}
+function cineBattedBallInfo(evt){
+  const text = `${evt.resultText||''} ${evt.desc||''} ${evt.label||''}`;
+  const extraBaseHit = /二塁打|三塁打/.test(text);
+  let fieldZone = 'center';
+  let depth = 'medium';
+  let battedBallType = 'liner';
+  if(/レフト|左翼|左中間/.test(text)) fieldZone = /左中間/.test(text) ? 'leftCenter' : 'left';
+  else if(/ライト|右翼|右中間/.test(text)) fieldZone = /右中間/.test(text) ? 'rightCenter' : 'right';
+  else if(/センター|中堅/.test(text)) fieldZone = 'center';
+  else if(!extraBaseHit && /サード|三塁/.test(text)) fieldZone = 'infieldLeft';
+  else if(/ショート|遊撃/.test(text)) fieldZone = 'infieldLeft';
+  else if(!extraBaseHit && /セカンド|二塁/.test(text)) fieldZone = 'infieldRight';
+  else if(/ファースト|一塁/.test(text)) fieldZone = 'infieldRight';
+
+  if(evt.type==='homerun' || /ホームラン/.test(text)){ battedBallType = 'homer'; depth = 'deep'; }
+  else if(/フライ|犠牲フライ/.test(text) || evt.type==='sf'){ battedBallType = 'fly'; depth = /フェンス|深/.test(text) ? 'deep' : 'medium'; }
+  else if(/ゴロ/.test(text)){ battedBallType = 'grounder'; depth = 'infield'; }
+  else if(/三塁打/.test(text)){ battedBallType = 'liner'; depth = 'deep'; if(fieldZone==='center') fieldZone='rightCenter'; }
+  else if(/二塁打|フェンス/.test(text)){ battedBallType = 'liner'; depth = 'deep'; if(fieldZone==='center') fieldZone='leftCenter'; }
+  else if(/前ヒット|ヒット/.test(text)){ battedBallType = 'liner'; depth = 'shallow'; }
+  else return null;
+
+  const points = {
+    left:{shallow:[-58,-96],medium:[-78,-124],deep:[-88,-154]},
+    leftCenter:{shallow:[-36,-106],medium:[-58,-132],deep:[-68,-160]},
+    center:{shallow:[0,-108],medium:[0,-138],deep:[0,-168]},
+    rightCenter:{shallow:[36,-106],medium:[58,-132],deep:[68,-160]},
+    right:{shallow:[58,-96],medium:[78,-124],deep:[88,-154]},
+    infieldLeft:{infield:[-45,-55],shallow:[-45,-55],medium:[-48,-66],deep:[-58,-82]},
+    infieldCenter:{infield:[0,-62],shallow:[0,-62],medium:[0,-78],deep:[0,-95]},
+    infieldRight:{infield:[45,-55],shallow:[45,-55],medium:[48,-66],deep:[58,-82]},
+  };
+  const zonePoints = points[fieldZone] || points.center;
+  const point = zonePoints[depth] || zonePoints.medium || points.center.medium;
+  const x = point[0], y = point[1];
+  const len = Math.max(1,Math.round(Math.sqrt(x*x+y*y)));
+  const rot = Math.round(Math.atan2(y,x) * 180 / Math.PI);
+  return {fieldZone,depth,battedBallType,x,y,len,rot};
+}
+function cineBattedStyle(info){
+  if(!info) return '';
+  return `--x:${info.x}px;--y:${info.y}px;--len:${info.len}px;--rot:${info.rot}deg`;
+}
+function cineOutDots(outs){
+  const o = typeof outs === 'number' ? Math.max(0,Math.min(3,outs)) : 0;
+  return [0,1,2].map(i=>`<span class="cine-dot${i<o?' on':''}"></span>`).join('');
+}
 function pushCinematicEvent(ms,evt){
   ensureCinematic(ms);
   if(!evt || typeof evt !== 'object') return;
+  if(!evt.scoreAfter) evt.scoreAfter = cineScoreSnap(ms);
+  if(!evt.basesAfter) evt.basesAfter = cineBasesSnap(ms);
+  if(typeof evt.outsAfter !== 'number') evt.outsAfter = ms.outs || 0;
+  if(typeof evt.inning !== 'number') evt.inning = ms.inning || 1;
+  if(!evt.half) evt.half = 'sys';
   evt.cine = true;
   evt.seq = ms.cineRaw.length;
   ms.cineRaw.push(evt);
@@ -1181,31 +1342,35 @@ function cineCapturePA(ms,half,bt,res,info){
   ensureCinematic(ms);
   if(!ms || !bt) return;
   const scoreBefore = info.scoreBefore || 0;
-  const scoreAfter = pTot(ms) - nTot(ms);
+  const scoreDiffAfter = pTot(ms) - nTot(ms);
   const actor = bt.name || '打者';
   const pitcher = info.pitcherName || '相手投手';
-  const baseAfter = ms.bases.map((r,i)=> r? `${i+1}塁:${r.name}` : `${i+1}塁:―`).join(' / ');
+  const scoreSnap = cineScoreSnap(ms);
+  const basesSnap = cineBasesSnap(ms);
+  const baseAfter = cineBaseTextFromSnap(basesSnap);
   const tags = [];
   let label = 'PLAY';
   let type = 'calm';
   let prio = 0;
   let theme = '';
   if(info.isWalkoff){ label='WALK-OFF'; type='walkoff'; prio=130; theme='t-walkoff'; tags.push('サヨナラ'); }
-  else if(res==='HR'){ label=info.runs>=4?'満塁HR':'HOMERUN'; type='homerun'; prio=100 + (bt.power>=62?10:0); theme='t-homerun'; }
+  else if(res==='HR'){ label=info.runs>=4?'GRAND SLAM':'HOME RUN'; type='homerun'; prio=100 + (bt.power>=62?10:0); theme='t-homerun'; }
   else if(res==='3B'){ label='TRIPLE'; type='triple'; prio=60; }
   else if(res==='2B'){ label='DOUBLE'; type='double'; prio=52; }
-  else if(info.runs>0){ label='SCORE'; type='score'; prio=48 + Math.min(info.runs*4,12); theme='t-score'; }
   else if(info.wasSF){ label='SAC FLY'; type='sf'; prio=50; }
+  else if(info.runs>0){ label=`${info.runs}-RUN HIT`; type='score'; prio=48 + Math.min(info.runs*4,12); theme='t-score'; }
   else if(info.wasDP){ label='DOUBLE PLAY'; type='dp'; prio=48; }
   else if(res==='K' && /1塁|2塁|3塁/.test(info.baseState || '')){ label='STRIKEOUT'; type='k'; prio=44; theme='t-k'; }
   else { return; }
-  if(scoreBefore < 0 && scoreAfter >= 0){ tags.push('逆転'); prio += 25; }
-  else if(scoreBefore === 0 && scoreAfter > 0){ tags.push('先制'); prio += 10; }
-  else if(scoreBefore > 0 && scoreAfter === 0){ tags.push('同点'); prio += 10; }
+  if(scoreBefore < 0 && scoreDiffAfter >= 0){ tags.push('逆転'); prio += 25; }
+  else if(scoreBefore === 0 && scoreDiffAfter > 0){ tags.push('先制'); prio += 10; }
+  else if(scoreBefore > 0 && scoreDiffAfter === 0){ tags.push('同点'); prio += 10; }
   if(info.runs > 0) tags.push('得点');
   const desc = `${actor} が ${info.outcomeText || info.resultText || res}。${info.runs? `${info.runs}点をもたらした。` : ''}`;
-  const result = `現在: ${pTot(ms)} - ${nTot(ms)} | ${baseAfter}`;
-  pushCinematicEvent(ms,{label,type,actor,pitcher,bases:baseAfter,desc,result,prio,theme,tags});
+  const result = `現在: ${scoreSnap.p} - ${scoreSnap.n} | ${baseAfter}`;
+  const resultText = info.outcomeText||info.resultText||res;
+  const ballInfo = cineBattedBallInfo({type,label,desc,resultText,runs:info.runs||0});
+  pushCinematicEvent(ms,{label,displayLabel:label,type,inning:ms.inning,half,actor,pitcher,bases:baseAfter,basesAfter:basesSnap,outsAfter:ms.outs,scoreAfter:scoreSnap,runs:info.runs||0,desc,result,resultText,battedBallType:ballInfo&&ballInfo.battedBallType,fieldZone:ballInfo&&ballInfo.fieldZone,depth:ballInfo&&ballInfo.depth,prio,theme,tags});
 }
 function cineSnap(ms,half,bt,res,info){ cineCapturePA(ms,half,bt,res,info); }
 function cineCaptureSteal(ms,half,runner,ok){
@@ -1216,10 +1381,12 @@ function cineCaptureSteal(ms,half,runner,ok){
   const type = ok ? 'steal' : 'stealFail';
   const prio = 46;
   const theme = 't-steal';
-  const baseAfter = ms.bases.map((r,i)=> r? `${i+1}塁:${r.name}` : `${i+1}塁:―`).join(' / ');
+  const scoreSnap = cineScoreSnap(ms);
+  const basesSnap = cineBasesSnap(ms);
+  const baseAfter = cineBaseTextFromSnap(basesSnap);
   const desc = ok ? `${runner.name} が勢いよく二塁をうかがった。` : `${runner.name} の盗塁はアウトになった。`;
-  const result = baseAfter;
-  pushCinematicEvent(ms,{label,type,actor:runner.name,pitcher,bases:baseAfter,desc,result,prio,theme,tags:['盗塁']});
+  const result = `現在: ${scoreSnap.p} - ${scoreSnap.n} | ${baseAfter}`;
+  pushCinematicEvent(ms,{label,displayLabel:ok?'STEAL':'CAUGHT STEALING',type,inning:ms.inning,half,actor:runner.name,pitcher,bases:baseAfter,basesAfter:basesSnap,outsAfter:ms.outs,scoreAfter:scoreSnap,desc,result,resultText:label,prio,theme,tags:['盗塁']});
 }
 function cineCaptureChange(ms,kind,actor,note){
   ensureCinematic(ms);
@@ -1228,9 +1395,11 @@ function cineCaptureChange(ms,kind,actor,note){
   const type = 'change';
   const prio = 36;
   const theme = 't-change';
+  const scoreSnap = cineScoreSnap(ms);
+  const basesSnap = cineBasesSnap(ms);
   const desc = `${actor} が ${kind} で登場。${note || ''}`;
   const result = note || '';
-  pushCinematicEvent(ms,{label,type,actor,pitcher:'—',bases:'',desc,result,prio,theme,tags:[kind]});
+  pushCinematicEvent(ms,{label,type,inning:ms.inning,half:'sys',actor,pitcher:'—',bases:cineBaseTextFromSnap(basesSnap),basesAfter:basesSnap,outsAfter:ms.outs,scoreAfter:scoreSnap,desc,result,resultText:kind,prio,theme,tags:[kind]});
 }
 function buildCinematicQueue(ms,startIndex){
   ensureCinematic(ms);
@@ -1245,36 +1414,74 @@ function buildCinematicQueue(ms,startIndex){
   buildMatchEffects(ms,startIndex);
 }
 function renderCinematicStage(evt,ms){
-  const progress = `${(ms.effectIndex||0)+1}/${ms.effectQueue.length||1}`;
-  const score = `${pTot(ms)} - ${nTot(ms)}`;
-  const baseText = evt.bases || '―';
+  const progress = `${((ms && ms.effectIndex)||0)+1}/${(ms && ms.effectQueue && ms.effectQueue.length)||1}`;
+  const scoreSnap = evt.scoreAfter && typeof evt.scoreAfter.p === 'number' && typeof evt.scoreAfter.n === 'number'
+    ? evt.scoreAfter
+    : (ms ? cineScoreSnap(ms) : {p:0,n:0});
+  const score = `${scoreSnap.p} - ${scoreSnap.n}`;
+  const basesSnap = Array.isArray(evt.basesAfter) ? evt.basesAfter.slice(0,3) : cineBasesFromText(evt.bases || '');
+  while(basesSnap.length<3) basesSnap.push(null);
+  const baseText = cineBaseTextFromSnap(basesSnap);
+  const outs = typeof evt.outsAfter === 'number' ? Math.max(0,Math.min(evt.outsAfter,3)) : 0;
+  const outsText = typeof evt.outsAfter === 'number' ? `${outs}アウト` : 'アウト不明';
+  const inningText = evt.inning ? `${evt.inning}回${cineHalfText(evt.half)}` : '回不明';
+  const label = cineDisplayLabel(evt);
+  const headline = cineHeadline(evt);
+  const inferredBall = cineBattedBallInfo(evt);
+  const battedInfo = evt.battedBallType ? Object.assign({}, inferredBall||{}, {battedBallType:evt.battedBallType,fieldZone:evt.fieldZone||((inferredBall||{}).fieldZone),depth:evt.depth||((inferredBall||{}).depth)}) : inferredBall;
+  const hasBattedInfo = battedInfo && typeof battedInfo.x === 'number' && typeof battedInfo.y === 'number';
+  const trajClass = hasBattedInfo ? `batted ${battedInfo.battedBallType}` : cineTrajectoryClass(evt);
+  const trajStyle = hasBattedInfo ? cineBattedStyle(battedInfo) : '';
+  const hasBases = Array.isArray(evt.basesAfter) || !!evt.bases;
+  const runnerNames = basesSnap.map((name,i)=>name ? `<span class="cine-run-name r${i+1}">${esc(name)}</span>` : '').join('');
   const tagsHtml = (evt.tags||[]).map(t=>`<span class="cine-tag">${esc(t)}</span>`).join('');
   return `
       <div class="mback" onclick="skipCinematics()"></div>
       <div class="mbox cine ${evt.theme||''}">
         <div class="cine-box">
-          <div class="cine-top">
-            <div class="cine-title"><span class="eyebrow">演出ステージ</span><h2>${esc(evt.label)}</h2></div>
-            <div class="cine-meta"><span>スコア ${esc(score)}</span><span>${esc(progress)}</span></div>
+          <div class="cine-scorebar">
+            <div class="cine-inning">${esc(inningText)} / ${evt.half==='top'?'相手攻撃':evt.half==='bottom'?'自軍攻撃':'試合状況'}</div>
+            <div class="cine-score">${esc(score)}</div>
+            <div class="cine-count">
+              <div class="cine-count-row"><span>B</span><span><span class="cine-dot"></span><span class="cine-dot"></span><span class="cine-dot"></span></span></div>
+              <div class="cine-count-row"><span>S</span><span><span class="cine-dot"></span><span class="cine-dot"></span></span></div>
+              <div class="cine-count-row"><span>O</span><span>${cineOutDots(outs)}</span></div>
+            </div>
+          </div>
+          <div class="cine-titleband">
+            <h2>${esc(label)}</h2>
+            <div class="cine-progress">PLAY ${esc(progress)}</div>
           </div>
           <div class="cine-stage">
             <div class="cine-sky"></div>
-            <div class="cine-ground"></div>
-            <div class="cine-diamond">
-              <span class="cine-base b1${baseText.includes('1塁')?' on':''}"></span>
-              <span class="cine-base b2${baseText.includes('2塁')?' on':''}"></span>
-              <span class="cine-base b3${baseText.includes('3塁')?' on':''}"></span>
+            <div class="cine-summary">
+              <div class="cine-actor">${esc(evt.actor||'打者')}</div>
+              <div class="cine-headline">${esc(headline)}</div>
+              <div class="cine-current">現在 ${esc(score)}</div>
+              <div class="cine-subline">${esc(evt.desc||evt.result||'')}</div>
             </div>
-            <div class="cine-ball"></div>
-            <div class="cine-label">${esc(evt.label)}</div>
+            ${hasBases ? `
+              <div class="cine-field" aria-label="グラウンド図">
+                <span class="cine-zone lf">LF</span><span class="cine-zone cf">CF</span><span class="cine-zone rf">RF</span>
+                <div class="cine-infield"></div>
+                <div class="cine-mound"></div>
+                <span class="cine-base b1${basesSnap[0]?' on':''}" data-label="1B"></span>
+                <span class="cine-base b2${basesSnap[1]?' on':''}" data-label="2B"></span>
+                <span class="cine-base b3${basesSnap[2]?' on':''}" data-label="3B"></span>
+                <span class="cine-home">HOME</span>
+                ${runnerNames}
+                ${trajClass ? `<span class="cine-traj ${esc(trajClass)}"${trajStyle?` style="${esc(trajStyle)}"`:''}></span>` : ''}
+                ${hasBattedInfo ? `<span class="cine-landing" style="${esc(cineBattedStyle(battedInfo))}"></span>` : ''}
+                ${evt.runs ? '<span class="cine-traj score-glow"></span>' : ''}
+              </div>
+            ` : `<div class="cine-field"><div class="cine-subline">塁状況スナップショットなし</div></div>`}
           </div>
-          <div class="cine-tag-wrap">${tagsHtml || '<span class="cine-tag">重要場面</span>'}</div>
-          <div class="cine-vs">
-            <div class="cine-card"><strong>${esc(evt.actor||'打者')}</strong><div class="cine-stat"><span>投手</span><strong>${esc(evt.pitcher||'—')}</strong></div></div>
-            <div class="cine-card"><strong>塁状況</strong><div class="cine-stat"><span>状態</span><strong>${esc(baseText)}</strong></div></div>
+          <div class="cine-info">
+            <div class="cine-card"><span class="mut">打者</span><strong>${esc(evt.actor||'—')}</strong><div class="cine-stat"><span>投手</span><strong>${esc(evt.pitcher||'—')}</strong></div></div>
+            <div class="cine-card"><span class="mut">状況</span><strong>${esc(baseText)}</strong><div class="cine-stat"><span>アウト</span><strong>${esc(outsText)}</strong></div></div>
           </div>
-          <div class="cine-call">${esc(evt.desc||'')}</div>
-          <div class="cine-result">${esc(evt.result||'')}</div>
+          <div class="cine-result">${esc(evt.resultText || headline || evt.result || '')}</div>
+          <div class="cine-tags">${tagsHtml || '<span class="cine-tag">重要場面</span>'}</div>
           <div class="cine-actions"><button class="btn pri" onclick="nextMatchEffect()">次の演出へ</button><button class="btn ghost" onclick="skipCinematics()">スキップ</button></div>
         </div>
       </div>
@@ -1565,6 +1772,17 @@ function importSaveText(){
   if(!ta) return;
   importJson(ta.value);
 }
+function resetToDefaultSave(){
+  if(!confirm('セーブデータを初期状態に戻します。よろしいですか？')) return;
+  if(!confirm('現在の進行状況は消えます。開発用リセットを実行しますか？')) return;
+  save = defaultSave();
+  UI.screen = 'home';
+  UI.modal = null;
+  UI.sel = null;
+  persist();
+  toast('初期状態にリセットしました');
+  render();
+}
 function openScoutResult(){ UI.modal = { kind:'scoutResult' }; render(); }
 function closeModal(){ UI.modal = null; render(); }
 
@@ -1584,6 +1802,7 @@ function renderNav(){
       <div class="cr">v0.1</div>
     </div>
     ${buttons.map(b=>`<button class="navbtn${UI.screen===b.id?' on':''}" onclick="setScreen('${b.id}')">${b.label}</button>`).join('')}
+    <button class="btn danger sm" onclick="resetToDefaultSave()">初期スタート</button>
     <div class="navfoot">${save.team.credits}クレジット</div>
   `;
 }
@@ -1655,9 +1874,9 @@ function renderMatch(){
   const baseHtml = `
     <div class="field">
       <div class="fline"></div>
-      <div class="base${ms.bases[2]?' on':''}" style="left:50%;top:12%;">3</div>
-      <div class="base${ms.bases[1]?' on':''}" style="left:88%;top:50%;">2</div>
-      <div class="base${ms.bases[0]?' on':''}" style="left:12%;top:50%;">1</div>
+      <div class="base${ms.bases[0]?' on':''}" style="left:88%;top:50%">1B</div>
+      <div class="base${ms.bases[1]?' on':''}" style="left:50%;top:12%">2B</div>
+      <div class="base${ms.bases[2]?' on':''}" style="left:12%;top:50%">3B</div>
     </div>
     <div class="fmeta"><div>攻撃: ${esc(offense)}</div><div>打者: ${esc(currentBatter)}</div></div>
   `;
@@ -1682,7 +1901,7 @@ function renderMatch(){
     <section class="panel"><div class="ph"><div><span class="eyebrow">試合</span><h2>${esc(NPC_TEAMS[ms.oppId].name)} 戦</h2></div><div class="sub">${status}</div></div>
       <div class="kv"><b>スコア</b><span>${score}</span></div>
       ${result}
-      <div class="field-card">${baseHtml}</div>
+      ${!ms.finished ? `<div class="field-card">${baseHtml}</div>` : ''}
       <div class="btnrow">${actionButtons}</div>
     </section>
     <section class="panel"><div class="ph"><div><span class="eyebrow">ログ</span><h2>直近プレイ</h2></div></div><div class="log">${log || '<p>まだプレイされていません。</p>'}</div></section>
@@ -1747,6 +1966,10 @@ function renderSave(){
       <div class="kv"><b>最終更新</b><span>${esc(save.updatedAt)}</span></div>
       <div class="btnrow"><button class="btn pri" onclick="persist(); toast('保存しました');">保存</button><button class="btn" onclick="copySaveText()">データコピー</button></div>
     </section>
+    <section class="panel"><div class="ph"><div><span class="eyebrow">開発用</span><h2>初期スタート</h2></div></div>
+      <p class="note">固まった時や作り直し確認用に、現在のセーブを初期状態へ戻します。</p>
+      <div class="btnrow"><button class="btn danger" onclick="resetToDefaultSave()">初期スタートに戻す</button></div>
+    </section>
     <section class="panel"><div class="ph"><div><span class="eyebrow">バックアップ</span><h2>JSON</h2></div></div>
       <textarea id="save-export" class="io">${json}</textarea>
       <div class="btnrow"><button class="btn pri" onclick="importSaveText()">JSON読み込み</button></div>
@@ -1785,15 +2008,17 @@ function renderModal(){
     }
   } else if(UI.modal.kind==='matchSummary'){
     const ms = save.activeMatch;
-    const summary = ms.finished ? '試合は終了しました' : 'この区切りの結果を確認してください';
+    const summaryRows = ms.finished
+      ? `<div class="stat"><span>最終スコア</span><strong>${pTot(ms)} - ${nTot(ms)}</strong></div>`
+      : `<div class="stat"><span>現在のスコア</span><strong>${pTot(ms)} - ${nTot(ms)}</strong></div>
+          <div class="stat"><span>次のイニング</span><strong>${ms.inning+'回'}</strong></div>
+          <div class="stat"><span>打者</span><strong>${esc(getPlayer(ms.order[ms.batIdx.p%9]).name)}</strong></div>`;
     html = `
       <div class="mback" onclick="closeMatchSummary()"></div>
       <div class="mbox goldfx">
         <div class="ph"><div><span class="eyebrow">演出完了</span><h2>区切り結果</h2></div></div>
         <div class="match-result">
-          <div class="stat"><span>現在のスコア</span><strong>${pTot(ms)} - ${nTot(ms)}</strong></div>
-          <div class="stat"><span>次のイニング</span><strong>${ms.finished? 'なし' : ms.inning+'回'}</strong></div>
-          <div class="stat"><span>打者</span><strong>${!ms.finished ? esc(getPlayer(ms.order[ms.batIdx.p%9]).name) : '—'}</strong></div>
+          ${summaryRows}
         </div>
         <div class="btnrow"><button class="btn pri" onclick="closeMatchSummary()">続ける</button></div>
       </div>
