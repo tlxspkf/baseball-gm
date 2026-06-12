@@ -200,10 +200,45 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .log{
   font-size:12px;line-height:1.65;max-height:46vh;overflow-y:auto;
   -webkit-overflow-scrolling:touch;user-select:text;-webkit-user-select:text;
+  padding-right:4px;
 }
-.log p{padding:2px 0;border-bottom:1px dashed rgba(72,180,255,.08)}
-.log p.hl{color:var(--imp);text-shadow:0 0 6px rgba(255,196,77,.3)}
+.log p{padding:8px 0 6px;border-bottom:1px dashed rgba(72,180,255,.08);transition:color .2s,transform .2s}
+.log p strong{color:var(--tx)}
+.log p.impact{color:#b9f7ff;font-weight:700;text-shadow:0 0 8px rgba(63,217,255,.35)}
+.log p.impact::before{content:'◆';margin-right:6px;color:var(--imp)}
 .log p.sysl{color:var(--pu)}
+.log p.final{padding-bottom:10px;margin-top:4px;border-color:rgba(255,196,77,.25)}
+.tip-list{display:grid;gap:8px;margin-top:8px}
+.tip-item{border:1px solid rgba(72,180,255,.16);border-radius:10px;background:linear-gradient(180deg,rgba(63,217,255,.08),rgba(12,20,36,.9));padding:12px;display:flex;align-items:flex-start;gap:10px}
+.tip-item .marker{width:8px;height:8px;border-radius:50%;background:var(--cy);margin-top:5px;flex-shrink:0}
+.tip-item strong{display:block;color:#eaf8ff;margin-bottom:4px}
+.match-result{border:1px solid rgba(255,196,77,.25);border-radius:14px;padding:14px;background:rgba(255,221,146,.06);box-shadow:0 0 18px rgba(255,196,77,.15)}
+.match-result .label{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:999px;background:rgba(255,196,77,.12);color:var(--imp);font-weight:700;margin-bottom:10px}
+.match-result .label.win{background:rgba(63,217,255,.18);color:#b9f7ff}
+.match-result .label.lose{background:rgba(255,122,107,.14);color:var(--warn)}
+.match-result .label.draw{background:rgba(148,132,255,.14);color:var(--pu)}
+.match-result .stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,196,77,.18)}
+.match-result .stat:last-child{border-bottom:none}
+.scout-card{border:1px solid rgba(255,196,77,.2);border-radius:14px;background:linear-gradient(180deg,rgba(255,196,77,.06),rgba(12,20,36,.9));padding:16px;margin:12px 0;position:relative;overflow:hidden}
+.scout-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right, rgba(255,196,77,.22), transparent 35%);opacity:.8;pointer-events:none}
+.scout-card .rarity{font-family:var(--num);letter-spacing:.18em;color:var(--imp);margin-bottom:8px}
+.scout-card .newtag{display:inline-block;padding:3px 8px;border-radius:999px;background:rgba(63,217,255,.18);color:#b9f7ff;font-size:11px;font-weight:700;margin-bottom:8px}
+.scout-card .dupetag{display:inline-block;padding:3px 8px;border-radius:999px;background:rgba(255,122,107,.18);color:var(--warn);font-size:11px;font-weight:700;margin-bottom:8px}
+.scout-card .pl-name{font-size:18px;font-weight:800;letter-spacing:.01em;margin-bottom:6px}
+.scout-card .pl-details{display:flex;flex-wrap:wrap;gap:10px;font-size:12px}
+.scout-card.goldfx{animation:glowStar .9s ease forwards}
+@keyframes glowStar{0%{transform:scale(0.98);filter:blur(1px);opacity:.8}50%{transform:scale(1.02);filter:blur(0);opacity:1}100%{transform:scale(1);opacity:1}}
+.material-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.material-card{border:1px solid var(--line);border-radius:12px;padding:10px;background:rgba(10,17,32,.82);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.material-card strong{color:var(--tx)}
+.material-card span{font-family:var(--num);color:var(--cy)}
+.material-card.rare{border-color:rgba(255,196,77,.35);box-shadow:0 0 8px rgba(255,196,77,.18)}
+.gauge-outer{border:1px solid var(--line);border-radius:10px;background:#08111f;padding:8px;margin-top:8px}
+.gauge-inner{height:12px;border-radius:8px;overflow:hidden;background:#08111f}
+.gauge-inner i{width:0%;height:100%;background:linear-gradient(90deg, var(--bl), var(--cy));transition:width .3s ease}
+.gauge-note{font-size:12px;color:var(--mut);margin-top:6px}
+.milestone{border:1px solid rgba(63,217,255,.15);border-radius:10px;padding:10px;background:rgba(63,217,255,.04);margin-top:8px;color:#c2ecff}
+.milestone strong{color:var(--cy)}
 /* ---------- テーブル(成績) ---------- */
 table.st{width:100%;border-collapse:collapse;font-size:12.5px}
 table.st th{color:var(--mut);font-weight:400;font-size:11px;border-bottom:1px solid var(--line2);padding:5px 4px;text-align:right}
@@ -976,6 +1011,7 @@ function finalizeMatch(ms){
   const oppName=NPC_TEAMS[ms.oppId].name;
   ms.result={outcome,p,n,credits,mvp,expList,oppName,
     winP:winP?getPlayer(winP).name:null, saveP:saveP?getPlayer(saveP).name:null};
+  UI.modal={kind:'matchResult'};
   save.recentResults.unshift({opp:oppName,score:p+' - '+n,outcome});
   if(save.recentResults.length>10) save.recentResults.length=10;
   mlog(ms,ms.inning,'sys','試合終了 '+p+' - '+n+'（'+(outcome==='win'?'勝利':outcome==='lose'?'敗北':'引き分け')+'）',outcome==='win');
@@ -1264,6 +1300,16 @@ function renderNav(){
 function renderHome(){
   const main = document.getElementById('main');
   const recent = save.recentResults.slice(0, 5).map(r => `<div class="card"><div class="kv"><b>${esc(r.opp)}</b><span>${esc(r.score)}</span></div><div class="note">${esc(r.outcome)}</div></div>`).join('') || '<p class="note">まだ試合結果がありません。</p>';
+  const tips=[];
+  if(save.team.credits>=SCOUT_COST) tips.push({title:'スカウト可能',desc:`${SCOUT_COST}クレジットで新選手を獲得できます`});
+  if(save.activeExpedition && !save.activeExpedition.finished) tips.push({title:'探索を進行',desc:'探索中のパネルで次のステップまたは選択肢を進めましょう'});
+  if(save.recentResults.length){
+    const last = save.recentResults[0];
+    tips.push({title:'直近の試合',desc:`前回は${last.outcome}でした。次の相手に備えよう`});
+  }
+  if(save.inventory.trainingData>0) tips.push({title:'育成できる',desc:`訓練データが ${save.inventory.trainingData} あります。選手を強化できます`});
+  if(save.activeMatch && !save.activeMatch.finished) tips.push({title:'試合進行中',desc:'対戦中の試合を再開して勝利を目指しましょう'});
+  const tipHtml = tips.length ? `<div class="tip-list">${tips.map(t=>`<div class="tip-item"><span class="marker"></span><div><strong>${esc(t.title)}</strong><div>${esc(t.desc)}</div></div></div>`).join('')}</div>` : '<p class="note">次に何をするか迷ったら、試合・探索・スカウトから始めてみてください。</p>';
   let active='';
   if(save.activeMatch){
     const ms = save.activeMatch;
@@ -1287,6 +1333,7 @@ function renderHome(){
         <button class="btn pri" onclick="setScreen('save')">保存</button>
       </div>
     </section>
+    <section class="panel"><div class="ph"><div><span class="eyebrow">おすすめ行動</span><h2>次にやること</h2></div></div>${tipHtml}</section>
     ${active}
     <section class="panel"><div class="ph"><div><span class="eyebrow">最近の結果</span><h2>直近の試合</h2></div></div>${recent}</section>
   `;
@@ -1307,9 +1354,14 @@ function renderMatch(){
   const ms = save.activeMatch;
   const score = `${pTot(ms)} - ${nTot(ms)}`;
   const status = ms.finished ? '試合終了' : `${ms.inning}回 ${ms.outs}アウト`;
-  const result = ms.finished ? `<p class="note">結果: ${esc(ms.result.outcome)} ${score}</p>` : '';
+  const result = ms.finished ? `<div class="match-result"><div class="label ${ms.result.outcome==='win'?'win':ms.result.outcome==='lose'?'lose':'draw'}">${esc(ms.result.outcome.toUpperCase())}</div><div class="stat"><span>スコア</span><strong>${score}</strong></div><div class="stat"><span>相手</span><strong>${esc(ms.result.oppName)}</strong></div><div class="stat"><span>MVP</span><strong>${esc(ms.result.mvp||'—')}</strong></div><div class="stat"><span>獲得CR</span><strong>${ms.result.credits}</strong></div></div>` : '';
   const actionButtons = ms.finished ? `<button class="btn pri" onclick="closeMatch()">試合を閉じる</button>` : `<button class="btn pri" onclick="advanceMatch(false)">次へ進める</button><button class="btn" onclick="advanceMatch(true)">一気に決着</button>`;
-  const log = ms.log.slice(-10).map(item => `<p${item.hl?' class="hl"':''}>${esc((item.half==='sys'? '' : halfLabel(item.inn,item.half)) + item.text)}</p>`).join('');
+  const log = ms.log.slice(-10).map(item => {
+    const text = (item.half==='sys'? '' : halfLabel(item.inn,item.half)) + item.text;
+    const isImpact = /◆|ホームラン|逆転|同点|ピンチ|チャンス|サヨナラ|勝利|敗北|四球|得点/.test(text);
+    const cls = [item.hl ? 'hl' : '', isImpact ? 'impact' : ''].filter(Boolean).join(' ');
+    return `<p${cls?` class="${cls}"`:''}>${esc(text)}</p>`;
+  }).join('');
   main.innerHTML = `
     <section class="panel"><div class="ph"><div><span class="eyebrow">試合</span><h2>${esc(NPC_TEAMS[ms.oppId].name)} 戦</h2></div><div class="sub">${status}</div></div>
       <div class="kv"><b>スコア</b><span>${score}</span></div>
@@ -1325,11 +1377,17 @@ function renderExplore(){
   if(save.activeExpedition){
     const ex = save.activeExpedition;
     const planet = PLANETS[ex.planetId];
-    const results = ex.results.map(r => `<p>${esc(r.text)}</p>`).join('');
+    const results = ex.results.map(r => `<p${r.ev?' class="impact"':''}>${esc(r.text)}</p>`).join('');
     const action = ex.finished ? '<button class="btn pri" onclick="closeExpedition()">探索を閉じる</button>' : ex.pend ? `<button class="btn pri" onclick="chooseExpedition('safe')">安全に調査</button><button class="btn pri" onclick="chooseExpedition('deep')">深部へ進む</button><button class="btn pri" onclick="chooseExpedition('data')">データ回収</button>` : `<button class="btn pri" onclick="stepExpedition()">次のステップ</button><button class="btn" onclick="retreatExpedition()">撤退する</button>`;
+    const gainsHtml = Object.entries(ex.gains).map(([mid,q]) => `<div class="material-card${MATERIALS[mid].r===3?' rare':''}"><strong>${esc(MATERIALS[mid].name)}</strong><span>×${q}</span></div>`).join('') || '<p class="note">素材はまだ獲得されていません。</p>';
+    const gauge = `<div class="gauge-outer"><div class="gauge-inner"><i style="width:${clampN(ex.survey,0,100)}%"></i></div></div><div class="gauge-note">調査率 ${ex.survey}%</div>`;
+    const milestone = ex.result && ex.result.unlocked && ex.result.unlocked.length ? `<div class="milestone">${esc(ex.result.unlocked.join(' / '))}</div>` : '';
     main.innerHTML = `
-      <section class="panel"><div class="ph"><div><span class="eyebrow">探索</span><h2>${esc(planet.name)}</h2></div><div class="sub">ステップ ${ex.step}/${ex.total}  調査率 ${ex.survey}%</div></div>
-        <div class="kv"><b>探索結果</b><span>${Object.entries(ex.gains).map(([mid,q])=>`${esc(MATERIALS[mid].name)} ×${q}`).join(' / ')||'なし'}</span></div>
+      <section class="panel"><div class="ph"><div><span class="eyebrow">探索</span><h2>${esc(planet.name)}</h2></div><div class="sub">ステップ ${ex.step}/${ex.total}</div></div>
+        <div class="kv"><b>獲得素材</b><span>${Object.values(ex.gains).reduce((s,q)=>s+q,0)||0} 個</span></div>
+        ${gainsHtml ? `<div class="material-grid">${gainsHtml}</div>` : ''}
+        ${gauge}
+        ${milestone}
         <div class="btnrow">${action}</div>
       </section>
       <section class="panel"><div class="ph"><div><span class="eyebrow">探索ログ</span><h2>進行記録</h2></div></div><div class="log">${results || '<p>まだ記録がありません。</p>'}</div></section>
@@ -1382,20 +1440,50 @@ function renderModal(){
   const root = document.getElementById('modal-root');
   if(!UI.modal){ root.className=''; root.innerHTML=''; return; }
   let html='';
-  if(UI.modal.kind==='scoutResult' && save.scout.pulledIds.length){
-    const lastId = save.scout.pulledIds[save.scout.pulledIds.length-1];
-    const pl = PLAYER_MASTER[lastId];
+  if(UI.modal.kind==='matchResult'){
+    const ms = save.activeMatch;
+    const out = ms && ms.result ? ms.result : (UI.modal.res || {});
+    const label = out.outcome==='win' ? 'WIN' : out.outcome==='lose' ? 'LOSE' : 'DRAW';
+    const styleClass = out.outcome==='win' ? 'win' : out.outcome==='lose' ? 'lose' : 'draw';
+    const score = ms ? `${pTot(ms)} - ${nTot(ms)}` : `${out.p||0} - ${out.n||0}`;
     html = `
       <div class="mback" onclick="closeModal()"></div>
-      <div class="mbox">
-        <div class="ph"><div><span class="eyebrow">スカウト結果</span><h2>${esc(pl.name)}</h2></div></div>
-        <div class="kv"><b>タイプ</b><span>${esc(TYPE_INFO[pl.type].label)}</span></div>
-        <div class="kv"><b>役割</b><span>${esc(ROLE_INFO[pl.role]||pl.role)}</span></div>
-        <p class="note">${esc(pl.pf)}</p>
+      <div class="mbox goldfx">
+        <div class="ph"><div><span class="eyebrow">試合結果</span><h2>${esc(label)}</h2></div></div>
+        <div class="match-result">
+          <div class="label ${styleClass}">${esc(label)}</div>
+          <div class="stat"><span>スコア</span><strong>${score}</strong></div>
+          <div class="stat"><span>相手</span><strong>${esc(out.oppName||'—')}</strong></div>
+          <div class="stat"><span>MVP</span><strong>${esc(out.mvp||'—')}</strong></div>
+          <div class="stat"><span>獲得クレジット</span><strong>${out.credits||0}</strong></div>
+          <div class="stat"><span>主な活躍</span><strong>${esc(out.expList? out.expList.slice(0,3).map(x=>x.name+' +'+x.exp).join(', '):'—')}</strong></div>
+        </div>
         <div class="btnrow"><button class="btn pri" onclick="closeModal()">閉じる</button></div>
       </div>
     `;
-  } else {
+  }
+  else if(UI.modal.kind==='scoutResult'){
+    const res = UI.modal.res || {};
+    const lastId = res.mid || save.scout.pulledIds[save.scout.pulledIds.length-1];
+    const pl = PLAYER_MASTER[lastId];
+    const dupe = res.dupe || false;
+    const newTag = !dupe ? '<div class="newtag">NEW</div>' : `<div class="dupetag">被り：訓練データ ${res.td||0}個</div>`;
+    html = `
+      <div class="mback" onclick="closeModal()"></div>
+      <div class="mbox ${pl && pl.rarity===3 ? 'goldfx' : ''}">
+        <div class="ph"><div><span class="eyebrow">スカウト結果</span><h2>${esc(pl.name)}</h2></div></div>
+        <div class="scout-card${pl && pl.rarity===3 ? ' goldfx' : ''}">
+          <div class="rarity">${stars(pl.rarity)}</div>
+          ${newTag}
+          <div class="pl-name">${esc(pl.name)}</div>
+          <div class="pl-details"><span>${esc(TYPE_INFO[pl.type].label)}</span><span>${esc(ROLE_INFO[pl.role]||pl.role)}</span><span>${esc(pl.pos.join('/'))}</span></div>
+          <p class="note">${esc(pl.pf)}</p>
+        </div>
+        <div class="btnrow"><button class="btn pri" onclick="closeModal()">閉じる</button></div>
+      </div>
+    `;
+  }
+  else {
     html = `<div class="mback" onclick="closeModal()"></div><div class="mbox"><p>情報がありません。</p><div class="btnrow"><button class="btn pri" onclick="closeModal()">閉じる</button></div></div>`;
   }
   root.className='show'; root.innerHTML=html;
