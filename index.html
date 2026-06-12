@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>銀河ベースボールGM v0.1</title>
+<style>
+/* ============================================================
+   デザイントークン
+   黒/濃紺ベース + シアン/青/紫の発光。ゴールドは重要演出のみ。
+============================================================ */
+:root{
+  --bg:#05080f;
+  --bg2:#0a1020;
+  --panel:#0c1424;
+  --panel2:#101b30;
+  --line:rgba(72,180,255,.16);
+  --line2:rgba(72,180,255,.32);
+  --cy:#3fd9ff;
+  --bl:#5a8bff;
+  --pu:#a47bff;
+  --tx:#d9e6f7;
+  --mut:#7d90b0;
+  --imp:#ffc44d;       /* ゴールド: 重要演出専用 */
+  --imp2:#ff8a3d;      /* オレンジ: 重要演出専用 */
+  --ok:#54e0a5;
+  --warn:#ff7a6b;
+  --num:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN",-apple-system,"Noto Sans JP",sans-serif;
+  background:
+    radial-gradient(1px 1px at 12% 22%, rgba(190,225,255,.5), transparent 60%),
+    radial-gradient(1px 1px at 68% 12%, rgba(190,225,255,.35), transparent 60%),
+    radial-gradient(1.5px 1.5px at 84% 64%, rgba(164,123,255,.4), transparent 60%),
+    radial-gradient(1px 1px at 30% 80%, rgba(63,217,255,.35), transparent 60%),
+    radial-gradient(1200px 700px at 70% -10%, #101d3a 0%, transparent 60%),
+    linear-gradient(180deg,#070b16 0%, var(--bg) 100%);
+  color:var(--tx);
+  font-size:14px;
+  line-height:1.55;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:manipulation;
+  overflow:hidden;
+}
+#app{
+  display:grid;
+  grid-template-columns:172px 1fr 312px;
+  gap:10px;
+  height:100dvh;
+  padding:10px;
+  padding-left:max(10px, env(safe-area-inset-left));
+  padding-right:max(10px, env(safe-area-inset-right));
+  padding-bottom:max(10px, env(safe-area-inset-bottom));
+}
+/* ---------- 左ナビ ---------- */
+#nav{display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.brand{
+  border:1px solid var(--line2);border-radius:10px;padding:10px 10px 8px;
+  background:linear-gradient(160deg,#0e1830,#0a1222);
+}
+.brand .eyebrow{font-size:9px;letter-spacing:.32em;color:var(--cy);font-family:var(--num)}
+.brand .ttl{font-size:15px;font-weight:800;letter-spacing:.04em;line-height:1.3;
+  background:linear-gradient(90deg,var(--cy),var(--bl) 55%,var(--pu));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .cr{margin-top:6px;font-family:var(--num);font-size:13px;color:var(--tx)}
+.brand .cr small{color:var(--mut);font-size:10px;letter-spacing:.1em}
+.navbtn{
+  text-align:left;border:1px solid var(--line);border-radius:10px;
+  background:rgba(12,20,36,.85);color:var(--tx);
+  padding:11px 12px;font-size:13.5px;cursor:pointer;position:relative;
+  display:flex;align-items:center;gap:8px;min-height:44px;width:100%;
+}
+.navbtn .ic{width:18px;text-align:center;opacity:.9}
+.navbtn.on{
+  border-color:var(--cy);color:#eaf8ff;
+  background:linear-gradient(90deg, rgba(63,217,255,.14), rgba(90,139,255,.05));
+  box-shadow:0 0 10px rgba(63,217,255,.18), inset 0 0 10px rgba(63,217,255,.06);
+}
+.badge{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  font-size:9px;letter-spacing:.1em;color:#06222c;background:var(--cy);
+  border-radius:8px;padding:1px 7px;font-weight:700;
+  box-shadow:0 0 8px rgba(63,217,255,.6);
+}
+.navfoot{margin-top:auto;font-size:10px;color:var(--mut);padding:4px 6px;line-height:1.5}
+/* ---------- パネル共通 ---------- */
+#main{overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
+#side{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.panel{
+  border:1px solid var(--line);border-radius:12px;
+  background:linear-gradient(170deg, var(--panel2), var(--panel));
+  padding:14px;margin-bottom:10px;
+}
+.ph{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.ph .eyebrow{font-size:9px;letter-spacing:.3em;color:var(--cy);font-family:var(--num)}
+.ph h2{font-size:15px;font-weight:800;letter-spacing:.05em}
+.ph .sub{margin-left:auto;font-size:11px;color:var(--mut)}
+h3.sec{font-size:12px;color:var(--bl);letter-spacing:.12em;margin:12px 0 6px;font-weight:700}
+.mut{color:var(--mut);font-size:12px}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums}
+.imp{color:var(--imp);text-shadow:0 0 8px rgba(255,196,77,.45)}
+/* ---------- ボタン ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border:1px solid var(--line2);border-radius:10px;cursor:pointer;
+  background:linear-gradient(180deg,#13223e,#0d1729);color:var(--tx);
+  padding:10px 16px;font-size:13.5px;min-height:44px;font-weight:600;
+}
+.btn.pri{
+  border-color:var(--cy);color:#04141c;font-weight:800;
+  background:linear-gradient(180deg,#6fe6ff,#2db4dd);
+  box-shadow:0 0 14px rgba(63,217,255,.35);
+}
+.btn.ghost{background:transparent}
+.btn.sm{min-height:34px;padding:5px 10px;font-size:12px;border-radius:8px}
+.btn:disabled{opacity:.35;pointer-events:none}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+/* ---------- カード/チップ ---------- */
+.chip{
+  display:inline-block;font-size:10px;border:1px solid var(--line2);
+  border-radius:6px;padding:1px 7px;color:var(--cy);letter-spacing:.06em;vertical-align:1px;
+}
+.chip.t-flame{color:#ff8d72;border-color:rgba(255,141,114,.4)}
+.chip.t-ice{color:#7ad9ff;border-color:rgba(122,217,255,.4)}
+.chip.t-machine{color:#9fb4ff;border-color:rgba(159,180,255,.4)}
+.chip.t-gravity{color:#c08bff;border-color:rgba(192,139,255,.4)}
+.chip.t-phantom{color:#ff9be0;border-color:rgba(255,155,224,.4)}
+.stars{color:var(--imp);font-size:11px;letter-spacing:.1em}
+.card{
+  border:1px solid var(--line);border-radius:10px;background:rgba(10,17,32,.7);
+  padding:10px 12px;margin-bottom:8px;cursor:pointer;
+}
+.card.sel{border-color:var(--cy);box-shadow:0 0 10px rgba(63,217,255,.2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+/* ---------- スロット(編成) ---------- */
+.slot{
+  display:flex;align-items:center;gap:8px;border:1px solid var(--line);
+  border-radius:10px;background:rgba(9,15,28,.75);padding:8px 10px;margin-bottom:6px;
+  min-height:48px;cursor:pointer;
+}
+.slot .no{font-family:var(--num);color:var(--bl);width:20px;text-align:right;font-size:13px}
+.slot .nm{font-weight:700;font-size:13.5px}
+.slot .pos{
+  font-family:var(--num);font-size:11px;border:1px solid var(--line2);border-radius:6px;
+  padding:2px 7px;color:var(--cy);cursor:pointer;min-width:36px;text-align:center;
+}
+.slot .warnp{color:var(--warn);font-size:11px}
+.slot .tail{margin-left:auto;display:flex;align-items:center;gap:6px}
+.rolechip{
+  font-size:10.5px;border:1px solid rgba(164,123,255,.45);color:var(--pu);
+  border-radius:6px;padding:2px 8px;cursor:pointer;
+}
+/* ---------- ゲージ ---------- */
+.gauge{height:8px;border-radius:5px;background:#0a1222;border:1px solid var(--line);overflow:hidden}
+.gauge i{display:block;height:100%;background:linear-gradient(90deg,var(--bl),var(--cy));border-radius:5px}
+.gauge.low i{background:linear-gradient(90deg,#a04a3c,var(--warn))}
+.gr{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:12px}
+.gr .lbl{width:96px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gr .gauge{flex:1}
+.gr .val{width:34px;text-align:right}
+/* ---------- スコアボード ---------- */
+.broadcast{
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;
+  font-family:var(--num);font-size:10px;letter-spacing:.28em;color:var(--cy);
+}
+.broadcast .live{
+  background:linear-gradient(90deg,var(--bl),var(--pu));color:#fff;
+  transform:skewX(-12deg);padding:2px 10px;border-radius:3px;letter-spacing:.2em;font-weight:700;
+}
+.broadcast .bar{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+table.sb{width:100%;border-collapse:collapse;font-family:var(--num);font-size:12.5px}
+table.sb th,table.sb td{
+  border:1px solid var(--line);padding:4px 2px;text-align:center;min-width:24px;
+}
+table.sb th{color:var(--mut);font-weight:400;font-size:10px}
+table.sb td.tm{text-align:left;padding-left:8px;min-width:86px;font-family:inherit;font-size:12px;font-weight:700}
+table.sb td.rh{color:var(--cy);font-weight:700}
+table.sb td.cur{background:rgba(63,217,255,.12)}
+/* ---------- ダイヤモンド ---------- */
+.field{position:relative;width:170px;height:130px;margin:10px auto 4px}
+.fline{
+  position:absolute;left:50%;top:62%;width:92px;height:92px;
+  transform:translate(-50%,-50%) rotate(45deg);
+  border:1px solid rgba(63,217,255,.35);
+  background:linear-gradient(135deg, rgba(63,217,255,.05), transparent);
+}
+.base{
+  position:absolute;width:15px;height:15px;transform:translate(-50%,-50%) rotate(45deg);
+  border:1px solid var(--cy);background:#0a1222;border-radius:2px;
+}
+.base.on{background:var(--cy);box-shadow:0 0 10px rgba(63,217,255,.8)}
+.fmeta{text-align:center;font-size:12px;color:var(--mut)}
+.outdots{letter-spacing:4px;color:var(--cy);font-size:10px}
+/* ---------- ログ ---------- */
+.log{
+  font-size:12px;line-height:1.65;max-height:46vh;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;user-select:text;-webkit-user-select:text;
+}
+.log p{padding:2px 0;border-bottom:1px dashed rgba(72,180,255,.08)}
+.log p.hl{color:var(--imp);text-shadow:0 0 6px rgba(255,196,77,.3)}
+.log p.sysl{color:var(--pu)}
+/* ---------- テーブル(成績) ---------- */
+table.st{width:100%;border-collapse:collapse;font-size:12.5px}
+table.st th{color:var(--mut);font-weight:400;font-size:11px;border-bottom:1px solid var(--line2);padding:5px 4px;text-align:right}
+table.st td{border-bottom:1px solid var(--line);padding:7px 4px;text-align:right}
+table.st th:first-child,table.st td:first-child{text-align:left}
+table.st tr.sel td{background:rgba(63,217,255,.08)}
+table.st tbody tr{cursor:pointer}
+/* ---------- モーダル ---------- */
+#modal-root{position:fixed;inset:0;display:none;z-index:50}
+#modal-root.show{display:block}
+.mback{position:absolute;inset:0;background:rgba(3,6,12,.72);backdrop-filter:blur(2px)}
+.mbox{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(560px,92vw);max-height:84vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  border:1px solid var(--line2);border-radius:14px;padding:16px;
+  background:linear-gradient(165deg,#101c34,#0a1222);
+  box-shadow:0 0 40px rgba(63,217,255,.12);
+}
+.mbox.goldfx{border-color:var(--imp);box-shadow:0 0 46px rgba(255,196,77,.35);animation:goldin .9s ease}
+@keyframes goldin{0%{box-shadow:0 0 0 rgba(255,196,77,0)}45%{box-shadow:0 0 70px rgba(255,196,77,.7)}100%{box-shadow:0 0 46px rgba(255,196,77,.35)}}
+.pickrow{
+  display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;margin-bottom:6px;cursor:pointer;min-height:46px;background:rgba(9,15,28,.7);
+}
+.pickrow:active{border-color:var(--cy)}
+/* ---------- トースト/縦画面警告 ---------- */
+#toast{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  background:#13223e;border:1px solid var(--cy);color:var(--tx);
+  border-radius:10px;padding:9px 18px;font-size:13px;display:none;z-index:80;
+  box-shadow:0 0 16px rgba(63,217,255,.3);
+}
+#toast.show{display:block}
+#portrait-warn{
+  position:fixed;inset:0;z-index:99;display:none;place-items:center;text-align:center;
+  background:var(--bg);color:var(--tx);font-size:15px;line-height:2;padding:30px;
+}
+@media (orientation: portrait){ #portrait-warn{display:grid} }
+textarea.io{
+  width:100%;height:120px;background:#070d18;color:var(--tx);border:1px solid var(--line2);
+  border-radius:8px;padding:8px;font-family:var(--num);font-size:11px;
+  user-select:text;-webkit-user-select:text;
+}
+.kv{display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0;border-bottom:1px dashed rgba(72,180,255,.08)}
+.kv b{font-family:var(--num)}
+.note{font-size:11px;color:var(--mut);line-height:1.6;margin-top:6px}
+.lockline{font-size:11px;color:var(--mut)}
+.lockline .pct{font-family:var(--num);color:var(--pu)}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+<div id="app">
+  <nav id="nav"></nav>
+  <main id="main"></main>
+  <aside id="side"></aside>
+</div>
+<div id="modal-root"></div>
+<div id="toast"></div>
+<div id="portrait-warn"><div>🛰<br>このゲームは横画面専用です。<br>iPadを横向きにしてください。</div></div>
+
+<script>
+"use strict";
+/* ============================================================
+   銀河ベースボールGM v0.1 最小動作版
+   セクション構成:
+   1.マスタデータ 2.乱数 3.セーブ/ロード 4.共通ヘルパー/指標計算
+   5.試合エンジン 6.探索エンジン 7.スカウト/育成/施設
+   8.UI描画 9.イベントハンドラ/起動
+============================================================ */
+
+/* ===== 1. マスタデータ ===================================== */
+const POS_LIST=['C','1B','2B','3B','SS','LF','CF','RF','DH'];
+const TYPE_INFO={
+  flame:{label:'炎星'}, ice:{label:'氷晶'}, machine:{label:'機械'},
+  gravity:{label:'重力'}, phantom:{label:'幻影'}
+};
+const ROLE_INFO={
+  slugger:'スラッガー', average:'アベレージ', speedster:'俊足', defender:'守備職人',
+  balanced:'バランス', starter:'先発', reliever:'中継ぎ', closer:'抑え'
+};
+const LEVCAP={1:30,2:40,3:50};
+const ABCAP={1:70,2:82,3:94};
+const GROWTH={
+  slugger:{power:2,contact:1,eye:1,defense:1,arm:1,speed:0},
+  average:{contact:2,eye:2,power:1,speed:1,defense:1,arm:0},
+  speedster:{speed:2,contact:1,eye:1,defense:1,arm:1,power:0},
+  defender:{defense:2,arm:2,contact:1,speed:1,eye:1,power:0},
+  balanced:{contact:1,power:1,speed:1,defense:1,arm:1,eye:1},
+  starter:{control:2,velocity:1,breaking:1,stamina:1,mental:1},
+  reliever:{velocity:2,breaking:1,control:1,mental:1,stamina:1},
+  closer:{velocity:2,mental:2,breaking:1,control:1,stamina:0},
+};
+
+// 選手マスタ: 初期16名(b01-b12, p01-p04) + スカウト候補10名(s01-s10)
+const PLAYER_MASTER={
+b01:{name:'マーズ・ゴウ',rarity:2,role:'slugger',type:'flame',pos:['RF','LF'],
+ ab:{contact:48,power:62,speed:46,defense:44,arm:55,eye:42},
+ pf:'火星鉱区の出身。打球はいつも赤く燃えて見えるらしい。'},
+b02:{name:'ルナ・ハル',rarity:2,role:'speedster',type:'ice',pos:['CF','LF'],
+ ab:{contact:52,power:36,speed:68,defense:56,arm:46,eye:50},
+ pf:'月面育ちの低重力ランナー。盗塁は趣味の延長。'},
+b03:{name:'ネオン・カイ',rarity:2,role:'balanced',type:'machine',pos:['SS','2B'],
+ ab:{contact:50,power:46,speed:52,defense:54,arm:52,eye:48},
+ pf:'整備ドロイドに育てられた遊撃手。守備計算は0.2秒。'},
+b04:{name:'アステル・ミナ',rarity:1,role:'average',type:'phantom',pos:['2B','SS'],
+ ab:{contact:54,power:34,speed:48,defense:46,arm:40,eye:52},
+ pf:'流れ星を読むのが得意。配球も同じ要領で読むという。'},
+b05:{name:'ガンマ・シュウ',rarity:2,role:'slugger',type:'gravity',pos:['1B'],
+ ab:{contact:44,power:64,speed:32,defense:42,arm:44,eye:40},
+ pf:'高重力惑星仕込みのフルスイング。歩く姿は遅い。'},
+b06:{name:'ボルト・レン',rarity:1,role:'balanced',type:'machine',pos:['3B','1B'],
+ ab:{contact:46,power:44,speed:44,defense:46,arm:50,eye:42},
+ pf:'雷雲衛星の発電所で働いていた苦労人。'},
+b07:{name:'コロナ・ジン',rarity:1,role:'defender',type:'flame',pos:['C'],
+ ab:{contact:40,power:38,speed:34,defense:58,arm:56,eye:44},
+ pf:'恒星観測士あがりの捕手。視野の広さは太陽系級。'},
+b08:{name:'プラズマ・タクト',rarity:1,role:'average',type:'gravity',pos:['LF','RF'],
+ ab:{contact:50,power:40,speed:44,defense:42,arm:42,eye:46},
+ pf:'指揮棒のようなバットコントロールが持ち味。'},
+b09:{name:'イオ・サクヤ',rarity:3,role:'slugger',type:'ice',pos:['DH','1B'],
+ ab:{contact:52,power:68,speed:36,defense:34,arm:38,eye:50},
+ pf:'氷の衛星から来た静かな主砲。打球音だけが熱い。'},
+b10:{name:'クォーク・ヒビキ',rarity:1,role:'average',type:'phantom',pos:['LF','DH'],
+ ab:{contact:52,power:42,speed:40,defense:38,arm:38,eye:48},
+ pf:'代打の切り札を自称する素粒子マニア。'},
+b11:{name:'シリウス・カケル',rarity:1,role:'speedster',type:'ice',pos:['CF','LF'],
+ ab:{contact:42,power:30,speed:70,defense:48,arm:40,eye:40},
+ pf:'銀河最速を名乗る男。塁間なら誰にも負けない。'},
+b12:{name:'テラ・ミコト',rarity:1,role:'defender',type:'gravity',pos:['SS','3B','2B'],
+ ab:{contact:38,power:32,speed:46,defense:62,arm:54,eye:42},
+ pf:'地球古式の守備練習を欠かさない職人肌。'},
+p01:{name:'オリオン・ソウスケ',rarity:2,role:'starter',type:'machine',pos:['P'],pitcher:true,
+ ab:{velocity:56,control:52,breaking:50,stamina:62,mental:48},
+ pf:'三ツ星の精密制御エンジンを腕に積むエース。'},
+p02:{name:'ベガ・ツムギ',rarity:1,role:'reliever',type:'ice',pos:['P'],pitcher:true,
+ ab:{velocity:52,control:46,breaking:48,stamina:36,mental:44},
+ pf:'織姫星出身。糸を紡ぐような変化球を投げる。'},
+p03:{name:'ノヴァ・リク',rarity:1,role:'reliever',type:'flame',pos:['P'],pitcher:true,
+ ab:{velocity:58,control:40,breaking:44,stamina:34,mental:42},
+ pf:'短いイニング限定で爆発する新星型の速球派。'},
+p04:{name:'ブラックホール・ガイ',rarity:2,role:'closer',type:'gravity',pos:['P'],pitcher:true,
+ ab:{velocity:62,control:46,breaking:52,stamina:30,mental:58},
+ pf:'9回の打球はすべて吸い込まれる、と言われる守護神。'},
+s01:{name:'パルサー・ナオ',rarity:1,role:'average',type:'machine',pos:['2B'],
+ ab:{contact:52,power:36,speed:46,defense:48,arm:40,eye:50},
+ pf:'一定のリズムで打ち続ける電波星の打撃マシン。'},
+s02:{name:'メテオ・ダイチ',rarity:1,role:'slugger',type:'flame',pos:['LF'],
+ ab:{contact:42,power:58,speed:38,defense:36,arm:44,eye:38},
+ pf:'当たれば隕石級。当たれば、だが。'},
+s03:{name:'コメット・スズ',rarity:1,role:'speedster',type:'phantom',pos:['CF'],
+ ab:{contact:46,power:28,speed:66,defense:50,arm:38,eye:44},
+ pf:'尾を引くような走塁が美しいと評判の彗星娘。'},
+s04:{name:'アンドロメダ・ケイ',rarity:1,role:'reliever',type:'ice',pos:['P'],pitcher:true,
+ ab:{velocity:50,control:50,breaking:46,stamina:38,mental:46},
+ pf:'隣の銀河からリモート移籍してきた技巧派。'},
+s05:{name:'クェーサー・ハヤテ',rarity:2,role:'defender',type:'machine',pos:['SS','2B'],
+ ab:{contact:44,power:36,speed:54,defense:64,arm:58,eye:44},
+ pf:'観測不能の初速で打球に追いつく超高輝度内野手。'},
+s06:{name:'フォトン・アカリ',rarity:2,role:'average',type:'flame',pos:['C','1B'],
+ ab:{contact:56,power:42,speed:36,defense:52,arm:50,eye:54},
+ pf:'光速のフレーミングで投手を照らす女房役。'},
+s07:{name:'グラビトン・ムサシ',rarity:2,role:'slugger',type:'gravity',pos:['1B','3B'],
+ ab:{contact:46,power:66,speed:30,defense:40,arm:46,eye:42},
+ pf:'二刀流ならぬ二重力流を名乗る重戦車。'},
+s08:{name:'エクリプス・トウマ',rarity:2,role:'starter',type:'phantom',pos:['P'],pitcher:true,
+ ab:{velocity:54,control:56,breaking:54,stamina:58,mental:50},
+ pf:'打者の視界を食(は)む、影のような投球術。'},
+s09:{name:'スーパーノヴァ・レイ',rarity:3,role:'slugger',type:'flame',pos:['RF','CF'],
+ ab:{contact:56,power:70,speed:50,defense:46,arm:58,eye:48},
+ pf:'銀河リーグ注目の超新星。打球は観測史上最遠。'},
+s10:{name:'ミルキー・カンナ',rarity:3,role:'starter',type:'ice',pos:['P'],pitcher:true,
+ ab:{velocity:62,control:58,breaking:58,stamina:64,mental:54},
+ pf:'天の川を引くような白いストレートの大器。'},
+};
+const SCOUT_POOL=['s01','s02','s03','s04','s05','s06','s07','s08','s09','s10'];
+const SCOUT_COST=300;
+const SCOUT_DUPE_TD={1:2,2:4,3:8};
+
+// NPC球団
+const NPC_TEAMS={
+  npc1:{name:'コメット・ライツ',short:'ライツ',power:42,note:'若手中心の新興球団。荒削りだが勢いがある。'},
+  npc2:{name:'ガリレオ・ノヴァズ',short:'ノヴァズ',power:52,note:'攻守のバランスが取れた中堅球団。'},
+  npc3:{name:'ヴォイド・エンペラーズ',short:'帝国',power:63,note:'銀河リーグ三連覇中の絶対王者。'},
+};
+function oppData(id){
+  const t=NPC_TEAMS[id];
+  const off=[4,2,9,11,6,0,-3,-5,-8];
+  const cl=v=>Math.max(20,Math.min(90,v));
+  const bats=off.map((o,i)=>({
+    name:t.short+(i+1)+'番',
+    contact:cl(t.power+o), power:cl(t.power+o-2+((i===2||i===3)?6:0)),
+    speed:cl(t.power+(i===0?10:0)-2), eye:cl(t.power+o-4),
+  }));
+  const pit={name:t.short+'先発',velocity:cl(t.power+9),control:cl(t.power+5),breaking:cl(t.power+4),stamina:62};
+  return {bats,pit,team:t};
+}
+
+// 素材
+const MATERIALS={
+  mat01:{name:'星鉄鉱',r:1}, mat02:{name:'蒼晶石',r:1}, mat03:{name:'重金属コア',r:2}, mat04:{name:'特異点合金',r:3},
+  mat05:{name:'発光樹液',r:1}, mat06:{name:'銀河胞子',r:1}, mat07:{name:'夜光花の蜜',r:2}, mat08:{name:'古代樹の核',r:3},
+  mat09:{name:'古代回路',r:1}, mat10:{name:'データ断片',r:1}, mat11:{name:'量子メモリ',r:2}, mat12:{name:'文明起動鍵',r:3},
+};
+// 惑星
+const PLANETS={
+  pl01:{name:'鉱晶惑星バルダ',type:'gravity',desc:'重力に潰された鉱脈が眠る岩石惑星。',
+    apt:[['power','velocity',.5],['arm','breaking',.3],['defense','stamina',.2]],aptLabel:'パワー / 肩',
+    drops:[{m:'mat01',w:50,min:1,max:3,u:0},{m:'mat02',w:38,min:1,max:2,u:0},{m:'mat03',w:18,min:1,max:2,u:30},{m:'mat04',w:6,min:1,max:1,u:60}],
+    events:['地下に巨大な鉱脈の反応がある。','崩落しかけた採掘坑を見つけた。']},
+  pl02:{name:'密林惑星ヴェルナ',type:'phantom',desc:'発光植物が覆う、霧の深い緑の惑星。',
+    apt:[['speed','stamina',.5],['defense','control',.3],['contact','breaking',.2]],aptLabel:'走力 / 守備',
+    drops:[{m:'mat05',w:50,min:1,max:3,u:0},{m:'mat06',w:38,min:1,max:2,u:0},{m:'mat07',w:18,min:1,max:2,u:30},{m:'mat08',w:6,min:1,max:1,u:60}],
+    events:['発光する巨大花が群生している。','原生生物の群れが通り過ぎていく。']},
+  pl03:{name:'遺跡惑星キオン',type:'machine',desc:'滅びた文明の演算装置が今も唸る惑星。',
+    apt:[['eye','mental',.5],['contact','control',.3],['speed','breaking',.2]],aptLabel:'選球眼 / 精神',
+    drops:[{m:'mat09',w:50,min:1,max:3,u:0},{m:'mat10',w:38,min:1,max:2,u:0},{m:'mat11',w:18,min:1,max:2,u:30},{m:'mat12',w:6,min:1,max:1,u:60}],
+    events:['稼働中の古代端末を発見した。','封印された区画への扉がある。']},
+};
+const STEP_NOTHING=['探知反応なし。静かな区画だった。','嵐をやり過ごした。収穫なし。','通信ノイズだけが響いていた。'];
+
+// 施設
+const FACILITIES={
+  training:{name:'トレーニング場',max:3,eff:lv=>'試合の獲得経験値 +'+(lv*10)+'%',
+    costs:{2:{cr:200,mats:{mat01:3,mat05:3}},3:{cr:500,mats:{mat03:2,mat09:4}}}},
+  analytics:{name:'データ解析室',max:1,eff:lv=>lv>=1?'詳細指標(出塁率/長打率/K9等)を解放':'未稼働(詳細指標ロック中)',
+    costs:{1:{cr:300,mats:{mat10:4}}}},
+  workshop:{name:'素材工房',max:3,eff:lv=>'素材売却レート +'+((lv-1)*10)+'% / 解析:同素材2個→訓練データ1',
+    costs:{2:{cr:200,mats:{mat02:3,mat06:3}},3:{cr:500,mats:{mat07:2,mat11:2}}}},
+};
+const SELL_BASE={1:12,2:30,3:80};
+
+// 各種バランス定数(調整はここ)
+const BAL={
+  rewardWin:260, rewardDraw:160, rewardLose:120,
+  tdExp:30,
+  phDiff:10, prDiff:15, dsDiff:10,
+  decideStamina:50,
+  retreatKeep:0.8,
+  surveyStep:1, surveyDone:3, surveySafe:2, surveyData:5,
+};
+
+/* ===== 2. 乱数(シード式・決定論的) ======================== */
+let save=null;
+const UI={screen:'home',sel:null,modal:null,playersTab:'bat',layer2:false,
+  expPlanet:'pl01',expParty:[null,null,null],oppSel:'npc1',exportText:''};
+
+function rnd(){ // mulberry32: save.rngState を進める
+  let t = save.rngState = (save.rngState + 0x6D2B79F5) | 0;
+  t = Math.imul(t ^ t >>> 15, t | 1);
+  t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+  return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+function rint(a,b){ return a + Math.floor(rnd()*(b-a+1)); }
+function pick(arr){ return arr[Math.floor(rnd()*arr.length)]; }
+function wpick(items){ // items: [{w,...}]
+  const tot=items.reduce((s,x)=>s+x.w,0); let r=rnd()*tot;
+  for(const x of items){ r-=x.w; if(r<=0) return x; }
+  return items[items.length-1];
+}
+
+/* ===== 3. セーブ/ロード ==================================== */
+const SAVE_KEY='gbgm_save_v1';
+function zeroBat(){return {games:0,pa:0,ab:0,h:0,d2:0,d3:0,hr:0,rbi:0,runs:0,bb:0,hbp:0,so:0,sb:0,cs:0,sf:0,gidp:0};}
+function zeroPit(){return {games:0,wins:0,losses:0,saves:0,outs:0,h:0,er:0,bb:0,so:0,hr:0};}
+function instantiate(mid){
+  const m=PLAYER_MASTER[mid];
+  const p={id:mid,name:m.name,rarity:m.rarity,role:m.role,type:m.type,
+    pos:m.pos.slice(),isPitcher:!!m.pitcher,level:1,exp:0,
+    ab:Object.assign({},m.ab),pf:m.pf};
+  if(p.isPitcher) p.sp=zeroPit(); else p.sb_=zeroBat();
+  return p;
+}
+function defaultSave(){
+  const s={
+    schemaVersion:1,
+    createdAt:new Date().toISOString(), updatedAt:new Date().toISOString(),
+    rngState:(Math.floor(Math.random()*0x7fffffff))|0,
+    team:{
+      name:'アストロ・パイオニアーズ', credits:600,
+      lineup:{
+        battingOrder:['b02','b03','b01','b09','b05','b06','b08','b07','b04'],
+        positions:{b02:'CF',b03:'SS',b01:'RF',b09:'DH',b05:'1B',b06:'3B',b08:'LF',b07:'C',b04:'2B'},
+        bench:[{pid:'b10',role:'pinchHitter'},{pid:'b11',role:'pinchRunner'},{pid:'b12',role:'defenseSub'}],
+        pitchers:{starter:'p01',relief1:'p02',relief2:'p03',closer:'p04'},
+      },
+      pitchingPolicy:{preset:'standard',useCloserOnLead:true},
+    },
+    players:['b01','b02','b03','b04','b05','b06','b07','b08','b09','b10','b11','b12','p01','p02','p03','p04'].map(instantiate),
+    inventory:{materials:{},trainingData:0},
+    facilities:{training:1,analytics:0,workshop:1},
+    planetProgress:{pl01:{surveyRate:0},pl02:{surveyRate:0},pl03:{surveyRate:0}},
+    scout:{pulledIds:[]},
+    activeMatch:null, activeExpedition:null,
+    recentResults:[], lastParty:null,
+  };
+  return s;
+}
+function persist(){
+  if(typeof localStorage==='undefined') return;
+  save.updatedAt=new Date().toISOString();
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); }
+  catch(e){ toast('保存に失敗しました(容量超過の可能性)。設定からバックアップしてください'); }
+}
+function loadSave(){
+  if(typeof localStorage==='undefined') return defaultSave();
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(!raw) return defaultSave();
+    const s=JSON.parse(raw);
+    if(!s || s.schemaVersion!==1 || !Array.isArray(s.players)) return defaultSave();
+    return s;
+  }catch(e){ return defaultSave(); }
+}
+function importJson(text){
+  try{
+    const s=JSON.parse(text);
+    if(!s || s.schemaVersion!==1 || !s.team || !Array.isArray(s.players)) throw 0;
+    save=s; persist(); UI.sel=null; UI.modal=null;
+    toast('セーブデータを読み込みました'); render();
+  }catch(e){ toast('読み込めません。データ形式を確認してください'); }
+}
+
+/* ===== 4. 共通ヘルパー/指標計算 ============================ */
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function getPlayer(pid){ return save.players.find(p=>p.id===pid)||null; }
+function stars(r){ return '★'.repeat(r); }
+function typeChip(t){ return '<span class="chip t-'+t+'">'+TYPE_INFO[t].label+'</span>'; }
+function clampN(v,a,b){ return Math.max(a,Math.min(b,v)); }
+function fmtAvg(v){ if(!isFinite(v))return '-'; const s=v.toFixed(3); return v<1? s.replace(/^0/,'') : s; }
+function fmt2(v){ return isFinite(v)? v.toFixed(2) : '-'; }
+function batView(r){
+  const tb=(r.h-r.d2-r.d3-r.hr)+2*r.d2+3*r.d3+4*r.hr;
+  const avg=r.ab>0? r.h/r.ab : NaN;
+  const obpD=r.ab+r.bb+r.hbp+r.sf;
+  const obp=obpD>0? (r.h+r.bb+r.hbp)/obpD : NaN;
+  const slg=r.ab>0? tb/r.ab : NaN;
+  return {avg,obp,slg,ops:(isFinite(obp)&&isFinite(slg))?obp+slg:NaN};
+}
+function pitView(r){
+  const ip=r.outs/3;
+  return {ip, era:ip>0? r.er*9/ip:NaN, whip:ip>0?(r.bb+r.h)/ip:NaN,
+    k9:ip>0? r.so*9/ip:NaN, bb9:ip>0? r.bb*9/ip:NaN};
+}
+function fmtIp(outs){ return Math.floor(outs/3)+(outs%3? '.'+(outs%3):''); }
+function teamPower(){
+  let b=0,bc=0,p=0,pc=0;
+  for(const pl of save.players){
+    if(pl.isPitcher){ p+=(pl.ab.velocity+pl.ab.control+pl.ab.breaking+pl.ab.stamina+pl.ab.mental)/5; pc++; }
+    else{ b+=(pl.ab.contact+pl.ab.power+pl.ab.speed+pl.ab.defense+pl.ab.eye)/5; bc++; }
+  }
+  return Math.round((bc?b/bc:0)*0.6+(pc?p/pc:0)*0.4);
+}
+function trainMult(){ return 1+0.1*save.facilities.training; }
+function fatF(pct){ return pct>=50?1: pct>=25?0.95: pct>=10?0.85:0.72; }
+function freeBatters(){
+  const used=new Set(save.team.lineup.battingOrder.concat(save.team.lineup.bench.map(b=>b.pid)));
+  return save.players.filter(p=>!p.isPitcher && !used.has(p.id));
+}
+function freePitchers(){
+  const P=save.team.lineup.pitchers;
+  const used=new Set([P.starter,P.relief1,P.relief2,P.closer]);
+  return save.players.filter(p=>p.isPitcher && !used.has(p.id));
+}
+
+/* ===== 5. 試合エンジン ===================================== */
+function startMatch(oppId){
+  const L=save.team.lineup;
+  const ms={
+    oppId, chunk:0, inning:1, outs:0,
+    bases:[null,null,null],
+    score:{p:[],n:[]}, hits:{p:0,n:0},
+    order:L.battingOrder.slice(), positions:Object.assign({},L.positions),
+    bench:L.bench.map(b=>({pid:b.pid,role:b.role,used:false})),
+    batIdx:{p:0,n:0},
+    pitcher:L.pitchers.starter,
+    stamina:{}, npcStamina:100,
+    usedPitchers:[L.pitchers.starter],
+    starterLocked:false, decisionUsed:false, pendingDecision:null,
+    pstats:{}, bstats:{}, benchEvents:[],
+    log:[], finished:false, result:null,
+  };
+  for(const k of ['starter','relief1','relief2','closer']) ms.stamina[L.pitchers[k]]=100;
+  for(const pid of ms.order) ensureB(ms,pid);
+  ensureP(ms,ms.pitcher);
+  mlog(ms,0,'sys','PLAY BALL！ vs '+NPC_TEAMS[oppId].name,false);
+  save.activeMatch=ms;
+  persist();
+}
+function ensureB(ms,pid){ if(!ms.bstats[pid]) ms.bstats[pid]={pa:0,ab:0,h:0,d2:0,d3:0,hr:0,rbi:0,runs:0,bb:0,hbp:0,so:0,sb:0,cs:0,sf:0,gidp:0}; return ms.bstats[pid]; }
+function ensureP(ms,pid){ if(!ms.pstats[pid]) ms.pstats[pid]={outs:0,h:0,r:0,bb:0,so:0,hr:0}; return ms.pstats[pid]; }
+function mlog(ms,inn,half,text,hl){ ms.log.push({inn,half,text,hl:!!hl}); }
+function tot(arr){ return arr.reduce((s,v)=>s+(typeof v==='number'?v:0),0); }
+function pTot(ms){ return tot(ms.score.p); }
+function nTot(ms){ return tot(ms.score.n); }
+function halfLabel(inn,half){ return half==='sys'? '' : '【'+inn+'回'+(half==='top'?'表':'裏')+'】'; }
+
+function switchPitcher(ms,pid,why){
+  ms.pitcher=pid;
+  if(!ms.usedPitchers.includes(pid)) ms.usedPitchers.push(pid);
+  ensureP(ms,pid);
+  mlog(ms,ms.inning,'sys','【継投】'+getPlayer(pid).name+'がマウンドへ('+why+')',false);
+}
+function pAvail(ms,pid){ return pid && !ms.usedPitchers.includes(pid); }
+
+function autoPitchCheck(ms){
+  const P=save.team.lineup.pitchers, pol=save.team.pitchingPolicy;
+  const i=ms.inning, lead=pTot(ms)-nTot(ms), cur=ms.pitcher, st=ms.stamina[cur];
+  if(pol.useCloserOnLead && i>=9 && lead>=1 && lead<=3 && pAvail(ms,P.closer) && cur!==P.closer){
+    switchPitcher(ms,P.closer,'抑え投入'); return;
+  }
+  if(pol.preset==='earlyRelief' && i>=7 && cur===P.starter && pAvail(ms,P.relief1)){
+    switchPitcher(ms,P.relief1,'早めの継投'); return;
+  }
+  const startLimit = ms.starterLocked?12 : (pol.preset==='longStarter'?20:35);
+  if(cur===P.starter && st<startLimit && pAvail(ms,P.relief1)){
+    switchPitcher(ms,P.relief1,'スタミナ低下'); return;
+  }
+  const relLimit = pol.preset==='longStarter'?20:35;
+  if(cur===P.relief1 && st<relLimit && pAvail(ms,P.relief2)){
+    switchPitcher(ms,P.relief2,'スタミナ低下'); return;
+  }
+}
+function defenseSubCheck(ms){
+  if(ms.inning!==8) return;
+  if(pTot(ms)<=nTot(ms)) return;
+  const slot=ms.bench.find(b=>!b.used && b.role==='defenseSub');
+  if(!slot) return;
+  const cand=getPlayer(slot.pid);
+  let worstIdx=-1,worst=999;
+  ms.order.forEach((pid,idx)=>{
+    if(ms.positions[pid]==='DH') return;
+    const d=getPlayer(pid).ab.defense;
+    if(d<worst){worst=d;worstIdx=idx;}
+  });
+  if(worstIdx<0 || cand.ab.defense < worst+BAL.dsDiff) return;
+  const outPid=ms.order[worstIdx];
+  ms.positions[cand.id]=ms.positions[outPid]; delete ms.positions[outPid];
+  ms.order[worstIdx]=cand.id; slot.used=true; ensureB(ms,cand.id);
+  ms.benchEvents.push({inn:ms.inning,type:'守備固め',inP:cand.name,outP:getPlayer(outPid).name});
+  mlog(ms,ms.inning,'sys','【守備固め】'+cand.name+'('+getPlayer(outPid).name+'に代えて)',false);
+}
+function pinchHitCheck(ms){
+  if(ms.inning<7) return;
+  const diff=pTot(ms)-nTot(ms);
+  if(diff>0 || diff<-3) return;
+  if(!ms.bases[1] && !ms.bases[2]) return;
+  const slot=ms.bench.find(b=>!b.used && b.role==='pinchHitter');
+  if(!slot) return;
+  const idx=ms.batIdx.p%9, curPid=ms.order[idx];
+  const cur=getPlayer(curPid), cand=getPlayer(slot.pid);
+  if(cand.ab.contact+cand.ab.power < cur.ab.contact+cur.ab.power+BAL.phDiff) return;
+  ms.positions[cand.id]=ms.positions[curPid]; delete ms.positions[curPid];
+  ms.order[idx]=cand.id; slot.used=true; ensureB(ms,cand.id);
+  ms.benchEvents.push({inn:ms.inning,type:'代打',inP:cand.name,outP:cur.name});
+  mlog(ms,ms.inning,'sys','【代打】'+cand.name+'('+cur.name+'に代えて)',false);
+}
+function pinchRunCheck(ms,batPid){
+  if(ms.inning<7) return;
+  const diff=Math.abs(pTot(ms)-nTot(ms));
+  if(diff>2) return;
+  const bi=ms.bases.findIndex(r=>r && r.pid===batPid);
+  if(bi<0) return;
+  const runner=ms.bases[bi];
+  if(runner.speed>=60) return;
+  const slot=ms.bench.find(b=>!b.used && b.role==='pinchRunner');
+  if(!slot) return;
+  const cand=getPlayer(slot.pid);
+  if(cand.ab.speed < runner.speed+BAL.prDiff) return;
+  const idx=ms.order.indexOf(batPid);
+  if(idx>=0){
+    ms.positions[cand.id]=ms.positions[batPid]; delete ms.positions[batPid];
+    ms.order[idx]=cand.id;
+  }
+  ms.bases[bi]={pid:cand.id,name:cand.name,speed:cand.ab.speed,side:'p'};
+  slot.used=true; ensureB(ms,cand.id);
+  ms.benchEvents.push({inn:ms.inning,type:'代走',inP:cand.name,outP:runner.name});
+  mlog(ms,ms.inning,'sys','【代走】'+cand.name+'('+runner.name+'に代えて)',false);
+}
+
+function resolvePA(bt,pit,fat){
+  const pv=(pit.velocity*0.5+pit.breaking*0.5)*fat;
+  const pc=pit.control*fat;
+  const kP=clampN(0.16+(pv-bt.contact)*0.0022,0.07,0.34);
+  const bbP=clampN(0.08+(bt.eye-pc)*0.0018,0.025,0.17);
+  const hbpP=0.008;
+  const r=rnd();
+  if(r<kP) return 'K';
+  if(r<kP+bbP) return 'BB';
+  if(r<kP+bbP+hbpP) return 'HBP';
+  const hitP=clampN(0.30+(bt.contact-pv)*0.0022,0.18,0.44);
+  if(rnd()<hitP){
+    const r2=rnd();
+    const hrP=clampN(0.04+(bt.power-45)*0.005,0.02,0.32);
+    const tpP=0.015+bt.speed*0.0004;
+    const dbP=0.16+bt.power*0.0012;
+    if(r2<hrP) return 'HR';
+    if(r2<hrP+tpP) return '3B';
+    if(r2<hrP+tpP+dbP) return '2B';
+    return '1B';
+  }
+  return 'OUT';
+}
+
+function doPA(ms,half){
+  const playerBat = half==='bottom';
+  const opp=oppData(ms.oppId);
+  // 投手側
+  let pit,fat,pitPid=null,pitRole='starter',pitSta;
+  if(playerBat){ pit=opp.pit; pitSta=opp.pit.stamina; fat=fatF(ms.npcStamina); }
+  else{
+    const pl=getPlayer(ms.pitcher);
+    pit=pl.ab; pitSta=pl.ab.stamina; pitPid=pl.id; pitRole=pl.role; fat=fatF(ms.stamina[pitPid]);
+  }
+  // 打者側(代打チェック→決定)
+  if(playerBat) pinchHitCheck(ms);
+  let bt;
+  if(playerBat){
+    const pid=ms.order[ms.batIdx.p%9]; const pl=getPlayer(pid);
+    bt={pid,name:pl.name,contact:pl.ab.contact,power:pl.ab.power,speed:pl.ab.speed,eye:pl.ab.eye,side:'p'};
+  }else{
+    const b=opp.bats[ms.batIdx.n%9];
+    bt={pid:null,name:b.name,contact:b.contact,power:b.power,speed:b.speed,eye:b.eye,side:'n'};
+  }
+  const bs = playerBat? ensureB(ms,bt.pid) : null;
+  const ps = (!playerBat && pitPid)? ensureP(ms,pitPid) : null;
+
+  // 盗塁試行(1塁のみ・2アウト未満・俊足)
+  const B=ms.bases;
+  if(B[0] && !B[1] && !B[2] && ms.outs<2 && B[0].speed>=68 && rnd()<0.08){
+    const ok=rnd()<clampN(0.45+B[0].speed*0.004,0.5,0.85);
+    if(ok){
+      mlog(ms,ms.inning,half,B[0].name+'が二盗成功！',false);
+      if(B[0].side==='p') ensureB(ms,B[0].pid).sb++;
+      B[1]=B[0]; B[0]=null;
+    }else{
+      mlog(ms,ms.inning,half,B[0].name+'は盗塁失敗…',false);
+      if(B[0].side==='p') ensureB(ms,B[0].pid).cs++;
+      B[0]=null; ms.outs++;
+      if(ms.outs>=3){ if(!playerBat&&ps)ps.outs++; consumeStamina(ms,playerBat,pitRole,pitSta,1,false,0); ms.batIdxNote=true; return; }
+      if(!playerBat&&ps)ps.outs++;
+    }
+  }
+
+  const res=resolvePA(bt,pit,fat);
+  let runsPA=0, outsGained=0, reached=false, text='', hl=false, isDP=false, isSF=false;
+
+  const scoreRun=(runner)=>{
+    const idx=ms.inning-1;
+    const arr= playerBat? ms.score.p : ms.score.n;
+    arr[idx]=(typeof arr[idx]==='number'?arr[idx]:0)+1;
+    runsPA++;
+    if(runner && runner.side==='p') ensureB(ms,runner.pid).runs++;
+    if(playerBat && ms.inning>=9 && pTot(ms)>nTot(ms)) ms._wo=true;
+  };
+  const runnerObj=()=>({pid:bt.pid,name:bt.name,speed:bt.speed,side:bt.side});
+
+  if(res==='K'){
+    outsGained=1; ms.outs++;
+    text=pick(['空振り三振','見逃し三振']);
+    if(bs){bs.pa++;bs.ab++;bs.so++;}
+    if(ps){ps.outs++;ps.so++;}
+  }
+  else if(res==='BB'||res==='HBP'){
+    reached=true;
+    text= res==='BB'?'四球を選ぶ':'死球';
+    if(B[0]){ if(B[1]){ if(B[2]) scoreRun(B[2]); B[2]=B[1]; } B[1]=B[0]; }
+    B[0]=runnerObj();
+    if(bs){bs.pa++; if(res==='BB')bs.bb++; else bs.hbp++; bs.rbi+=runsPA;}
+    if(ps && res==='BB') ps.bb++;
+    if(ps) ps.r+=runsPA;
+  }
+  else if(res==='HR'){
+    reached=true; hl=true;
+    let cnt=1;
+    [2,1,0].forEach(i=>{ if(B[i]){scoreRun(B[i]);B[i]=null;cnt++;} });
+    scoreRun(runnerObj());
+    text= cnt>1? '◆'+cnt+'ランホームラン！！' : '◆ソロホームラン！！';
+    if(playerBat)ms.hits.p++; else ms.hits.n++;
+    if(bs){bs.pa++;bs.ab++;bs.h++;bs.hr++;bs.rbi+=runsPA;}
+    if(ps){ps.h++;ps.hr++;ps.r+=runsPA;}
+  }
+  else if(res==='3B'){
+    reached=true;
+    [2,1,0].forEach(i=>{ if(B[i]){scoreRun(B[i]);B[i]=null;} });
+    B[2]=runnerObj();
+    text='フェンス直撃の三塁打！';
+    if(playerBat)ms.hits.p++; else ms.hits.n++;
+    if(bs){bs.pa++;bs.ab++;bs.h++;bs.d3++;bs.rbi+=runsPA;}
+    if(ps){ps.h++;ps.r+=runsPA;}
+  }
+  else if(res==='2B'){
+    reached=true;
+    if(B[2]){scoreRun(B[2]);B[2]=null;}
+    if(B[1]){scoreRun(B[1]);B[1]=null;}
+    if(B[0]){
+      const r1=B[0]; B[0]=null;
+      if(r1.speed>=60 && rnd()<0.45) scoreRun(r1); else B[2]=r1;
+    }
+    B[1]=runnerObj();
+    text=pick(['左中間を破る二塁打','右中間への二塁打','フェンス直撃の二塁打']);
+    if(playerBat)ms.hits.p++; else ms.hits.n++;
+    if(bs){bs.pa++;bs.ab++;bs.h++;bs.d2++;bs.rbi+=runsPA;}
+    if(ps){ps.h++;ps.r+=runsPA;}
+  }
+  else if(res==='1B'){
+    reached=true;
+    if(B[2]){scoreRun(B[2]);B[2]=null;}
+    if(B[1]){
+      const r2=B[1]; B[1]=null;
+      if(rnd()<0.35+r2.speed*0.004) scoreRun(r2); else B[2]=r2;
+    }
+    if(B[0]){ B[1]=B[0]; B[0]=null; }
+    B[0]=runnerObj();
+    text=pick(['レフト前ヒット','センター前ヒット','ライト前ヒット']);
+    if(playerBat)ms.hits.p++; else ms.hits.n++;
+    if(bs){bs.pa++;bs.ab++;bs.h++;bs.rbi+=runsPA;}
+    if(ps){ps.h++;ps.r+=runsPA;}
+  }
+  else{ // OUT
+    if(B[0] && ms.outs<2 && rnd()<0.30){
+      isDP=true; outsGained=2; ms.outs+=2; B[0]=null;
+      text='併殺打…';
+      if(bs){bs.pa++;bs.ab++;bs.gidp++;}
+      if(ps)ps.outs+=2;
+    }
+    else if(B[2] && ms.outs<2 && rnd()<0.28){
+      isSF=true; outsGained=1; ms.outs++;
+      scoreRun(B[2]); B[2]=null;
+      text='犠牲フライ';
+      if(bs){bs.pa++;bs.sf++;bs.rbi+=runsPA;}
+      if(ps){ps.outs++;ps.r+=runsPA;}
+    }
+    else{
+      outsGained=1; ms.outs++;
+      text=pick(['ショートゴロ','セカンドゴロ','サードゴロ','センターフライ','レフトフライ','ファーストゴロ']);
+      if(bs){bs.pa++;bs.ab++;}
+      if(ps)ps.outs++;
+    }
+  }
+  if(runsPA>0){ text+='（'+runsPA+'点）'; hl=true; }
+  mlog(ms,ms.inning,half,bt.name+'：'+text,hl);
+
+  consumeStamina(ms,playerBat,pitRole,pitSta,outsGained,reached,runsPA);
+
+  // 代走チェック(打者が出塁した場合)
+  if(playerBat && reached && !ms._wo) pinchRunCheck(ms,bt.pid);
+
+  if(playerBat) ms.batIdx.p++; else ms.batIdx.n++;
+}
+function consumeStamina(ms,playerBat,role,staAb,outs,reached,runs){
+  let c=(outs*2+(reached?3:0)+runs*2)*(1-staAb/250);
+  if(role==='reliever'||role==='closer') c*=1.5;
+  if(playerBat){ ms.npcStamina=Math.max(0,ms.npcStamina-c); }
+  else{ ms.stamina[ms.pitcher]=Math.max(0,ms.stamina[ms.pitcher]-c); }
+}
+
+function simHalf(ms,half){
+  while(ms.outs<3 && !ms.finished){
+    doPA(ms,half);
+    if(ms._wo){
+      ms._wo=false;
+      mlog(ms,ms.inning,'sys','サヨナラ勝ち！！',true);
+      finalizeMatch(ms);
+      return;
+    }
+  }
+  ms.outs=0; ms.bases=[null,null,null];
+}
+function playOneInning(ms){
+  const i=ms.inning;
+  if(typeof ms.score.n[i-1]!=='number') ms.score.n[i-1]=0;
+  autoPitchCheck(ms);
+  defenseSubCheck(ms);
+  simHalf(ms,'top');
+  if(ms.finished) return;
+  if(i>=9 && pTot(ms)>nTot(ms)){ ms.score.p[i-1]='X'; finalizeMatch(ms); return; }
+  if(typeof ms.score.p[i-1]!=='number') ms.score.p[i-1]=0;
+  simHalf(ms,'bottom');
+  if(ms.finished) return;
+  if(i>=9 && pTot(ms)!==nTot(ms)){ finalizeMatch(ms); return; }
+  if(i>=12){ finalizeMatch(ms); return; }
+  ms.inning++;
+}
+function maybeDecision(ms){
+  if(ms.decisionUsed || ms.finished) return;
+  const P=save.team.lineup.pitchers;
+  if(ms.pitcher!==P.starter) return;
+  if(ms.stamina[P.starter]>=BAL.decideStamina) return;
+  const opts=[{id:'continue',label:'続投する',hint:'残スタミナ '+Math.round(ms.stamina[P.starter])+'%'}];
+  if(pAvail(ms,P.relief1)) opts.push({id:P.relief1,label:'中継ぎ1：'+getPlayer(P.relief1).name,hint:'スタミナ100%'});
+  if(pAvail(ms,P.relief2)) opts.push({id:P.relief2,label:'中継ぎ2：'+getPlayer(P.relief2).name,hint:'スタミナ100%'});
+  if(opts.length<2) return;
+  ms.pendingDecision={type:'relief',options:opts};
+  mlog(ms,6,'sys','── 6回終了。先発のスタミナが低下しています。継投を判断してください ──',false);
+}
+function resolveDecision(opt){
+  const ms=save.activeMatch;
+  if(!ms || !ms.pendingDecision) return;
+  ms.pendingDecision=null; ms.decisionUsed=true;
+  if(opt==='continue'){ ms.starterLocked=true; mlog(ms,6,'sys','【判断】先発が続投',false); }
+  else switchPitcher(ms,opt,'監督判断');
+  persist(); render();
+}
+function advanceMatch(full){
+  const ms=save.activeMatch;
+  if(!ms || ms.finished || ms.pendingDecision) return;
+  while(true){
+    const target = ms.chunk<3 ? [3,6,9][ms.chunk] : ms.inning;
+    while(!ms.finished && ms.inning<=target) playOneInning(ms);
+    if(!ms.finished && ms.chunk<3) ms.chunk++;
+    if(!ms.finished && ms.chunk===2 && !ms.decisionUsed) maybeDecision(ms);
+    if(ms.finished || ms.pendingDecision || !full) break;
+    if(ms.chunk<3) continue;
+    // 延長: fullの場合は決着まで1イニングずつ
+  }
+  persist(); render();
+}
+function finalizeMatch(ms){
+  if(ms.finished) return;
+  ms.finished=true;
+  const p=pTot(ms), n=nTot(ms);
+  const outcome = p>n?'win': p<n?'lose':'draw';
+  const P=save.team.lineup.pitchers;
+  // 勝敗投手の簡易判定(v0.1: 勝利=最多アウト投手 / 敗戦=最多失点投手 / S=抑えが勝利試合を締め3点差以内)
+  let winP=null,loseP=null,saveP=null;
+  const pids=Object.keys(ms.pstats);
+  if(outcome==='win' && pids.length){
+    winP=pids.reduce((a,b)=>ms.pstats[a].outs>=ms.pstats[b].outs?a:b);
+    const last=ms.pitcher;
+    if(last===P.closer && winP!==P.closer && (p-n)<=3) saveP=P.closer;
+  }
+  if(outcome==='lose' && pids.length){
+    loseP=pids.reduce((a,b)=>ms.pstats[a].r>=ms.pstats[b].r?a:b);
+  }
+  // シーズン成績へ反映
+  const mult=trainMult();
+  const expList=[];
+  for(const pid of Object.keys(ms.bstats)){
+    const t=ms.bstats[pid], pl=getPlayer(pid); if(!pl||pl.isPitcher) continue;
+    const r=pl.sb_;
+    r.games++; r.pa+=t.pa; r.ab+=t.ab; r.h+=t.h; r.d2+=t.d2; r.d3+=t.d3; r.hr+=t.hr;
+    r.rbi+=t.rbi; r.runs+=t.runs; r.bb+=t.bb; r.hbp+=t.hbp; r.so+=t.so;
+    r.sb+=t.sb; r.cs+=t.cs; r.sf+=t.sf; r.gidp+=t.gidp;
+    const e=Math.round((15+t.h*8+t.hr*12+t.rbi*5+t.bb*2+t.sb*4+t.runs*3)*mult);
+    pl.exp+=e; expList.push({name:pl.name,exp:e});
+  }
+  for(const pid of pids){
+    const t=ms.pstats[pid], pl=getPlayer(pid); if(!pl) continue;
+    const r=pl.sp;
+    r.games++; r.outs+=t.outs; r.h+=t.h; r.er+=t.r; r.bb+=t.bb; r.so+=t.so; r.hr+=t.hr;
+    const isW=pid===winP, isS=pid===saveP;
+    if(isW) r.wins++;
+    if(pid===loseP) r.losses++;
+    if(isS) r.saves++;
+    const e=Math.round((15+t.outs*1.5+t.so*3+(isW?20:0)+(isS?15:0))*mult);
+    pl.exp+=e; expList.push({name:pl.name,exp:e});
+  }
+  // 報酬
+  const credits = outcome==='win'? BAL.rewardWin+ms.hits.p*6
+                : outcome==='draw'? BAL.rewardDraw+ms.hits.p*4
+                : BAL.rewardLose+ms.hits.p*4;
+  save.team.credits+=credits;
+  // MVP
+  let mvp='—',best=-1;
+  for(const pid of Object.keys(ms.bstats)){
+    const t=ms.bstats[pid], sc=t.h+t.hr*2+t.rbi;
+    if(sc>best){best=sc;mvp=getPlayer(pid)?getPlayer(pid).name:'—';}
+  }
+  const oppName=NPC_TEAMS[ms.oppId].name;
+  ms.result={outcome,p,n,credits,mvp,expList,oppName,
+    winP:winP?getPlayer(winP).name:null, saveP:saveP?getPlayer(saveP).name:null};
+  save.recentResults.unshift({opp:oppName,score:p+' - '+n,outcome});
+  if(save.recentResults.length>10) save.recentResults.length=10;
+  mlog(ms,ms.inning,'sys','試合終了 '+p+' - '+n+'（'+(outcome==='win'?'勝利':outcome==='lose'?'敗北':'引き分け')+'）',outcome==='win');
+}
+function closeMatch(){ save.activeMatch=null; persist(); render(); }
+
+/* ===== 6. 探索エンジン ===================================== */
+function aptFactor(planet,pids){
+  let sum=0;
+  for(const pid of pids){
+    const pl=getPlayer(pid);
+    let sc=0;
+    for(const [bk,pk,w] of planet.apt){
+      const v = pl.isPitcher? pl.ab[pk] : pl.ab[bk];
+      sc+=(v||0)*w;
+    }
+    if(pl.type===planet.type) sc*=1.1;
+    sum+=sc;
+  }
+  const avg=clampN(sum/pids.length,0,100);
+  return 0.8+avg/100*0.5;
+}
+function unlockedDrops(planetId){
+  const sr=save.planetProgress[planetId].surveyRate;
+  return PLANETS[planetId].drops.filter(d=>sr>=d.u);
+}
+function startExpedition(planetId,pids){
+  const pl=PLANETS[planetId];
+  const ex={
+    planetId, party:pids.slice(), apt:aptFactor(pl,pids),
+    step:0, total:rint(5,8),
+    results:[], pend:null,
+    gains:{}, survey:0,
+    finished:false, retreated:false, result:null,
+  };
+  save.activeExpedition=ex;
+  save.lastParty=pids.slice();
+  persist();
+}
+function gainMat(ex,mid,qty){ ex.gains[mid]=(ex.gains[mid]||0)+qty; }
+function dropOnce(ex){
+  const sr=save.planetProgress[ex.planetId].surveyRate;
+  const ent=wpick(unlockedDrops(ex.planetId));
+  const qty=Math.max(1,Math.round(rint(ent.min,ent.max)*ex.apt*(1+sr*0.002)));
+  gainMat(ex,ent.m,qty);
+  return {mid:ent.m,qty};
+}
+function stepExpedition(){
+  const ex=save.activeExpedition;
+  if(!ex || ex.finished || ex.pend) return;
+  ex.step++; ex.survey+=BAL.surveyStep;
+  const r=rnd();
+  if(r<0.25){
+    const pl=PLANETS[ex.planetId];
+    const okP=clampN(0.35+(ex.apt-0.8)*1.2,0.35,0.9);
+    ex.pend={
+      text:pick(pl.events),
+      okP,
+      options:[
+        {id:'safe',label:'安全に調査する',hint:'素材を確実に獲得 / 調査率+'+BAL.surveySafe+'%'},
+        {id:'deep',label:'深部へ進む',hint:'レア素材の可能性(成功率'+Math.round(okP*100)+'%)'},
+        {id:'data',label:'データだけ回収する',hint:'素材なし / 調査率+'+BAL.surveyData+'%'},
+      ],
+    };
+    ex.results.push({step:ex.step,text:'❖ '+ex.pend.text,ev:true});
+  }
+  else if(r<0.45){
+    ex.results.push({step:ex.step,text:pick(STEP_NOTHING)});
+  }
+  else{
+    const d=dropOnce(ex);
+    ex.results.push({step:ex.step,text:MATERIALS[d.mid].name+' ×'+d.qty+' を採取'});
+  }
+  if(ex.step>=ex.total && !ex.pend) finishExpedition(true);
+  persist();
+}
+function chooseExpedition(optId){
+  const ex=save.activeExpedition;
+  if(!ex || !ex.pend) return;
+  const pl=PLANETS[ex.planetId];
+  let txt='';
+  if(optId==='safe'){
+    const bases=pl.drops.filter(d=>d.u===0);
+    const ent=pick(bases);
+    const qty=2+(ex.apt>1.05?1:0);
+    gainMat(ex,ent.m,qty);
+    ex.survey+=BAL.surveySafe;
+    txt='慎重に調査。'+MATERIALS[ent.m].name+' ×'+qty+' を確保（調査率+'+BAL.surveySafe+'%）';
+  }
+  else if(optId==='deep'){
+    if(rnd()<ex.pend.okP){
+      const un=unlockedDrops(ex.planetId);
+      const rare=un.reduce((a,b)=>MATERIALS[a.m].r>=MATERIALS[b.m].r?a:b);
+      const qty=rint(2,3);
+      gainMat(ex,rare.m,qty);
+      txt='深部調査に成功！ '+MATERIALS[rare.m].name+' ×'+qty+' を発見！';
+    }else{
+      if(rnd()<0.5){
+        const bases=pl.drops.filter(d=>d.u===0);
+        const ent=pick(bases);
+        gainMat(ex,ent.m,1);
+        txt='深部で迷ったが、'+MATERIALS[ent.m].name+' ×1 だけ拾って引き返した。';
+      }else{
+        txt='深部は崩落していた。収穫なし。';
+      }
+    }
+  }
+  else{
+    ex.survey+=BAL.surveyData;
+    txt='周辺データをスキャン（調査率+'+BAL.surveyData+'%）';
+  }
+  ex.pend=null;
+  ex.results.push({step:ex.step,text:'→ '+txt});
+  if(ex.step>=ex.total) finishExpedition(true);
+  persist();
+}
+function retreatExpedition(){
+  const ex=save.activeExpedition;
+  if(!ex || ex.finished) return;
+  ex.pend=null;
+  finishExpedition(false);
+  persist();
+}
+function finishExpedition(completed){
+  const ex=save.activeExpedition;
+  if(!ex || ex.finished) return;
+  ex.finished=true; ex.retreated=!completed;
+  const keep = completed? 1 : BAL.retreatKeep;
+  const final={};
+  for(const mid of Object.keys(ex.gains)){
+    const q=Math.ceil(ex.gains[mid]*keep);
+    if(q>0){ final[mid]=q; save.inventory.materials[mid]=(save.inventory.materials[mid]||0)+q; }
+  }
+  const sGain=ex.survey+(completed?BAL.surveyDone:0);
+  const prog=save.planetProgress[ex.planetId];
+  const before=prog.surveyRate;
+  prog.surveyRate=Math.min(100,before+sGain);
+  const unlocked=[];
+  for(const th of [30,60]){
+    if(before<th && prog.surveyRate>=th){
+      const ent=PLANETS[ex.planetId].drops.find(d=>d.u===th);
+      unlocked.push('調査率'+th+'%達成！ 新素材「'+MATERIALS[ent.m].name+'」の反応を検知');
+    }
+  }
+  ex.result={completed,final,sGain,rate:prog.surveyRate,unlocked};
+}
+function closeExpedition(){ save.activeExpedition=null; persist(); render(); }
+
+/* ===== 7. スカウト/育成/施設 =============================== */
+function doScout(){
+  if(save.activeMatch && !save.activeMatch.finished){ toast('試合中はスカウトできません'); return; }
+  if(save.team.credits<SCOUT_COST){ toast('クレジットが足りません'); return; }
+  save.team.credits-=SCOUT_COST;
+  const r=rnd();
+  const rar = r<0.15?3 : r<0.50?2 : 1;
+  const cand=SCOUT_POOL.filter(id=>PLAYER_MASTER[id].rarity===rar);
+  const mid=pick(cand);
+  let res;
+  if(save.scout.pulledIds.includes(mid)){
+    const td=SCOUT_DUPE_TD[rar];
+    save.inventory.trainingData+=td;
+    res={mid,rar,dupe:true,td};
+  }else{
+    save.scout.pulledIds.push(mid);
+    save.players.push(instantiate(mid));
+    res={mid,rar,dupe:false};
+  }
+  persist(); // 演出前に保存(引き直し防止)
+  UI.modal={kind:'scoutResult',res};
+  render();
+}
+function needExp(level){ return 40+(level-1)*30; }
+function levelCost(level){ return 60+level*25; }
+function canLevelUp(p){
+  return p.level<LEVCAP[p.rarity] && p.exp>=needExp(p.level) && save.team.credits>=levelCost(p.level);
+}
+function levelUp(pid){
+  const p=getPlayer(pid);
+  if(!p || !canLevelUp(p)){ toast('経験値またはクレジットが不足しています'); return; }
+  p.exp-=needExp(p.level);
+  save.team.credits-=levelCost(p.level);
+  p.level++;
+  const g=GROWTH[p.role], cap=ABCAP[p.rarity];
+  for(const k of Object.keys(g)){
+    if(p.ab[k]!==undefined) p.ab[k]=Math.min(cap,p.ab[k]+g[k]);
+  }
+  persist();
+  toast(p.name+' が Lv'+p.level+' に成長！');
+  render();
+}
+function useTraining(pid){
+  const p=getPlayer(pid);
+  if(!p || save.inventory.trainingData<1){ toast('訓練データがありません'); return; }
+  save.inventory.trainingData--;
+  p.exp+=BAL.tdExp;
+  persist(); render();
+}
+function facCost(fid){
+  const f=FACILITIES[fid], lv=save.facilities[fid];
+  if(lv>=f.max) return null;
+  return f.costs[lv+1];
+}
+function canUpgrade(fid){
+  const c=facCost(fid);
+  if(!c) return false;
+  if(save.team.credits<c.cr) return false;
+  for(const m of Object.keys(c.mats)) if((save.inventory.materials[m]||0)<c.mats[m]) return false;
+  return true;
+}
+function upgradeFacility(fid){
+  if(!canUpgrade(fid)){ toast('強化に必要な素材かクレジットが不足しています'); return; }
+  const c=facCost(fid);
+  save.team.credits-=c.cr;
+  for(const m of Object.keys(c.mats)) save.inventory.materials[m]-=c.mats[m];
+  save.facilities[fid]++;
+  persist();
+  const lv=save.facilities[fid];
+  toast(FACILITIES[fid].name+' が Lv'+lv+' になりました'+(lv>=FACILITIES[fid].max?'（最大）':''));
+  render();
+}
+function sellPrice(mid){ return Math.round(SELL_BASE[MATERIALS[mid].r]*(1+0.1*(save.facilities.workshop-1))); }
+function sellMaterial(mid){
+  if((save.inventory.materials[mid]||0)<1) return;
+  save.team.credits += sellPrice(mid);
+  save.inventory.materials[mid] -= 1;
+  persist();
+  toast(MATERIALS[mid].name + ' を売却しました');
+  render();
+}
+
+function setScreen(screen){ UI.screen = screen; UI.modal = null; render(); }
+function selectOpp(id){ UI.oppSel = id; render(); }
+function selectExpPlanet(id){ UI.expPlanet = id; UI.expParty = [null, null, null]; render(); }
+function toggleExpParty(pid){
+  const idx = UI.expParty.indexOf(pid);
+  if(idx >= 0){ UI.expParty[idx] = null; }
+  else {
+    const empty = UI.expParty.indexOf(null);
+    if(empty >= 0){ UI.expParty[empty] = pid; }
+    else { toast('パーティは最大3人までです'); return; }
+  }
+  render();
+}
+function startExpeditionParty(){
+  const party = UI.expParty.filter(Boolean);
+  if(party.length < 1){ toast('パーティを1人以上選んでください'); return; }
+  startExpedition(UI.expPlanet, party);
+  render();
+}
+function copySaveText(){
+  const ta = document.getElementById('save-export');
+  if(!ta) return;
+  ta.value = JSON.stringify(save, null, 2);
+  ta.select();
+  document.execCommand('copy');
+  toast('セーブデータをコピーしました');
+}
+function importSaveText(){
+  const ta = document.getElementById('save-export');
+  if(!ta) return;
+  importJson(ta.value);
+}
+function openScoutResult(){ UI.modal = { kind:'scoutResult' }; render(); }
+function closeModal(){ UI.modal = null; render(); }
+
+function renderNav(){
+  const nav = document.getElementById('nav');
+  const buttons = [
+    {id:'home', label:'ホーム'},
+    {id:'match', label:'試合'},
+    {id:'explore', label:'探索'},
+    {id:'scout', label:'スカウト'},
+    {id:'save', label:'保存'},
+  ];
+  nav.innerHTML = `
+    <div class="brand">
+      <div class="eyebrow">銀河ベースボールGM</div>
+      <div class="ttl">${esc(save.team.name)}</div>
+      <div class="cr">v0.1</div>
+    </div>
+    ${buttons.map(b=>`<button class="navbtn${UI.screen===b.id?' on':''}" onclick="setScreen('${b.id}')">${b.label}</button>`).join('')}
+    <div class="navfoot">${save.team.credits}クレジット</div>
+  `;
+}
+
+function renderHome(){
+  const main = document.getElementById('main');
+  const recent = save.recentResults.slice(0, 5).map(r => `<div class="card"><div class="kv"><b>${esc(r.opp)}</b><span>${esc(r.score)}</span></div><div class="note">${esc(r.outcome)}</div></div>`).join('') || '<p class="note">まだ試合結果がありません。</p>';
+  let active='';
+  if(save.activeMatch){
+    const ms = save.activeMatch;
+    const state = ms.finished ? '終了' : `${ms.inning}回 ${ms.outs}アウト`;
+    active += `<div class="panel"><div class="ph"><div><span class="eyebrow">進行中の試合</span><h2>${esc(NPC_TEAMS[ms.oppId].short)} 戦</h2></div></div><p>${state}</p><div class="btnrow"><button class="btn pri" onclick="setScreen('match')">試合画面へ</button></div></div>`;
+  }
+  if(save.activeExpedition){
+    const ex = save.activeExpedition;
+    const planet = PLANETS[ex.planetId];
+    active += `<div class="panel"><div class="ph"><div><span class="eyebrow">進行中の探索</span><h2>${esc(planet.name)}</h2></div></div><p>ステップ ${ex.step}/${ex.total}  調査率 ${ex.survey}%</p><div class="btnrow"><button class="btn pri" onclick="setScreen('explore')">探索画面へ</button></div></div>`;
+  }
+  main.innerHTML = `
+    <section class="panel">
+      <div class="ph"><div><span class="eyebrow">ホーム</span><h2>アストロ・パイオニアーズ</h2></div><div class="sub">${esc(save.team.name)}</div></div>
+      <div class="kv"><b>クレジット</b><span>${save.team.credits}</span></div>
+      <div class="kv"><b>訓練データ</b><span>${save.inventory.trainingData}</span></div>
+      <div class="btnrow">
+        <button class="btn pri" onclick="setScreen('match')">試合</button>
+        <button class="btn pri" onclick="setScreen('explore')">探索</button>
+        <button class="btn pri" onclick="setScreen('scout')">スカウト</button>
+        <button class="btn pri" onclick="setScreen('save')">保存</button>
+      </div>
+    </section>
+    ${active}
+    <section class="panel"><div class="ph"><div><span class="eyebrow">最近の結果</span><h2>直近の試合</h2></div></div>${recent}</section>
+  `;
+}
+
+function renderMatch(){
+  const main = document.getElementById('main');
+  if(!save.activeMatch){
+    const options = Object.keys(NPC_TEAMS).map(id => `
+      <button class="btn${UI.oppSel===id?' pri':''}" onclick="selectOpp('${id}')">${esc(NPC_TEAMS[id].name)}</button>`).join('');
+    main.innerHTML = `
+      <section class="panel"><div class="ph"><div><span class="eyebrow">試合</span><h2>対戦相手を選択</h2></div></div>${options}
+        <div class="btnrow"><button class="btn pri" onclick="startMatch(UI.oppSel)">対戦開始</button></div>
+      </section>
+    `;
+    return;
+  }
+  const ms = save.activeMatch;
+  const score = `${pTot(ms)} - ${nTot(ms)}`;
+  const status = ms.finished ? '試合終了' : `${ms.inning}回 ${ms.outs}アウト`;
+  const result = ms.finished ? `<p class="note">結果: ${esc(ms.result.outcome)} ${score}</p>` : '';
+  const actionButtons = ms.finished ? `<button class="btn pri" onclick="closeMatch()">試合を閉じる</button>` : `<button class="btn pri" onclick="advanceMatch(false)">次へ進める</button><button class="btn" onclick="advanceMatch(true)">一気に決着</button>`;
+  const log = ms.log.slice(-10).map(item => `<p${item.hl?' class="hl"':''}>${esc((item.half==='sys'? '' : halfLabel(item.inn,item.half)) + item.text)}</p>`).join('');
+  main.innerHTML = `
+    <section class="panel"><div class="ph"><div><span class="eyebrow">試合</span><h2>${esc(NPC_TEAMS[ms.oppId].name)} 戦</h2></div><div class="sub">${status}</div></div>
+      <div class="kv"><b>スコア</b><span>${score}</span></div>
+      ${result}
+      <div class="btnrow">${actionButtons}</div>
+    </section>
+    <section class="panel"><div class="ph"><div><span class="eyebrow">ログ</span><h2>直近プレイ</h2></div></div><div class="log">${log || '<p>まだプレイされていません。</p>'}</div></section>
+  `;
+}
+
+function renderExplore(){
+  const main = document.getElementById('main');
+  if(save.activeExpedition){
+    const ex = save.activeExpedition;
+    const planet = PLANETS[ex.planetId];
+    const results = ex.results.map(r => `<p>${esc(r.text)}</p>`).join('');
+    const action = ex.finished ? '<button class="btn pri" onclick="closeExpedition()">探索を閉じる</button>' : ex.pend ? `<button class="btn pri" onclick="chooseExpedition('safe')">安全に調査</button><button class="btn pri" onclick="chooseExpedition('deep')">深部へ進む</button><button class="btn pri" onclick="chooseExpedition('data')">データ回収</button>` : `<button class="btn pri" onclick="stepExpedition()">次のステップ</button><button class="btn" onclick="retreatExpedition()">撤退する</button>`;
+    main.innerHTML = `
+      <section class="panel"><div class="ph"><div><span class="eyebrow">探索</span><h2>${esc(planet.name)}</h2></div><div class="sub">ステップ ${ex.step}/${ex.total}  調査率 ${ex.survey}%</div></div>
+        <div class="kv"><b>探索結果</b><span>${Object.entries(ex.gains).map(([mid,q])=>`${esc(MATERIALS[mid].name)} ×${q}`).join(' / ')||'なし'}</span></div>
+        <div class="btnrow">${action}</div>
+      </section>
+      <section class="panel"><div class="ph"><div><span class="eyebrow">探索ログ</span><h2>進行記録</h2></div></div><div class="log">${results || '<p>まだ記録がありません。</p>'}</div></section>
+    `;
+    return;
+  }
+  const planets = Object.keys(PLANETS).map(id => {
+    const pl = PLANETS[id];
+    return `<button class="btn${UI.expPlanet===id?' pri':''}" onclick="selectExpPlanet('${id}')">${esc(pl.name)}</button>`;
+  }).join('');
+  const party = save.players.filter(p => !p.isPitcher);
+  const partyButtons = party.map(p => `<button class="btn${UI.expParty.includes(p.id)?' pri':''}" onclick="toggleExpParty('${p.id}')">${esc(p.name)} (${esc(p.pos[0])})</button>`).join('');
+  main.innerHTML = `
+    <section class="panel"><div class="ph"><div><span class="eyebrow">探索</span><h2>惑星を選択</h2></div></div>${planets}</section>
+    <section class="panel"><div class="ph"><div><span class="eyebrow">パーティ</span><h2>編成を選ぶ</h2></div></div>${partyButtons || '<p>編成できる選手がいません。</p>'}<div class="btnrow"><button class="btn pri" onclick="startExpeditionParty()">探索開始</button></div></section>
+  `;
+}
+
+function renderScout(){
+  const main = document.getElementById('main');
+  const pulled = save.scout.pulledIds.map(id => {
+    const pl = PLAYER_MASTER[id];
+    return `<div class="card"><div class="kv"><b>${esc(pl.name)}</b><span>${esc(TYPE_INFO[pl.type].label)}</span></div><div class="note">${esc(pl.role)} / ${esc(pl.pos.join('/'))}</div></div>`;
+  }).join('') || '<p class="note">まだスカウトしていません。</p>';
+  main.innerHTML = `
+    <section class="panel"><div class="ph"><div><span class="eyebrow">スカウト</span><h2>新入団選手</h2></div></div>
+      <div class="kv"><b>クレジット</b><span>${save.team.credits}</span></div>
+      <div class="btnrow"><button class="btn pri" onclick="doScout()">スカウト (${SCOUT_COST}CR)</button></div>
+    </section>
+    <section class="panel"><div class="ph"><div><span class="eyebrow">獲得履歴</span><h2>スカウト済み</h2></div></div>${pulled}</section>
+  `;
+}
+
+function renderSave(){
+  const main = document.getElementById('main');
+  const json = esc(JSON.stringify(save, null, 2));
+  main.innerHTML = `
+    <section class="panel"><div class="ph"><div><span class="eyebrow">保存</span><h2>データ管理</h2></div></div>
+      <div class="kv"><b>最終更新</b><span>${esc(save.updatedAt)}</span></div>
+      <div class="btnrow"><button class="btn pri" onclick="persist(); toast('保存しました');">保存</button><button class="btn" onclick="copySaveText()">データコピー</button></div>
+    </section>
+    <section class="panel"><div class="ph"><div><span class="eyebrow">バックアップ</span><h2>JSON</h2></div></div>
+      <textarea id="save-export" class="io">${json}</textarea>
+      <div class="btnrow"><button class="btn pri" onclick="importSaveText()">JSON読み込み</button></div>
+    </section>
+  `;
+}
+
+function renderModal(){
+  const root = document.getElementById('modal-root');
+  if(!UI.modal){ root.className=''; root.innerHTML=''; return; }
+  let html='';
+  if(UI.modal.kind==='scoutResult' && save.scout.pulledIds.length){
+    const lastId = save.scout.pulledIds[save.scout.pulledIds.length-1];
+    const pl = PLAYER_MASTER[lastId];
+    html = `
+      <div class="mback" onclick="closeModal()"></div>
+      <div class="mbox">
+        <div class="ph"><div><span class="eyebrow">スカウト結果</span><h2>${esc(pl.name)}</h2></div></div>
+        <div class="kv"><b>タイプ</b><span>${esc(TYPE_INFO[pl.type].label)}</span></div>
+        <div class="kv"><b>役割</b><span>${esc(ROLE_INFO[pl.role]||pl.role)}</span></div>
+        <p class="note">${esc(pl.pf)}</p>
+        <div class="btnrow"><button class="btn pri" onclick="closeModal()">閉じる</button></div>
+      </div>
+    `;
+  } else {
+    html = `<div class="mback" onclick="closeModal()"></div><div class="mbox"><p>情報がありません。</p><div class="btnrow"><button class="btn pri" onclick="closeModal()">閉じる</button></div></div>`;
+  }
+  root.className='show'; root.innerHTML=html;
+}
+
+function renderSide(){
+  const side = document.getElementById('side');
+  let html = '<div class="panel"><div class="ph"><div><span class="eyebrow">チーム</span><h2>パワー</h2></div></div>';
+  html += `<div class="kv"><b>打撃</b><span>${teamPower()}</span></div>`;
+  html += `<div class="kv"><b>施設</b><span>TR${save.facilities.training} A${save.facilities.analytics} WS${save.facilities.workshop}</span></div>`;
+  html += '</div>';
+  side.innerHTML = html;
+}
+
+function render(){
+  if(!save) save = loadSave();
+  renderNav();
+  if(UI.screen==='home') renderHome();
+  else if(UI.screen==='match') renderMatch();
+  else if(UI.screen==='explore') renderExplore();
+  else if(UI.screen==='scout') renderScout();
+  else if(UI.screen==='save') renderSave();
+  else renderHome();
+  renderSide();
+  renderModal();
+}
+
+function toast(message){
+  const toastEl = document.getElementById('toast');
+  if(!toastEl) return;
+  toastEl.textContent = message;
+  toastEl.classList.add('show');
+  clearTimeout(UI.toastTimer);
+  UI.toastTimer = setTimeout(()=> toastEl.classList.remove('show'), 2400);
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  save = loadSave();
+  render();
+});
+</script>
+</body>
+</html>
