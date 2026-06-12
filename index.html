@@ -134,6 +134,18 @@ h3.sec{font-size:12px;color:var(--bl);letter-spacing:.12em;margin:12px 0 6px;fon
   border:1px solid var(--line);border-radius:10px;background:rgba(10,17,32,.7);
   padding:10px 12px;margin-bottom:8px;cursor:pointer;
 }
+.news-item{
+  border:1px solid rgba(72,180,255,.16);border-radius:12px;padding:10px 12px;margin-bottom:8px;
+  background:linear-gradient(180deg,rgba(63,217,255,.06),rgba(9,15,28,.95));
+  font-size:13px;line-height:1.6;
+}
+.player-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
+.player-card{border:1px solid rgba(72,180,255,.16);border-radius:14px;background:linear-gradient(180deg,rgba(63,217,255,.08),rgba(9,15,28,.95));padding:12px;}
+.player-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.player-top .badge{background:rgba(255,196,77,.12);color:var(--imp);font-size:11px;padding:3px 8px;border-radius:999px;}
+.player-name{font-size:16px;font-weight:800;margin-bottom:4px}
+.player-title{font-size:12px;color:var(--mut);margin-bottom:8px}
+.player-note{font-size:12px;color:var(--tx);line-height:1.5}
 .card.sel{border-color:var(--cy);box-shadow:0 0 10px rgba(63,217,255,.2)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
@@ -190,13 +202,18 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
   background:linear-gradient(135deg, rgba(63,217,255,.05), transparent);
 }
 .base{
-  position:absolute;width:15px;height:15px;transform:translate(-50%,-50%) rotate(45deg);
+  position:absolute;width:20px;height:20px;transform:translate(-50%,-50%) rotate(45deg);
   border:1px solid var(--cy);background:#0a1222;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--tx);
 }
-.base.on{background:var(--cy);box-shadow:0 0 10px rgba(63,217,255,.8)}
-.fmeta{text-align:center;font-size:12px;color:var(--mut)}
-.outdots{letter-spacing:4px;color:var(--cy);font-size:10px}
-/* ---------- ログ ---------- */
+.base.on{background:var(--cy);box-shadow:0 0 14px rgba(63,217,255,.9);}
+.fmeta{text-align:center;font-size:12px;color:var(--mut);display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.field-card{border:1px solid rgba(63,217,255,.14);border-radius:14px;padding:12px;background:linear-gradient(180deg,rgba(63,217,255,.06),rgba(10,17,32,.96));margin:10px 0}
+.field-card .fmeta{font-size:12px;color:var(--tx);}
+.reward-card{border:1px solid rgba(255,196,77,.18);border-radius:12px;background:rgba(255,196,77,.06);padding:10px;margin:10px 0;color:#fff;font-size:13px}
+.log-sep{padding:8px 0 4px;color:var(--cy);font-size:12px;font-weight:700;border-bottom:1px solid rgba(63,217,255,.16);margin-top:10px}
+.log-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:rgba(63,217,255,.15);color:var(--cy);margin-right:6px}
+.log p{padding:8px 0 6px;border-bottom:1px dashed rgba(72,180,255,.08);transition:color .2s,transform .2s}
 .log{
   font-size:12px;line-height:1.65;max-height:46vh;overflow-y:auto;
   -webkit-overflow-scrolling:touch;user-select:text;-webkit-user-select:text;
@@ -259,6 +276,11 @@ table.st tbody tr{cursor:pointer}
 }
 .mbox.goldfx{border-color:var(--imp);box-shadow:0 0 46px rgba(255,196,77,.35);animation:goldin .9s ease}
 @keyframes goldin{0%{box-shadow:0 0 0 rgba(255,196,77,0)}45%{box-shadow:0 0 70px rgba(255,196,77,.7)}100%{box-shadow:0 0 46px rgba(255,196,77,.35)}}
+.effect-card{border:1px solid rgba(72,180,255,.18);border-radius:14px;background:linear-gradient(180deg,rgba(63,217,255,.06),rgba(9,15,28,.95));padding:14px;margin:12px 0;}
+.effect-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:8px;}
+.effect-row span{color:var(--mut);}
+.effect-text{font-size:14px;line-height:1.7;padding:12px 0;border-top:1px solid rgba(72,180,255,.1);border-bottom:1px solid rgba(72,180,255,.1);margin:12px 0;color:#eef7ff;}
+.effect-result{font-size:13px;color:var(--cy);font-weight:700;text-align:right;}
 .pickrow{
   display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;
   padding:9px 12px;margin-bottom:6px;cursor:pointer;min-height:46px;background:rgba(9,15,28,.7);
@@ -534,6 +556,7 @@ function defaultSave(){
     scout:{pulledIds:[]},
     activeMatch:null, activeExpedition:null,
     recentResults:[], lastParty:null,
+    news:[],
   };
   return s;
 }
@@ -550,6 +573,7 @@ function loadSave(){
     if(!raw) return defaultSave();
     const s=JSON.parse(raw);
     if(!s || s.schemaVersion!==1 || !Array.isArray(s.players)) return defaultSave();
+    if(!Array.isArray(s.news)) s.news=[];
     return s;
   }catch(e){ return defaultSave(); }
 }
@@ -567,6 +591,18 @@ function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 function getPlayer(pid){ return save.players.find(p=>p.id===pid)||null; }
 function stars(r){ return '★'.repeat(r); }
 function typeChip(t){ return '<span class="chip t-'+t+'">'+TYPE_INFO[t].label+'</span>'; }
+function addNews(text){ if(!save.news) save.news=[]; save.news.unshift({text}); if(save.news.length>5) save.news.length=5; }
+function summaryCard(p){
+  const recent = p.isPitcher ? `通算 ${p.sp.games}試合 / SO ${p.sp.so} / ERA ${fmt2(pitView(p.sp).era)}` : (p.sb_.ab>0 ? `打率 ${fmtAvg(p.sb_.h/p.sb_.ab)} / ${p.sb_.hr}HR / ${p.sb_.rbi}打点` : 'まだ公式戦未出場');
+  return `
+    <div class="player-card">
+      <div class="player-top">${typeChip(p.type)}<span class="badge">${esc(ROLE_INFO[p.role]||p.role)}</span></div>
+      <div class="player-name">${esc(p.name)}</div>
+      <div class="player-title">${esc(p.pf)}</div>
+      <div class="player-note">${recent}</div>
+    </div>
+  `;
+}
 function clampN(v,a,b){ return Math.max(a,Math.min(b,v)); }
 function fmtAvg(v){ if(!isFinite(v))return '-'; const s=v.toFixed(3); return v<1? s.replace(/^0/,'') : s; }
 function fmt2(v){ return isFinite(v)? v.toFixed(2) : '-'; }
@@ -630,7 +666,7 @@ function startMatch(oppId){
 }
 function ensureB(ms,pid){ if(!ms.bstats[pid]) ms.bstats[pid]={pa:0,ab:0,h:0,d2:0,d3:0,hr:0,rbi:0,runs:0,bb:0,hbp:0,so:0,sb:0,cs:0,sf:0,gidp:0}; return ms.bstats[pid]; }
 function ensureP(ms,pid){ if(!ms.pstats[pid]) ms.pstats[pid]={outs:0,h:0,r:0,bb:0,so:0,hr:0}; return ms.pstats[pid]; }
-function mlog(ms,inn,half,text,hl){ ms.log.push({inn,half,text,hl:!!hl}); }
+function mlog(ms,inn,half,text,hl,bases){ ms.log.push({inn,half,text,hl:!!hl,bases:bases||''}); }
 function tot(arr){ return arr.reduce((s,v)=>s+(typeof v==='number'?v:0),0); }
 function pTot(ms){ return tot(ms.score.p); }
 function nTot(ms){ return tot(ms.score.n); }
@@ -746,6 +782,7 @@ function resolvePA(bt,pit,fat){
 function doPA(ms,half){
   const playerBat = half==='bottom';
   const opp=oppData(ms.oppId);
+  const baseState = ms.bases.map(r=>r? (r.side==='p'?getPlayer(r.pid).name:r.name) : '-').join(' / ');
   // 投手側
   let pit,fat,pitPid=null,pitRole='starter',pitSta;
   if(playerBat){ pit=opp.pit; pitSta=opp.pit.stamina; fat=fatF(ms.npcStamina); }
@@ -880,7 +917,7 @@ function doPA(ms,half){
     }
   }
   if(runsPA>0){ text+='（'+runsPA+'点）'; hl=true; }
-  mlog(ms,ms.inning,half,bt.name+'：'+text,hl);
+  mlog(ms,ms.inning,half,bt.name+'：'+text,hl,baseState);
 
   consumeStamina(ms,playerBat,pitRole,pitSta,outsGained,reached,runsPA);
 
@@ -946,6 +983,7 @@ function resolveDecision(opt){
 function advanceMatch(full){
   const ms=save.activeMatch;
   if(!ms || ms.finished || ms.pendingDecision) return;
+  const startLog = ms.log.length;
   while(true){
     const target = ms.chunk<3 ? [3,6,9][ms.chunk] : ms.inning;
     while(!ms.finished && ms.inning<=target) playOneInning(ms);
@@ -954,6 +992,12 @@ function advanceMatch(full){
     if(ms.finished || ms.pendingDecision || !full) break;
     if(ms.chunk<3) continue;
     // 延長: fullの場合は決着まで1イニングずつ
+  }
+  if(ms.log.length>startLog){
+    buildMatchEffects(ms,startLog);
+    if(ms.effectQueue && ms.effectQueue.length){
+      UI.modal={kind:'matchEffect'};
+    }
   }
   persist(); render();
 }
@@ -1009,14 +1053,62 @@ function finalizeMatch(ms){
     if(sc>best){best=sc;mvp=getPlayer(pid)?getPlayer(pid).name:'—';}
   }
   const oppName=NPC_TEAMS[ms.oppId].name;
+  const title = outcome==='win' ? `${oppName} に勝利！` : outcome==='lose' ? `${oppName} に敗北` : `${oppName} と引き分け`;
   ms.result={outcome,p,n,credits,mvp,expList,oppName,
     winP:winP?getPlayer(winP).name:null, saveP:saveP?getPlayer(saveP).name:null};
   UI.modal={kind:'matchResult'};
   save.recentResults.unshift({opp:oppName,score:p+' - '+n,outcome});
   if(save.recentResults.length>10) save.recentResults.length=10;
+  addNews(`${mvp} が活躍して ${title}`);
   mlog(ms,ms.inning,'sys','試合終了 '+p+' - '+n+'（'+(outcome==='win'?'勝利':outcome==='lose'?'敗北':'引き分け')+'）',outcome==='win');
 }
 function closeMatch(){ save.activeMatch=null; persist(); render(); }
+function buildMatchEffects(ms,startIndex){
+  const events=[];
+  for(let i=startIndex;i<ms.log.length;i++){
+    if(events.length>=3) break;
+    const entry=ms.log[i];
+    const txt=entry.text;
+    const meta={label:'PLAY',type:'normal',actor:'',pitcher:'',bases:entry.bases||'',desc:txt, result:txt};
+    if(/ホームラン/.test(txt)){
+      meta.label='HOMERUN'; meta.type='homerun';
+    } else if(/三塁打|二塁打/.test(txt)){
+      meta.label='CLUTCH'; meta.type='extra';
+    } else if(/逆転|同点|サヨナラ/.test(txt)){
+      meta.label='CLUTCH'; meta.type='clutch';
+    } else if(/ピンチ|三振|併殺/.test(txt)){
+      meta.label='PINCH'; meta.type='pinch';
+    } else if(/点/.test(txt) && /点/.test(txt)){
+      meta.label='SCORE'; meta.type='score';
+    } else if(/代打|継投|代走/.test(txt)){
+      meta.label='CHANGE'; meta.type='change';
+    } else {
+      continue;
+    }
+    const names = txt.split('：');
+    if(names.length>1){ meta.actor=names[0]; }
+    meta.pitcher = '相手投手';
+    events.push(meta);
+  }
+  if(events.length===0){
+    events.push({label:'CALM',type:'calm',actor:'',pitcher:'',bases:'',desc:'静かな立ち上がり。両チームとも慎重に攻めている。',result:'次のイニングへ'});
+  }
+  ms.effectQueue = events;
+  ms.effectIndex = 0;
+}
+function nextMatchEffect(){
+  const ms=save.activeMatch;
+  if(!ms || !ms.effectQueue) return;
+  ms.effectIndex = (ms.effectIndex||0) + 1;
+  if(ms.effectIndex >= ms.effectQueue.length){
+    if(ms.finished) { UI.modal={kind:'matchResult'}; }
+    else { UI.modal={kind:'matchSummary'}; }
+  } else {
+    UI.modal={kind:'matchEffect'};
+  }
+  persist(); render();
+}
+function closeMatchSummary(){ UI.modal=null; render(); }
 
 /* ===== 6. 探索エンジン ===================================== */
 function aptFactor(planet,pids){
@@ -1059,13 +1151,20 @@ function dropOnce(ex){
   gainMat(ex,ent.m,qty);
   return {mid:ent.m,qty};
 }
+function openExploreEffect(desc){
+  const ex=save.activeExpedition;
+  if(!ex) return;
+  const pl=PLANETS[ex.planetId];
+  UI.modal={kind:'exploreEffect',res:{desc, gains:ex.gains, survey:ex.survey, planet:pl.name}};
+  render();
+}
 function stepExpedition(){
   const ex=save.activeExpedition;
   if(!ex || ex.finished || ex.pend) return;
   ex.step++; ex.survey+=BAL.surveyStep;
+  const pl=PLANETS[ex.planetId];
   const r=rnd();
   if(r<0.25){
-    const pl=PLANETS[ex.planetId];
     const okP=clampN(0.35+(ex.apt-0.8)*1.2,0.35,0.9);
     ex.pend={
       text:pick(pl.events),
@@ -1077,16 +1176,24 @@ function stepExpedition(){
       ],
     };
     ex.results.push({step:ex.step,text:'❖ '+ex.pend.text,ev:true});
+    persist();
+    UI.modal={kind:'exploreChoice',pend:ex.pend,planet:pl.name};
+    render();
+    return;
   }
-  else if(r<0.45){
-    ex.results.push({step:ex.step,text:pick(STEP_NOTHING)});
+  let message='';
+  if(r<0.45){
+    message=pick(STEP_NOTHING);
+    ex.results.push({step:ex.step,text:message});
   }
   else{
     const d=dropOnce(ex);
-    ex.results.push({step:ex.step,text:MATERIALS[d.mid].name+' ×'+d.qty+' を採取'});
+    message=MATERIALS[d.mid].name+' ×'+d.qty+' を採取';
+    ex.results.push({step:ex.step,text:message});
   }
-  if(ex.step>=ex.total && !ex.pend) finishExpedition(true);
+  if(ex.step>=ex.total) finishExpedition(true);
   persist();
+  openExploreEffect(message);
 }
 function chooseExpedition(optId){
   const ex=save.activeExpedition;
@@ -1127,6 +1234,8 @@ function chooseExpedition(optId){
   ex.results.push({step:ex.step,text:'→ '+txt});
   if(ex.step>=ex.total) finishExpedition(true);
   persist();
+  UI.modal={kind:'exploreEffect',res:{desc:txt,gains:ex.gains,survey:ex.survey,planet:pl.name}};
+  render();
 }
 function retreatExpedition(){
   const ex=save.activeExpedition;
@@ -1157,6 +1266,10 @@ function finishExpedition(completed){
     }
   }
   ex.result={completed,final,sGain,rate:prog.surveyRate,unlocked};
+  if(Object.keys(final).length){
+    const found = Object.entries(final).map(([mid,q])=>`${MATERIALS[mid].name} ×${q}`).join(' / ');
+    addNews(`探索完了: ${PLANETS[ex.planetId].name} で ${found} を獲得`);
+  }
 }
 function closeExpedition(){ save.activeExpedition=null; persist(); render(); }
 
@@ -1181,6 +1294,7 @@ function doScout(){
   }
   persist(); // 演出前に保存(引き直し防止)
   UI.modal={kind:'scoutResult',res};
+  addNews(`${PLAYER_MASTER[mid].name} をスカウト${res.dupe?'し、訓練データに変換':'しました'}`);
   render();
 }
 function needExp(level){ return 40+(level-1)*30; }
@@ -1321,6 +1435,8 @@ function renderHome(){
     const planet = PLANETS[ex.planetId];
     active += `<div class="panel"><div class="ph"><div><span class="eyebrow">進行中の探索</span><h2>${esc(planet.name)}</h2></div></div><p>ステップ ${ex.step}/${ex.total}  調査率 ${ex.survey}%</p><div class="btnrow"><button class="btn pri" onclick="setScreen('explore')">探索画面へ</button></div></div>`;
   }
+  const newsHtml = save.news.length ? save.news.map(n => `<div class="news-item">${esc(n.text)}</div>`).join('') : '<p class="note">チームニュースはここに表示されます。</p>';
+  const hero = save.players.slice(0,3).map(p => summaryCard(p)).join('');
   main.innerHTML = `
     <section class="panel">
       <div class="ph"><div><span class="eyebrow">ホーム</span><h2>アストロ・パイオニアーズ</h2></div><div class="sub">${esc(save.team.name)}</div></div>
@@ -1335,6 +1451,8 @@ function renderHome(){
     </section>
     <section class="panel"><div class="ph"><div><span class="eyebrow">おすすめ行動</span><h2>次にやること</h2></div></div>${tipHtml}</section>
     ${active}
+    <section class="panel"><div class="ph"><div><span class="eyebrow">銀河スポーツニュース</span><h2>最新情報</h2></div></div>${newsHtml}</section>
+    <section class="panel"><div class="ph"><div><span class="eyebrow">注目選手</span><h2>最近の活躍</h2></div></div><div class="player-grid">${hero}</div></section>
     <section class="panel"><div class="ph"><div><span class="eyebrow">最近の結果</span><h2>直近の試合</h2></div></div>${recent}</section>
   `;
 }
@@ -1354,18 +1472,40 @@ function renderMatch(){
   const ms = save.activeMatch;
   const score = `${pTot(ms)} - ${nTot(ms)}`;
   const status = ms.finished ? '試合終了' : `${ms.inning}回 ${ms.outs}アウト`;
+  const currentHalf = !ms.finished && typeof ms.score.p[ms.inning-1] === 'number' ? 'bottom' : 'top';
+  const currentBatter = !ms.finished ? (currentHalf==='bottom' ? getPlayer(ms.order[ms.batIdx.p%9]).name : oppData(ms.oppId).bats[ms.batIdx.n%9].name) : '—';
+  const offense = !ms.finished ? (currentHalf==='bottom' ? save.team.name : NPC_TEAMS[ms.oppId].name) : '—';
+  const baseHtml = `
+    <div class="field">
+      <div class="fline"></div>
+      <div class="base${ms.bases[2]?' on':''}" style="left:50%;top:12%;">3</div>
+      <div class="base${ms.bases[1]?' on':''}" style="left:88%;top:50%;">2</div>
+      <div class="base${ms.bases[0]?' on':''}" style="left:12%;top:50%;">1</div>
+    </div>
+    <div class="fmeta"><div>攻撃: ${esc(offense)}</div><div>打者: ${esc(currentBatter)}</div></div>
+  `;
   const result = ms.finished ? `<div class="match-result"><div class="label ${ms.result.outcome==='win'?'win':ms.result.outcome==='lose'?'lose':'draw'}">${esc(ms.result.outcome.toUpperCase())}</div><div class="stat"><span>スコア</span><strong>${score}</strong></div><div class="stat"><span>相手</span><strong>${esc(ms.result.oppName)}</strong></div><div class="stat"><span>MVP</span><strong>${esc(ms.result.mvp||'—')}</strong></div><div class="stat"><span>獲得CR</span><strong>${ms.result.credits}</strong></div></div>` : '';
   const actionButtons = ms.finished ? `<button class="btn pri" onclick="closeMatch()">試合を閉じる</button>` : `<button class="btn pri" onclick="advanceMatch(false)">次へ進める</button><button class="btn" onclick="advanceMatch(true)">一気に決着</button>`;
-  const log = ms.log.slice(-10).map(item => {
+  const logItems = ms.log.slice(-18);
+  let currentGroup = 0;
+  const log = logItems.map(item => {
     const text = (item.half==='sys'? '' : halfLabel(item.inn,item.half)) + item.text;
     const isImpact = /◆|ホームラン|逆転|同点|ピンチ|チャンス|サヨナラ|勝利|敗北|四球|得点/.test(text);
+    const group = item.inn<=3 ? 1 : item.inn<=6 ? 2 : 3;
+    let marker = '';
+    if(group !== currentGroup){
+      currentGroup = group;
+      marker = `<p class="log-sep">${group===1?'1回表〜3回裏':'4回表〜6回裏'}</p>`;
+    }
+    const label = isImpact ? `<span class="log-label">${/ホームラン/.test(text)?'HOMERUN':/逆転|勝利/.test(text)?'CLUTCH':/同点|ピンチ/.test(text)?'PINCH':'CHANCE'}</span>` : '';
     const cls = [item.hl ? 'hl' : '', isImpact ? 'impact' : ''].filter(Boolean).join(' ');
-    return `<p${cls?` class="${cls}"`:''}>${esc(text)}</p>`;
+    return marker + `<p${cls?` class="${cls}"`:''}>${label}${esc(text)}</p>`;
   }).join('');
   main.innerHTML = `
     <section class="panel"><div class="ph"><div><span class="eyebrow">試合</span><h2>${esc(NPC_TEAMS[ms.oppId].name)} 戦</h2></div><div class="sub">${status}</div></div>
       <div class="kv"><b>スコア</b><span>${score}</span></div>
       ${result}
+      <div class="field-card">${baseHtml}</div>
       <div class="btnrow">${actionButtons}</div>
     </section>
     <section class="panel"><div class="ph"><div><span class="eyebrow">ログ</span><h2>直近プレイ</h2></div></div><div class="log">${log || '<p>まだプレイされていません。</p>'}</div></section>
@@ -1378,7 +1518,7 @@ function renderExplore(){
     const ex = save.activeExpedition;
     const planet = PLANETS[ex.planetId];
     const results = ex.results.map(r => `<p${r.ev?' class="impact"':''}>${esc(r.text)}</p>`).join('');
-    const action = ex.finished ? '<button class="btn pri" onclick="closeExpedition()">探索を閉じる</button>' : ex.pend ? `<button class="btn pri" onclick="chooseExpedition('safe')">安全に調査</button><button class="btn pri" onclick="chooseExpedition('deep')">深部へ進む</button><button class="btn pri" onclick="chooseExpedition('data')">データ回収</button>` : `<button class="btn pri" onclick="stepExpedition()">次のステップ</button><button class="btn" onclick="retreatExpedition()">撤退する</button>`;
+    const action = ex.finished ? '<button class="btn pri" onclick="closeExpedition()">探索を閉じる</button>' : ex.pend ? `<button class="btn pri" onclick="chooseExpedition('safe')">A. 安全に調査する</button><button class="btn pri" onclick="chooseExpedition('deep')">B. 深部へ進む</button><button class="btn pri" onclick="chooseExpedition('data')">C. データだけ回収する</button>` : `<button class="btn pri" onclick="stepExpedition()">次のステップ</button><button class="btn" onclick="retreatExpedition()">撤退する</button>`;
     const gainsHtml = Object.entries(ex.gains).map(([mid,q]) => `<div class="material-card${MATERIALS[mid].r===3?' rare':''}"><strong>${esc(MATERIALS[mid].name)}</strong><span>×${q}</span></div>`).join('') || '<p class="note">素材はまだ獲得されていません。</p>';
     const gauge = `<div class="gauge-outer"><div class="gauge-inner"><i style="width:${clampN(ex.survey,0,100)}%"></i></div></div><div class="gauge-note">調査率 ${ex.survey}%</div>`;
     const milestone = ex.result && ex.result.unlocked && ex.result.unlocked.length ? `<div class="milestone">${esc(ex.result.unlocked.join(' / '))}</div>` : '';
@@ -1388,6 +1528,7 @@ function renderExplore(){
         ${gainsHtml ? `<div class="material-grid">${gainsHtml}</div>` : ''}
         ${gauge}
         ${milestone}
+        <div class="reward-card">報酬: ${Object.entries(ex.gains).map(([mid,q])=>`🔹 ${esc(MATERIALS[mid].name)} ×${q}`).join(' / ')} ${ex.sGain?` | 調査率+${ex.sGain}%` : ''}</div>
         <div class="btnrow">${action}</div>
       </section>
       <section class="panel"><div class="ph"><div><span class="eyebrow">探索ログ</span><h2>進行記録</h2></div></div><div class="log">${results || '<p>まだ記録がありません。</p>'}</div></section>
@@ -1440,7 +1581,73 @@ function renderModal(){
   const root = document.getElementById('modal-root');
   if(!UI.modal){ root.className=''; root.innerHTML=''; return; }
   let html='';
-  if(UI.modal.kind==='matchResult'){
+  if(UI.modal.kind==='matchEffect'){
+    const ms = save.activeMatch;
+    const idx = ms.effectIndex||0;
+    const evt = ms.effectQueue && ms.effectQueue[idx] ? ms.effectQueue[idx] : null;
+    if(evt){
+      const effectBg = evt.type==='pinch' ? 'background:radial-gradient(circle at top, rgba(196,77,255,.18), transparent);' : evt.type==='homerun' ? 'background:radial-gradient(circle at top left, rgba(255,196,77,.18), transparent);' : '';
+      html = `
+      <div class="mback" onclick="closeModal()"></div>
+      <div class="mbox" style="${effectBg}">
+        <div class="ph"><div><span class="eyebrow">演出ステージ</span><h2>${esc(evt.label)}</h2></div></div>
+        <div class="effect-card">
+          <div class="effect-row"><span>打者</span><strong>${esc(evt.actor||'—')}</strong></div>
+          <div class="effect-row"><span>投手</span><strong>${esc(evt.pitcher||'—')}</strong></div>
+          <div class="effect-row"><span>塁状況</span><strong>${esc(evt.bases||'—')}</strong></div>
+          <div class="effect-text">${esc(evt.desc)}</div>
+          <div class="effect-result">${esc(evt.result)}</div>
+        </div>
+        <div class="btnrow"><button class="btn pri" onclick="nextMatchEffect()">次の演出へ</button></div>
+      </div>
+      `;
+    }
+  } else if(UI.modal.kind==='matchSummary'){
+    const ms = save.activeMatch;
+    const summary = ms.finished ? '試合は終了しました' : 'この区切りの結果を確認してください';
+    html = `
+      <div class="mback" onclick="closeMatchSummary()"></div>
+      <div class="mbox goldfx">
+        <div class="ph"><div><span class="eyebrow">演出完了</span><h2>区切り結果</h2></div></div>
+        <div class="match-result">
+          <div class="stat"><span>現在のスコア</span><strong>${pTot(ms)} - ${nTot(ms)}</strong></div>
+          <div class="stat"><span>次のイニング</span><strong>${ms.finished? 'なし' : ms.inning+'回'}</strong></div>
+          <div class="stat"><span>打者</span><strong>${!ms.finished ? esc(getPlayer(ms.order[ms.batIdx.p%9]).name) : '—'}</strong></div>
+        </div>
+        <div class="btnrow"><button class="btn pri" onclick="closeMatchSummary()">続ける</button></div>
+      </div>
+    `;
+  } else if(UI.modal.kind==='exploreChoice'){
+    const pend = UI.modal.pend||{};
+    html = `
+      <div class="mback" onclick="closeModal()"></div>
+      <div class="mbox">
+        <div class="ph"><div><span class="eyebrow">探索決断</span><h2>${esc(UI.modal.planet||'遭遇')}</h2></div></div>
+        <div class="effect-card">
+          <div class="effect-row"><span>遭遇</span><strong>${esc(pend.text)}</strong></div>
+          <div class="effect-row"><span>深度</span><strong>${Math.round(pend.okP*100)}%</strong></div>
+        </div>
+        <div class="btnrow">
+          ${pend.options.map(o=>`<button class="btn pri" onclick="chooseExpedition('${o.id}')">${esc(o.label)}</button>`).join('')}
+          <button class="btn" onclick="retreatExpedition()">撤退する</button>
+        </div>
+      </div>
+    `;
+  } else if(UI.modal.kind==='exploreEffect'){
+    const res = UI.modal.res||{};
+    html = `
+      <div class="mback" onclick="closeModal()"></div>
+      <div class="mbox">
+        <div class="ph"><div><span class="eyebrow">探索演出</span><h2>${esc(res.planet||'探索')}</h2></div></div>
+        <div class="effect-card">
+          <div class="effect-row"><span>イベント</span><strong>${esc(res.desc)}</strong></div>
+          <div class="effect-row"><span>報酬</span><strong>${res.gains?Object.entries(res.gains).map(([mid,q])=>`${esc(MATERIALS[mid].name)} ×${q}`).join(' / '):'—'}</strong></div>
+          <div class="effect-row"><span>調査率</span><strong>${res.survey}%</strong></div>
+        </div>
+        <div class="btnrow"><button class="btn pri" onclick="closeModal()">結果へ</button></div>
+      </div>
+    `;
+  } else if(UI.modal.kind==='matchResult'){
     const ms = save.activeMatch;
     const out = ms && ms.result ? ms.result : (UI.modal.res || {});
     const label = out.outcome==='win' ? 'WIN' : out.outcome==='lose' ? 'LOSE' : 'DRAW';
