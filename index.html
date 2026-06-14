@@ -226,6 +226,8 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .log p.impact::before{content:'◆';margin-right:6px;color:var(--imp)}
 .log p.sysl{color:var(--pu)}
 .log p.final{padding-bottom:10px;margin-top:4px;border-color:rgba(255,196,77,.25)}
+.log-detail{display:block;margin-top:5px;font-size:11px;line-height:1.55;color:#c9d8ee;font-weight:500;text-shadow:none;}
+.log-detail b{color:var(--imp);}
 .tip-list{display:grid;gap:8px;margin-top:8px}
 .tip-item{border:1px solid rgba(72,180,255,.16);border-radius:10px;background:linear-gradient(180deg,rgba(63,217,255,.08),rgba(12,20,36,.9));padding:12px;display:flex;align-items:flex-start;gap:10px}
 .tip-item .marker{width:8px;height:8px;border-radius:50%;background:var(--cy);margin-top:5px;flex-shrink:0}
@@ -354,9 +356,22 @@ textarea.io{
 .cine-base.on::after{content:'RUN';color:#04141c;font-size:9px;}
 .cine-run-name{position:absolute;font-size:10px;color:#dff8ff;background:rgba(3,6,12,.76);border:1px solid rgba(63,217,255,.18);border-radius:999px;padding:1px 6px;max-width:86px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cine-run-name.r1{left:74%;top:69%;}.cine-run-name.r2{left:50%;top:16%;transform:translateX(-50%);}.cine-run-name.r3{right:74%;top:69%;}
+.cine-runner-chip{position:absolute;z-index:5;left:var(--fx,50%);top:var(--fy,84%);transform:translate(-50%,-50%);display:flex;align-items:center;gap:3px;max-width:92px;padding:2px 7px;border-radius:999px;background:rgba(3,6,12,.86);border:1px solid rgba(63,217,255,.45);box-shadow:0 0 14px rgba(63,217,255,.34);color:#eef7ff;font-size:10px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;animation:cineRunnerMove .95s cubic-bezier(.2,.7,.2,1) var(--delay,.45s) forwards;}
+.cine-runner-chip::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--cy);box-shadow:0 0 10px rgba(63,217,255,.8);flex:0 0 auto;}
+.cine-runner-chip.score{border-color:rgba(255,196,77,.75);box-shadow:0 0 18px rgba(255,196,77,.48);animation-name:cineRunnerScore;}
+.cine-runner-chip.score::before{background:var(--imp);box-shadow:0 0 11px rgba(255,196,77,.9);}
+.cine-runner-chip.out{animation-name:cineRunnerOut;}
+.cine-runner-chip.hr-batter{animation:cineHrBatter 1.85s cubic-bezier(.2,.7,.2,1) var(--delay,.45s) forwards;}
+.cine-runner-chip.hr-from-1{animation:cineHrFrom1 1.55s cubic-bezier(.2,.7,.2,1) var(--delay,.45s) forwards;}
+.cine-runner-chip.hr-from-2{animation:cineHrFrom2 1.28s cubic-bezier(.2,.7,.2,1) var(--delay,.45s) forwards;}
+.cine-runner-chip.hr-from-3{animation:cineHrFrom3 .9s cubic-bezier(.2,.7,.2,1) var(--delay,.45s) forwards;}
+.cine-home.flash::after{content:'';position:absolute;left:50%;top:50%;width:38px;height:38px;border-radius:50%;transform:translate(-50%,-50%);background:rgba(255,196,77,.2);box-shadow:0 0 24px rgba(255,196,77,.75);animation:cineHomeFlash 1.1s ease .85s forwards;pointer-events:none;}
 .cine-traj{position:absolute;z-index:2;left:50%;top:84%;width:4px;height:4px;pointer-events:none;}
 .cine-traj::before{content:'';position:absolute;left:0;top:0;width:var(--len,118px);height:0;border-top:3px solid rgba(255,196,77,.86);border-radius:999px;box-shadow:0 0 12px rgba(255,196,77,.45);transform:rotate(var(--rot,-90deg));transform-origin:left center;}
 .cine-traj::after{content:'';position:absolute;left:calc(var(--x,0px) - 6px);top:calc(var(--y,-118px) - 6px);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 15px rgba(255,196,77,.9);}
+.cine-ball-flight{position:absolute;z-index:6;left:50%;top:84%;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 16px rgba(255,242,185,.96);pointer-events:none;animation:cineBallFlight .72s cubic-bezier(.18,.58,.22,1) forwards;}
+.cine-ball-flight.grounder{width:9px;height:9px;animation-duration:.58s;box-shadow:0 0 10px rgba(255,196,77,.72);}
+.cine-ball-flight.fly,.cine-ball-flight.homer{animation-duration:.9s;}
 .cine-traj.batted.grounder::before{border-top-style:dashed;border-color:rgba(255,196,77,.7);box-shadow:0 0 8px rgba(255,196,77,.3);}
 .cine-traj.batted.grounder::after{width:10px;height:10px;background:var(--imp);}
 .cine-traj.batted.liner::before{border-top-width:3px;border-color:rgba(255,242,185,.9);}
@@ -375,6 +390,15 @@ textarea.io{
 .cine-traj.score-glow::after{left:-21px;top:auto;bottom:-22px;width:44px;height:44px;background:rgba(255,196,77,.22);box-shadow:0 0 28px rgba(255,196,77,.7);}
 .cine-landing{position:absolute;z-index:3;left:calc(50% + var(--x,0px) - 7px);top:calc(84% + var(--y,-118px) - 7px);width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.78);background:rgba(255,196,77,.2);box-shadow:0 0 18px rgba(255,196,77,.62);pointer-events:none;}
 .cine-landing::after{content:'落下点';position:absolute;left:13px;top:-7px;font-size:9px;color:#fff;background:rgba(3,6,12,.7);border-radius:999px;padding:1px 5px;white-space:nowrap;}
+@keyframes cineRunnerMove{0%{left:var(--fx);top:var(--fy);opacity:0;transform:translate(-50%,-50%) scale(.82);}12%{opacity:1;}100%{left:var(--tx);top:var(--ty);opacity:1;transform:translate(-50%,-50%) scale(1);}}
+@keyframes cineRunnerScore{0%{left:var(--fx);top:var(--fy);opacity:0;transform:translate(-50%,-50%) scale(.82);}12%{opacity:1;}72%{left:var(--tx);top:var(--ty);opacity:1;transform:translate(-50%,-50%) scale(1.04);}100%{left:var(--tx);top:var(--ty);opacity:0;transform:translate(-50%,-50%) scale(.58);}}
+@keyframes cineRunnerOut{0%{left:var(--fx);top:var(--fy);opacity:0;transform:translate(-50%,-50%) scale(.82);}18%{opacity:1;}100%{left:var(--tx);top:var(--ty);opacity:0;transform:translate(-50%,-50%) scale(.7);}}
+@keyframes cineHrBatter{0%{left:50%;top:84%;opacity:0;transform:translate(-50%,-50%) scale(.82);}8%{opacity:1;}28%{left:78%;top:57%;}50%{left:50%;top:28%;}72%{left:22%;top:57%;opacity:1;}88%{left:50%;top:84%;opacity:1;transform:translate(-50%,-50%) scale(1.05);}100%{left:50%;top:84%;opacity:0;transform:translate(-50%,-50%) scale(.58);}}
+@keyframes cineHrFrom1{0%{left:78%;top:57%;opacity:0;transform:translate(-50%,-50%) scale(.82);}9%{opacity:1;}36%{left:50%;top:28%;}64%{left:22%;top:57%;opacity:1;}86%{left:50%;top:84%;opacity:1;transform:translate(-50%,-50%) scale(1.05);}100%{left:50%;top:84%;opacity:0;transform:translate(-50%,-50%) scale(.58);}}
+@keyframes cineHrFrom2{0%{left:50%;top:28%;opacity:0;transform:translate(-50%,-50%) scale(.82);}10%{opacity:1;}48%{left:22%;top:57%;opacity:1;}82%{left:50%;top:84%;opacity:1;transform:translate(-50%,-50%) scale(1.05);}100%{left:50%;top:84%;opacity:0;transform:translate(-50%,-50%) scale(.58);}}
+@keyframes cineHrFrom3{0%{left:22%;top:57%;opacity:0;transform:translate(-50%,-50%) scale(.82);}14%{opacity:1;}76%{left:50%;top:84%;opacity:1;transform:translate(-50%,-50%) scale(1.05);}100%{left:50%;top:84%;opacity:0;transform:translate(-50%,-50%) scale(.58);}}
+@keyframes cineHomeFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.45);}22%{opacity:1;}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45);}}
+@keyframes cineBallFlight{0%{left:50%;top:84%;opacity:0;transform:translate(-50%,-50%) scale(.7);}12%{opacity:1;}55%{left:calc(50% + var(--mx,0px));top:calc(84% + var(--my,-68px));transform:translate(-50%,-50%) translateY(var(--arc,-28px)) scale(1.05);}100%{left:calc(50% + var(--x,0px));top:calc(84% + var(--y,-118px));opacity:0;transform:translate(-50%,-50%) scale(.72);}}
 .cine-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .cine-card{border:1px solid rgba(63,217,255,.16);border-radius:8px;background:linear-gradient(180deg,rgba(63,217,255,.04),rgba(10,17,32,.92));padding:10px;}
 .cine-card strong{display:block;font-size:15px;color:#eef7ff;overflow-wrap:anywhere;}
@@ -382,6 +406,8 @@ textarea.io{
 .cine-stat span{color:var(--mut);}
 .cine-stat strong{font-size:12px;color:#eef7ff;text-align:right;}
 .cine-result{border:1px solid rgba(255,196,77,.18);border-radius:8px;background:rgba(255,196,77,.06);padding:10px 12px;font-size:15px;color:#eef7ff;font-weight:800;line-height:1.45;}
+.cine-advances{display:grid;gap:5px;border:1px solid rgba(63,217,255,.14);border-radius:8px;background:rgba(6,14,28,.62);padding:9px 11px;font-size:12px;line-height:1.45;color:#dcecff;}
+.cine-advances b{color:var(--imp);font-weight:900;}
 .cine-tags{display:flex;flex-wrap:wrap;gap:8px;}
 .cine-tag{font-size:11px;color:var(--tx);background:rgba(63,217,255,.08);border:1px solid rgba(63,217,255,.15);border-radius:999px;padding:4px 8px;}
 .cine-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px;}
@@ -754,7 +780,7 @@ function startMatch(oppId){
 }
 function ensureB(ms,pid){ if(!ms.bstats[pid]) ms.bstats[pid]={pa:0,ab:0,h:0,d2:0,d3:0,hr:0,rbi:0,runs:0,bb:0,hbp:0,so:0,sb:0,cs:0,sf:0,gidp:0}; return ms.bstats[pid]; }
 function ensureP(ms,pid){ if(!ms.pstats[pid]) ms.pstats[pid]={outs:0,h:0,r:0,bb:0,so:0,hr:0}; return ms.pstats[pid]; }
-function mlog(ms,inn,half,text,hl,bases){ ms.log.push({inn,half,text,hl:!!hl,bases:bases||''}); }
+function mlog(ms,inn,half,text,hl,bases,details){ ms.log.push({inn,half,text,hl:!!hl,bases:bases||'',details:details||null}); }
 function tot(arr){ return arr.reduce((s,v)=>s+(typeof v==='number'?v:0),0); }
 function pTot(ms){ return tot(ms.score.p); }
 function nTot(ms){ return tot(ms.score.n); }
@@ -847,6 +873,112 @@ function pinchRunCheck(ms,batPid){
   cineCaptureChange(ms,'代走',cand.name,runner.name+'に代えて');
 }
 
+function cloneRunner(r){ return r ? {pid:r.pid,name:r.name,speed:r.speed,side:r.side} : null; }
+function cloneBases(bases){ return bases.map(cloneRunner); }
+function baseLabel(n){ return n===1?'1塁':n===2?'2塁':n===3?'3塁':'本塁'; }
+function formatBaseState(bases){
+  const filled = [];
+  if(bases[0]) filled.push('1塁');
+  if(bases[1]) filled.push('2塁');
+  if(bases[2]) filled.push('3塁');
+  if(filled.length===0) return '走者なし';
+  if(filled.length===3) return '満塁';
+  return filled.join('・');
+}
+function runnerMoveText(m){
+  const name = m.runner && m.runner.name ? m.runner.name : (typeof m.runner === 'string' ? m.runner : '');
+  if(m.from==='B' || m.from==='batter') return `打者${name ? ' '+name : ''} → ${m.to===4||m.to==='home'?'本塁':baseLabel(m.to)}`;
+  const from = `${baseLabel(m.from)}走者${name}`;
+  return `${from} → ${m.to===4||m.to==='home'?'本塁':baseLabel(m.to)}`;
+}
+function formatRunnerMovements(movs, scoringOnly){
+  const isHome = m => m && (m.to===4 || m.to==='home');
+  const list = (movs||[]).filter(m=>scoringOnly ? isHome(m) : !isHome(m));
+  return list.length ? list.map(runnerMoveText).join(' / ') : (scoringOnly ? 'なし' : 'なし');
+}
+function singleZoneText(info){
+  const z = info && info.fieldZone;
+  if(z==='LF') return 'レフト前ヒット';
+  if(z==='CF') return 'センター前ヒット';
+  if(z==='RF') return 'ライト前ヒット';
+  if(z==='LC') return '左中間へのヒット';
+  if(z==='RC') return '右中間へのヒット';
+  if(z==='IF_L') return '三遊間への内野安打';
+  if(z==='IF_C') return 'ピッチャー強襲の内野安打';
+  if(z==='IF_R') return '一二塁間への内野安打';
+  return 'ヒット';
+}
+function formatSingleResultText(info,runs){
+  const hit = singleZoneText(info);
+  if(runs>0) return `${hit}で${runs}点追加`;
+  return hit;
+}
+function createBattedBallInfo(res,bt){
+  if(res!=='1B') return null;
+  const r = rnd();
+  let fieldZone, traj, depth;
+  if(r<0.08){
+    const z = rnd();
+    fieldZone = z<0.36 ? 'IF_L' : z<0.66 ? 'IF_C' : 'IF_R';
+    traj = 'grounder';
+    depth = 'infield';
+  }else if(r<0.22){
+    const z = rnd();
+    fieldZone = z<0.36 ? 'LF' : z<0.68 ? 'CF' : 'RF';
+    traj = rnd()<0.55 ? 'fly' : 'liner';
+    depth = 'shallow';
+  }else{
+    const z = rnd();
+    fieldZone = z<0.23 ? 'LF' : z<0.38 ? 'LC' : z<0.62 ? 'CF' : z<0.77 ? 'RC' : 'RF';
+    depth = rnd()<0.58 ? 'shallow' : 'medium';
+    traj = rnd()<0.72 ? 'liner' : 'grounder';
+  }
+  return {fieldZone,traj,depth};
+}
+function resolveSingleAdvance(B,batter,info,outs,scoreRun){
+  const movements = [], scored = [];
+  const next = [null,null,null];
+  const move = (runner,from,to)=>{
+    movements.push({runner:cloneRunner(runner),from,to});
+    if(to===4){ scored.push(cloneRunner(runner)); scoreRun(runner); }
+    else next[to-1] = runner;
+  };
+  if(B[2]) move(B[2],3,4);
+  if(B[1]){
+    const r2 = B[1];
+    let p = 0.44 + (r2.speed-50)*0.006;
+    if(outs===2) p += 0.13;
+    if(outs===0) p -= 0.07;
+    if(info.depth==='medium') p += 0.15;
+    if(info.depth==='shallow') p -= 0.15;
+    if(['LC','CF','RC'].includes(info.fieldZone)) p += 0.10;
+    if(info.fieldZone==='RF' && info.depth==='shallow') p -= 0.18;
+    if(info.traj==='liner') p += 0.08;
+    if(info.traj==='grounder') p -= 0.04;
+    if(/^IF_/.test(info.fieldZone)) p -= 0.24;
+    if(rnd()<clampN(p,0.10,0.88)) move(r2,2,4);
+    else move(r2,2,3);
+  }
+  if(B[0]){
+    const r1 = B[0];
+    let takeThird = false;
+    if(!next[2]){
+      let p = 0.08 + (r1.speed-50)*0.005;
+      if(outs===2) p += 0.06;
+      if(info.depth==='medium') p += 0.18;
+      if(['LC','CF','RC'].includes(info.fieldZone)) p += 0.14;
+      if(info.traj==='liner') p += 0.07;
+      if(info.fieldZone==='RF' && info.depth==='shallow') p -= 0.18;
+      if(/^IF_/.test(info.fieldZone)) p -= 0.22;
+      takeThird = rnd()<clampN(p,0.03,0.62);
+    }
+    move(r1,1,takeThird?3:2);
+  }
+  move(batter,'B',1);
+  B[0]=next[0]; B[1]=next[1]; B[2]=next[2];
+  return {movements,scored};
+}
+
 function resolvePA(bt,pit,fat){
   const pv=(pit.velocity*0.5+pit.breaking*0.5)*fat;
   const pc=pit.control*fat;
@@ -875,6 +1007,7 @@ function doPA(ms,half){
   const playerBat = half==='bottom';
   const opp=oppData(ms.oppId);
   const baseState = ms.bases.map(r=>r? (r.side==='p'?getPlayer(r.pid).name:r.name) : '-').join(' / ');
+  const basesBeforePA = cloneBases(ms.bases);
   const scoreBefore = pTot(ms) - nTot(ms);
   // 投手側
   let pit,fat,pitPid=null,pitRole='starter',pitSta;
@@ -918,6 +1051,7 @@ function doPA(ms,half){
 
   const res=resolvePA(bt,pit,fat);
   let runsPA=0, outsGained=0, reached=false, text='', hl=false, isDP=false, isSF=false;
+  let battedBallInfo=null, runnerMovements=null, scoredRunners=null;
 
   const scoreRun=(runner)=>{
     const idx=ms.inning-1;
@@ -979,14 +1113,11 @@ function doPA(ms,half){
   }
   else if(res==='1B'){
     reached=true;
-    if(B[2]){scoreRun(B[2]);B[2]=null;}
-    if(B[1]){
-      const r2=B[1]; B[1]=null;
-      if(rnd()<0.35+r2.speed*0.004) scoreRun(r2); else B[2]=r2;
-    }
-    if(B[0]){ B[1]=B[0]; B[0]=null; }
-    B[0]=runnerObj();
-    text=pick(['レフト前ヒット','センター前ヒット','ライト前ヒット']);
+    battedBallInfo=createBattedBallInfo(res,bt);
+    const singleAdvance=resolveSingleAdvance(B,runnerObj(),battedBallInfo,ms.outs,scoreRun);
+    runnerMovements=singleAdvance.movements;
+    scoredRunners=singleAdvance.scored;
+    text=formatSingleResultText(battedBallInfo,runsPA);
     if(playerBat)ms.hits.p++; else ms.hits.n++;
     if(bs){bs.pa++;bs.ab++;bs.h++;bs.rbi+=runsPA;}
     if(ps){ps.h++;ps.r+=runsPA;}
@@ -1012,9 +1143,20 @@ function doPA(ms,half){
       if(ps)ps.outs++;
     }
   }
-  if(runsPA>0){ text+='（'+runsPA+'点）'; hl=true; }
-  mlog(ms,ms.inning,half,bt.name+'：'+text,hl,baseState);
-  cineSnap(ms,half,bt,res,{runs:runsPA,baseState,scoreBefore,pitcherName: playerBat ? opp.pit.name : getPlayer(ms.pitcher).name, outcomeText:text, wasDP:isDP, wasSF:isSF, isWalkoff:ms._wo});
+  if(runsPA>0){ if(res!=='1B') text+='（'+runsPA+'点）'; hl=true; }
+  const basesAfterPA = cloneBases(B);
+  const paDetails = res==='1B' ? {
+    basesBefore:basesBeforePA,
+    basesAfter:basesAfterPA,
+    baseStateBefore:formatBaseState(basesBeforePA),
+    baseStateAfter:formatBaseState(basesAfterPA),
+    runnerMovements:runnerMovements||[],
+    scoredRunners:scoredRunners||[],
+    runs:runsPA,
+    battedBall:battedBallInfo
+  } : null;
+  mlog(ms,ms.inning,half,bt.name+'：'+text,hl,baseState,paDetails);
+  cineSnap(ms,half,bt,res,{runs:runsPA,baseState,scoreBefore,pitcherName: playerBat ? opp.pit.name : getPlayer(ms.pitcher).name, outcomeText:text, wasDP:isDP, wasSF:isSF, isWalkoff:ms._wo,basesBefore:paDetails&&basesBeforePA,basesAfter:paDetails&&basesAfterPA,runnerMovements,scoredRunners,battedBall:battedBallInfo});
 
   consumeStamina(ms,playerBat,pitRole,pitSta,outsGained,reached,runsPA);
 
@@ -1318,9 +1460,97 @@ function cineBattedBallInfo(evt){
   const rot = Math.round(Math.atan2(y,x) * 180 / Math.PI);
   return {fieldZone,depth,battedBallType,x,y,len,rot};
 }
+function battedBallVisualInfo(info){
+  if(!info) return null;
+  const zoneMap = {
+    LF:'left',LC:'leftCenter',CF:'center',RC:'rightCenter',RF:'right',
+    IF_L:'infieldLeft',IF_C:'infieldCenter',IF_R:'infieldRight',
+    left:'left',leftCenter:'leftCenter',center:'center',rightCenter:'rightCenter',right:'right',
+    infieldLeft:'infieldLeft',infieldCenter:'infieldCenter',infieldRight:'infieldRight'
+  };
+  const fieldZone = info.fieldZone || 'CF';
+  const visualZone = zoneMap[fieldZone] || 'center';
+  const depth = info.depth || (/^IF_/.test(fieldZone) ? 'infield' : 'medium');
+  const battedBallType = info.traj || info.battedBallType || 'liner';
+  const points = {
+    left:{shallow:[-58,-96],medium:[-78,-124],deep:[-88,-154]},
+    leftCenter:{shallow:[-36,-106],medium:[-58,-132],deep:[-68,-160]},
+    center:{shallow:[0,-108],medium:[0,-138],deep:[0,-168]},
+    rightCenter:{shallow:[36,-106],medium:[58,-132],deep:[68,-160]},
+    right:{shallow:[58,-96],medium:[78,-124],deep:[88,-154]},
+    infieldLeft:{infield:[-45,-55],shallow:[-45,-55],medium:[-48,-66],deep:[-58,-82]},
+    infieldCenter:{infield:[0,-62],shallow:[0,-62],medium:[0,-78],deep:[0,-95]},
+    infieldRight:{infield:[45,-55],shallow:[45,-55],medium:[48,-66],deep:[58,-82]},
+  };
+  const zonePoints = points[visualZone] || points.center;
+  const point = zonePoints[depth] || zonePoints.medium || points.center.medium;
+  const x = point[0], y = point[1];
+  const len = Math.max(1,Math.round(Math.sqrt(x*x+y*y)));
+  const rot = Math.round(Math.atan2(y,x) * 180 / Math.PI);
+  return Object.assign({},info,{fieldZone,visualZone,depth,battedBallType,x,y,len,rot});
+}
 function cineBattedStyle(info){
   if(!info) return '';
   return `--x:${info.x}px;--y:${info.y}px;--len:${info.len}px;--rot:${info.rot}deg`;
+}
+function cineAnimBasePoint(pos){
+  const key = String(pos);
+  if(key==='1' || key==='1B') return {x:'78%',y:'57%',cls:'from-1'};
+  if(key==='2' || key==='2B') return {x:'50%',y:'28%',cls:'from-2'};
+  if(key==='3' || key==='3B') return {x:'22%',y:'57%',cls:'from-3'};
+  if(key==='4' || key==='home' || key==='H') return {x:'50%',y:'84%',cls:'home'};
+  if(key==='B' || key==='batter') return {x:'50%',y:'84%',cls:'batter'};
+  if(key==='out') return {x:'50%',y:'70%',cls:'out'};
+  return {x:'50%',y:'84%',cls:'home'};
+}
+function cineMoveName(m,fallback){
+  if(m && m.runner){
+    if(typeof m.runner === 'string') return m.runner;
+    if(m.runner.name) return m.runner.name;
+  }
+  return fallback || '';
+}
+function cineNormalizedMovements(evt,basesBeforeSnap){
+  const src = Array.isArray(evt.runnerMovements) ? evt.runnerMovements : [];
+  const moves = src.map(m=>({
+    runner:m.runner,
+    name:cineMoveName(m,evt.actor),
+    from:m.from==='B' ? 'batter' : m.from,
+    to:m.to===4 ? 'home' : m.to
+  })).filter(m=>m.name);
+  if(moves.length) return moves;
+  if(evt.type==='homerun'){
+    const hr = [];
+    if(Array.isArray(basesBeforeSnap)){
+      basesBeforeSnap.forEach((name,i)=>{ if(name) hr.push({runner:{name},name,from:i+1,to:'home'}); });
+    }
+    if(evt.actor) hr.push({runner:{name:evt.actor},name:evt.actor,from:'batter',to:'home'});
+    return hr;
+  }
+  return [];
+}
+function cineRunnerChipsHtml(moves,evt){
+  return (moves||[]).map((m,i)=>{
+    const from = cineAnimBasePoint(m.from);
+    const to = cineAnimBasePoint(m.to);
+    const score = m.to==='home' || m.to===4;
+    const out = m.to==='out';
+    const hrClass = evt && evt.type==='homerun' && score
+      ? (m.from==='batter' || m.from==='B' ? ' hr-batter' : ` hr-${from.cls}`)
+      : '';
+    const cls = `cine-runner-chip${score?' score':''}${out?' out':''}${hrClass}`;
+    const delay = 0.42 + i*0.12;
+    const style = `--fx:${from.x};--fy:${from.y};--tx:${to.x};--ty:${to.y};--delay:${delay.toFixed(2)}s`;
+    return `<span class="${esc(cls)}" style="${esc(style)}">${esc(m.name)}</span>`;
+  }).join('');
+}
+function cineAnimatedBallStyle(info){
+  if(!info) return '';
+  const base = cineBattedStyle(info);
+  const arc = info.battedBallType==='homer' ? -58 : info.battedBallType==='fly' ? -46 : info.battedBallType==='liner' ? -28 : -8;
+  const mx = Math.round((info.x||0)*0.58);
+  const my = Math.round((info.y||0)*0.58);
+  return `${base};--mx:${mx}px;--my:${my}px;--arc:${arc}px`;
 }
 function cineOutDots(outs){
   const o = typeof outs === 'number' ? Math.max(0,Math.min(3,outs)) : 0;
@@ -1369,8 +1599,9 @@ function cineCapturePA(ms,half,bt,res,info){
   const desc = `${actor} が ${info.outcomeText || info.resultText || res}。${info.runs? `${info.runs}点をもたらした。` : ''}`;
   const result = `現在: ${scoreSnap.p} - ${scoreSnap.n} | ${baseAfter}`;
   const resultText = info.outcomeText||info.resultText||res;
-  const ballInfo = cineBattedBallInfo({type,label,desc,resultText,runs:info.runs||0});
-  pushCinematicEvent(ms,{label,displayLabel:label,type,inning:ms.inning,half,actor,pitcher,bases:baseAfter,basesAfter:basesSnap,outsAfter:ms.outs,scoreAfter:scoreSnap,runs:info.runs||0,desc,result,resultText,battedBallType:ballInfo&&ballInfo.battedBallType,fieldZone:ballInfo&&ballInfo.fieldZone,depth:ballInfo&&ballInfo.depth,prio,theme,tags});
+  const savedBall = info.battedBall || null;
+  const ballInfo = savedBall ? battedBallVisualInfo(savedBall) : cineBattedBallInfo({type,label,desc,resultText,runs:info.runs||0});
+  pushCinematicEvent(ms,{label,displayLabel:label,type,inning:ms.inning,half,actor,pitcher,bases:baseAfter,basesBefore:info.basesBefore||null,basesAfter:basesSnap,outsAfter:ms.outs,scoreAfter:scoreSnap,runs:info.runs||0,desc,result,resultText,battedBallType:ballInfo&&ballInfo.battedBallType,traj:(savedBall&&savedBall.traj)||(ballInfo&&ballInfo.battedBallType),fieldZone:ballInfo&&ballInfo.fieldZone,depth:ballInfo&&ballInfo.depth,runnerMovements:info.runnerMovements||[],scoredRunners:info.scoredRunners||[],prio,theme,tags});
 }
 function cineSnap(ms,half,bt,res,info){ cineCapturePA(ms,half,bt,res,info); }
 function cineCaptureSteal(ms,half,runner,ok){
@@ -1421,6 +1652,7 @@ function renderCinematicStage(evt,ms){
   const score = `${scoreSnap.p} - ${scoreSnap.n}`;
   const basesSnap = Array.isArray(evt.basesAfter) ? evt.basesAfter.slice(0,3) : cineBasesFromText(evt.bases || '');
   while(basesSnap.length<3) basesSnap.push(null);
+  const basesBeforeSnap = Array.isArray(evt.basesBefore) ? evt.basesBefore.slice(0,3) : null;
   const baseText = cineBaseTextFromSnap(basesSnap);
   const outs = typeof evt.outsAfter === 'number' ? Math.max(0,Math.min(evt.outsAfter,3)) : 0;
   const outsText = typeof evt.outsAfter === 'number' ? `${outs}アウト` : 'アウト不明';
@@ -1428,13 +1660,29 @@ function renderCinematicStage(evt,ms){
   const label = cineDisplayLabel(evt);
   const headline = cineHeadline(evt);
   const inferredBall = cineBattedBallInfo(evt);
-  const battedInfo = evt.battedBallType ? Object.assign({}, inferredBall||{}, {battedBallType:evt.battedBallType,fieldZone:evt.fieldZone||((inferredBall||{}).fieldZone),depth:evt.depth||((inferredBall||{}).depth)}) : inferredBall;
+  const eventBall = evt.fieldZone ? battedBallVisualInfo({fieldZone:evt.fieldZone,depth:evt.depth,traj:evt.traj||evt.battedBallType}) : null;
+  const battedInfo = eventBall || (evt.battedBallType ? Object.assign({}, inferredBall||{}, {battedBallType:evt.battedBallType,fieldZone:evt.fieldZone||((inferredBall||{}).fieldZone),depth:evt.depth||((inferredBall||{}).depth)}) : inferredBall);
   const hasBattedInfo = battedInfo && typeof battedInfo.x === 'number' && typeof battedInfo.y === 'number';
   const trajClass = hasBattedInfo ? `batted ${battedInfo.battedBallType}` : cineTrajectoryClass(evt);
   const trajStyle = hasBattedInfo ? cineBattedStyle(battedInfo) : '';
   const hasBases = Array.isArray(evt.basesAfter) || !!evt.bases;
-  const runnerNames = basesSnap.map((name,i)=>name ? `<span class="cine-run-name r${i+1}">${esc(name)}</span>` : '').join('');
+  const animMoves = cineNormalizedMovements(evt,basesBeforeSnap);
+  const animNames = new Set(animMoves.map(m=>m.name).filter(Boolean));
+  const runnerNames = basesSnap.map((name,i)=>name && !animNames.has(name) ? `<span class="cine-run-name r${i+1}">${esc(name)}</span>` : '').join('');
+  const runnerChips = cineRunnerChipsHtml(animMoves,evt);
+  const hasScoringAnim = animMoves.some(m=>m.to==='home' || m.to===4) || !!evt.runs;
+  const ballFlight = hasBattedInfo ? `<span class="cine-ball-flight ${esc(battedInfo.battedBallType||'liner')}" style="${esc(cineAnimatedBallStyle(battedInfo))}"></span>` : '';
   const tagsHtml = (evt.tags||[]).map(t=>`<span class="cine-tag">${esc(t)}</span>`).join('');
+  const movementText = formatRunnerMovements(evt.runnerMovements||[],false);
+  const scoredText = formatRunnerMovements(evt.runnerMovements||[],true);
+  const advanceHtml = (basesBeforeSnap || (evt.runnerMovements||[]).length) ? `
+            <div class="cine-advances">
+              ${basesBeforeSnap ? `<div><b>打席前:</b> ${esc(formatBaseState(basesBeforeSnap))}</div>` : ''}
+              <div><b>打席後:</b> ${esc(formatBaseState(basesSnap))}</div>
+              <div><b>生還:</b> ${esc(scoredText)}</div>
+              <div><b>進塁:</b> ${esc(movementText)}</div>
+              <div><b>得点:</b> ${evt.runs ? esc(evt.runs+'点追加') : '得点なし'}</div>
+            </div>` : '';
   return `
       <div class="mback" onclick="skipCinematics()"></div>
       <div class="mbox cine ${evt.theme||''}">
@@ -1468,8 +1716,10 @@ function renderCinematicStage(evt,ms){
                 <span class="cine-base b1${basesSnap[0]?' on':''}" data-label="1B"></span>
                 <span class="cine-base b2${basesSnap[1]?' on':''}" data-label="2B"></span>
                 <span class="cine-base b3${basesSnap[2]?' on':''}" data-label="3B"></span>
-                <span class="cine-home">HOME</span>
+                <span class="cine-home${hasScoringAnim?' flash':''}">HOME</span>
                 ${runnerNames}
+                ${runnerChips}
+                ${ballFlight}
                 ${trajClass ? `<span class="cine-traj ${esc(trajClass)}"${trajStyle?` style="${esc(trajStyle)}"`:''}></span>` : ''}
                 ${hasBattedInfo ? `<span class="cine-landing" style="${esc(cineBattedStyle(battedInfo))}"></span>` : ''}
                 ${evt.runs ? '<span class="cine-traj score-glow"></span>' : ''}
@@ -1480,6 +1730,7 @@ function renderCinematicStage(evt,ms){
             <div class="cine-card"><span class="mut">打者</span><strong>${esc(evt.actor||'—')}</strong><div class="cine-stat"><span>投手</span><strong>${esc(evt.pitcher||'—')}</strong></div></div>
             <div class="cine-card"><span class="mut">状況</span><strong>${esc(baseText)}</strong><div class="cine-stat"><span>アウト</span><strong>${esc(outsText)}</strong></div></div>
           </div>
+          ${advanceHtml}
           <div class="cine-result">${esc(evt.resultText || headline || evt.result || '')}</div>
           <div class="cine-tags">${tagsHtml || '<span class="cine-tag">重要場面</span>'}</div>
           <div class="cine-actions"><button class="btn pri" onclick="nextMatchEffect()">次の演出へ</button><button class="btn ghost" onclick="skipCinematics()">スキップ</button></div>
@@ -1895,7 +2146,9 @@ function renderMatch(){
     }
     const label = isImpact ? `<span class="log-label">${/ホームラン/.test(text)?'HOMERUN':/逆転|勝利/.test(text)?'CLUTCH':/同点|ピンチ/.test(text)?'PINCH':'CHANCE'}</span>` : '';
     const cls = [item.hl ? 'hl' : '', isImpact ? 'impact' : ''].filter(Boolean).join(' ');
-    return marker + `<p${cls?` class="${cls}"`:''}>${label}${esc(text)}</p>`;
+    const d = item.details;
+    const detailHtml = d ? `<span class="log-detail"><b>打席前:</b> ${esc(d.baseStateBefore||formatBaseState(d.basesBefore||[]))} / <b>打席後:</b> ${esc(d.baseStateAfter||formatBaseState(d.basesAfter||[]))}<br><b>生還:</b> ${esc(formatRunnerMovements(d.runnerMovements||[],true))}<br><b>進塁:</b> ${esc(formatRunnerMovements(d.runnerMovements||[],false))} / <b>得点:</b> ${d.runs?esc(d.runs+'点追加'):'得点なし'}</span>` : '';
+    return marker + `<p${cls?` class="${cls}"`:''}>${label}${esc(text)}${detailHtml}</p>`;
   }).join('');
   main.innerHTML = `
     <section class="panel"><div class="ph"><div><span class="eyebrow">試合</span><h2>${esc(NPC_TEAMS[ms.oppId].name)} 戦</h2></div><div class="sub">${status}</div></div>
