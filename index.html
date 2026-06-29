@@ -290,13 +290,25 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .pa-card .pa-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
 .pa-card .pa-head strong{font-size:15px;color:#eef7ff}
 .pa-card .pa-result{font-size:16px;font-weight:900;color:var(--imp);line-height:1.35;margin:8px 0}
+.live-result-banner{display:flex;align-items:center;justify-content:center;text-align:center;min-height:42px;margin:4px 0 8px;padding:8px 12px;border-radius:8px;border:1px solid rgba(63,217,255,.24);background:linear-gradient(90deg,rgba(63,217,255,.14),rgba(255,255,255,.04));font-family:var(--num);font-size:clamp(24px,3.6vw,38px);font-weight:950;line-height:1;letter-spacing:0;color:#f3fdff;text-shadow:0 0 16px rgba(63,217,255,.42);box-shadow:inset 0 0 20px rgba(63,217,255,.06);animation:liveResultPop .42s ease-out var(--pa-callout-delay,var(--result-delay,1.9s)) both}
+.live-result-banner.gold{border-color:rgba(255,196,77,.56);background:linear-gradient(90deg,rgba(255,196,77,.24),rgba(255,138,61,.08));color:var(--imp);text-shadow:0 0 18px rgba(255,196,77,.58);box-shadow:0 0 18px rgba(255,196,77,.16),inset 0 0 24px rgba(255,196,77,.08)}
+.live-result-banner.out{border-color:rgba(255,122,107,.5);background:linear-gradient(90deg,rgba(255,122,107,.2),rgba(255,255,255,.03));color:#ffd8d2;text-shadow:0 0 16px rgba(255,122,107,.46)}
+.live-result-banner.safe{border-color:rgba(84,224,165,.42);background:linear-gradient(90deg,rgba(84,224,165,.18),rgba(63,217,255,.08));color:#eafff7;text-shadow:0 0 16px rgba(84,224,165,.38)}
+@keyframes liveResultPop{0%{opacity:0;transform:translateY(7px) scale(.88)}60%{opacity:1;transform:translateY(0) scale(1.04)}100%{opacity:1;transform:translateY(0) scale(1)}}
 .pa-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;font-size:12px}
 .pa-grid .kv{border-bottom:1px dashed rgba(72,180,255,.1)}
 .pa-move{font-size:12px;color:#d9e6f7;line-height:1.6;margin-top:8px}
 .pa-chiprow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .pa-chip{font-family:var(--num);font-size:10px;border:1px solid rgba(63,217,255,.28);border-radius:999px;padding:2px 8px;color:var(--cy);background:rgba(63,217,255,.06)}
 .pa-stage-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(134px,196px);gap:12px;align-items:start;margin:8px 0 10px}
-.live-pa-stage{border:1px solid rgba(63,217,255,.18);border-radius:10px;background:linear-gradient(180deg,rgba(6,14,28,.92),rgba(4,10,20,.96));padding:18px 12px 12px;overflow:hidden;display:flex;align-items:center;justify-content:center;min-width:0;perspective:1000px;perspective-origin:50% 68%}
+.live-pa-stage{border:1px solid rgba(63,217,255,.18);border-radius:10px;background:linear-gradient(180deg,rgba(6,14,28,.92),rgba(4,10,20,.96));padding:12px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:0;perspective:1000px;perspective-origin:50% 66%}
+.lpv-statbar{display:flex;gap:8px;width:100%;justify-content:center}
+.lpv-statbar>div{flex:1 1 0;min-width:0;text-align:center;border:1px solid rgba(72,180,255,.16);border-radius:8px;background:rgba(4,10,20,.5);padding:4px 6px}
+.lpv-statbar span{display:block;font-size:9px;letter-spacing:.12em;color:var(--mut)}
+.lpv-statbar b{font-family:var(--num);font-size:18px;font-weight:900;color:#eaf8ff;line-height:1.1}
+.lpv-statbar small{font-size:9px;color:var(--mut);font-weight:700;margin-left:2px}
+.lpf-callout.safe{color:#04141c;background:var(--ok);box-shadow:0 0 10px rgba(84,224,165,.6)}
+.mode-cine .lpv-statbar b{font-size:22px}
 .live-pa-stage.anim-off *{animation:none!important;transition:none!important}
 .live-pa-stage.anim-off .live-pa-pitch,.live-pa-stage.anim-off .live-pa-pitch-line,.live-pa-stage.anim-off .live-pa-contact,.live-pa-stage.anim-off .live-pa-pitch-label,.live-pa-stage.anim-off .live-pa-ball,.live-pa-stage.anim-off .live-pa-move-chip,.live-pa-stage.anim-off .live-pa-home-pulse,.live-pa-stage.anim-off .live-pa-home-in{display:none}
 .live-pa-stage.anim-off .live-pa-trace,.live-pa-stage.anim-off .live-pa-landing{opacity:1}
@@ -305,13 +317,22 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .live-pa-stage.anim-simple .live-pa-trace,.live-pa-stage.important .live-pa-trace{animation-duration:.34s;box-shadow:none}
 .live-pa-stage.anim-simple .live-pa-ball,.live-pa-stage.important .live-pa-ball{animation-duration:.34s;box-shadow:0 0 8px rgba(255,196,77,.5)}
 .live-pa-stage.important{border-color:rgba(255,196,77,.2);background:linear-gradient(180deg,rgba(255,196,77,.06),rgba(4,10,20,.96))}
-.live-pa-field{position:relative;width:100%;max-width:380px;aspect-ratio:1;border-radius:50%;overflow:hidden;margin:0 auto;justify-self:center;background:radial-gradient(ellipse at 50% 77%,rgba(157,106,54,.42) 0 23%,transparent 24%),radial-gradient(ellipse at 50% 43%,rgba(38,126,92,.38) 0 61%,transparent 62%),linear-gradient(180deg,rgba(6,28,32,.9),rgba(5,13,26,.95));border:1px solid rgba(63,217,255,.16)}
-.live-pa-field::before{content:'';position:absolute;left:12%;top:10%;width:76%;height:72%;border-top:1px solid rgba(63,217,255,.16);border-radius:50%;pointer-events:none}
-.live-pa-field::after{content:'';position:absolute;left:50%;top:83%;width:106px;height:106px;transform:translate(-50%,-50%) rotate(45deg);border-left:1px solid rgba(210,235,255,.26);border-top:1px solid rgba(210,235,255,.26);pointer-events:none}
-.live-pa-base{position:absolute;width:18px;height:18px;border-radius:3px;transform:translate(-50%,-50%) rotate(45deg);background:rgba(210,230,255,.13);border:1px solid rgba(210,230,255,.3);display:flex;align-items:center;justify-content:center}
-.live-pa-base::after{content:attr(data-label);transform:rotate(-45deg);font-family:var(--num);font-size:8px;color:var(--mut);font-weight:800}
-.live-pa-base.on{background:var(--cy);border-color:rgba(63,217,255,.9);box-shadow:0 0 14px rgba(63,217,255,.65)}
-.live-pa-home{position:absolute;left:50%;top:84%;transform:translate(-50%,-50%);font-family:var(--num);font-size:8px;color:#dff8ff;background:rgba(3,6,12,.8);border:1px solid rgba(210,235,255,.25);border-radius:4px;padding:1px 4px}
+.live-pa-field{position:relative;width:100%;max-width:380px;aspect-ratio:1;border-radius:50%;overflow:hidden;margin:0 auto;justify-self:center;background:radial-gradient(ellipse at 50% 78%,rgba(157,106,54,.46) 0 22%,transparent 23%),radial-gradient(ellipse at 50% 43%,rgba(38,126,92,.48) 0 61%,transparent 62%),linear-gradient(180deg,rgba(6,28,32,.92),rgba(5,13,26,.96));border:1px solid rgba(63,217,255,.16)}
+.live-pa-field::before{content:'';position:absolute;left:9%;top:7%;width:82%;height:72%;border-top:2px solid rgba(63,217,255,.18);border-radius:50%;box-shadow:0 -10px 22px rgba(0,0,0,.28);pointer-events:none;z-index:1}
+.live-pa-field::after{content:'';position:absolute;left:50%;top:83%;width:112px;height:112px;transform:translate(-50%,-50%) rotate(45deg);border-left:1px solid rgba(255,244,214,.36);border-top:1px solid rgba(255,244,214,.36);pointer-events:none;z-index:1}
+.lpf-stands,.lpf-fence,.lpf-grass,.lpf-dirt,.lpf-foul-line,.lpf-mound-ring,.lpf-stadium-light{position:absolute;pointer-events:none}
+.lpf-stands{left:-7%;top:-10%;width:114%;height:58%;border-radius:50% 50% 32% 32%;background:radial-gradient(ellipse at 50% 100%,rgba(2,8,18,.1),rgba(2,8,18,.62) 64%,rgba(0,0,0,.78) 100%);z-index:0}
+.lpf-fence{left:8%;top:8%;width:84%;height:58%;border-radius:50% 50% 18% 18%;border-top:8px solid rgba(18,86,96,.72);box-shadow:0 -2px 0 rgba(117,238,255,.22),inset 0 12px 18px rgba(0,0,0,.28);z-index:1}
+.lpf-grass{inset:6%;border-radius:50%;background:repeating-linear-gradient(104deg,rgba(255,255,255,.045) 0 10px,rgba(0,0,0,.035) 10px 20px);mix-blend-mode:screen;opacity:.58;z-index:1}
+.lpf-dirt{left:50%;top:69%;width:39%;height:39%;transform:translate(-50%,-50%) rotate(45deg);border-radius:16% 38% 16% 38%;background:linear-gradient(135deg,rgba(176,116,58,.42),rgba(118,74,38,.18));border:1px solid rgba(255,211,144,.18);box-shadow:inset 0 0 18px rgba(65,35,14,.22);z-index:1}
+.lpf-foul-line{left:50%;top:84%;width:43%;height:0;border-top:1.5px solid rgba(255,248,222,.5);transform-origin:left center;z-index:2;box-shadow:0 0 8px rgba(255,248,222,.18)}
+.lpf-foul-line.left{transform:rotate(-134deg)}.lpf-foul-line.right{transform:rotate(-46deg)}
+.lpf-mound-ring{left:50%;top:50%;width:34px;height:22px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(ellipse at 50% 42%,rgba(230,158,82,.44),rgba(121,74,35,.32) 58%,rgba(0,0,0,.1) 70%,transparent 72%);border:1px solid rgba(255,215,144,.2);box-shadow:0 7px 10px rgba(0,0,0,.2);z-index:2}
+.lpf-stadium-light{inset:-2%;border-radius:50%;background:linear-gradient(125deg,rgba(255,255,255,.12),transparent 27%),linear-gradient(235deg,rgba(164,217,255,.1),transparent 30%);opacity:.38;z-index:1}
+.live-pa-base{position:absolute;width:18px;height:18px;border-radius:3px;transform:translate(-50%,-50%) rotate(45deg);background:rgba(244,248,255,.9);border:1px solid rgba(255,255,255,.92);box-shadow:0 2px 7px rgba(0,0,0,.38),0 0 8px rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;z-index:5}
+.live-pa-base::after{content:attr(data-label);transform:rotate(-45deg);font-family:var(--num);font-size:8px;color:#183044;font-weight:900}
+.live-pa-base.on{background:linear-gradient(135deg,#f8ffff,var(--cy));border-color:rgba(244,255,255,.98);box-shadow:0 2px 8px rgba(0,0,0,.35),0 0 16px rgba(63,217,255,.78)}
+.live-pa-home{position:absolute;z-index:5;left:50%;top:84%;transform:translate(-50%,-50%);font-family:var(--num);font-size:8px;color:#0d1b24;background:rgba(244,248,255,.9);border:1px solid rgba(255,255,255,.9);box-shadow:0 0 10px rgba(255,255,255,.22);border-radius:4px;padding:1px 4px}
 .live-pa-zone{position:absolute;z-index:4;left:50%;top:75%;width:28px;height:24px;transform:translate(-50%,-50%);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);border:1px solid rgba(210,235,255,.22);background:rgba(3,6,12,.28);pointer-events:none}
 .live-pa-zone span{border-right:1px solid rgba(210,235,255,.08);border-bottom:1px solid rgba(210,235,255,.08)}.live-pa-zone span:nth-child(3n){border-right:none}.live-pa-zone span:nth-child(n+7){border-bottom:none}
 .live-pa-pitch{position:absolute;z-index:5;left:50%;top:54%;width:5px;height:5px;border-radius:50%;background:#dff8ff;box-shadow:0 0 10px rgba(63,217,255,.72);transform:translate(-50%,-50%);pointer-events:none;animation:livePitchFlight .38s cubic-bezier(.2,.72,.28,1) both}
@@ -322,13 +343,19 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .live-pa-pitch-label{position:absolute;z-index:7;left:var(--px,50%);top:calc(var(--py,75%) - 18px);transform:translate(-50%,-50%);font-family:var(--num);font-size:9px;font-weight:900;color:#07101f;background:#dff8ff;border-radius:999px;padding:1px 6px;box-shadow:0 0 10px rgba(63,217,255,.42);opacity:0;pointer-events:none;animation:livePitchLabel .56s ease-out .34s both}
 .live-pa-pitch-label.ball{background:#b9c4d6}.live-pa-pitch-label.hbp{background:var(--warn);color:#1d0504}.live-pa-pitch-label.inplay{background:var(--imp);color:#1d1300}
 .live-pa-base.b1{left:78%;top:57%}.live-pa-base.b2{left:50%;top:28%}.live-pa-base.b3{left:22%;top:57%}
-.live-pa-runner{position:absolute;z-index:3;transform:translate(-50%,-50%);max-width:60px;padding:1px 5px;border-radius:999px;background:rgba(3,8,16,.84);border:1px solid rgba(63,217,255,.28);font-size:9px;color:#eefbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live-pa-runner{position:absolute;z-index:5;transform:translate(-50%,-50%);min-width:28px;max-width:78px;display:grid;justify-items:center;gap:1px;padding:2px 5px;border-radius:10px;background:linear-gradient(180deg,rgba(18,60,86,.92),rgba(3,8,16,.9));border:1px solid rgba(63,217,255,.46);box-shadow:0 6px 10px rgba(0,0,0,.38),0 0 12px rgba(63,217,255,.18);font-size:9px;color:#eefbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live-pa-runner .chip-no{font-family:var(--num);font-size:10px;font-weight:950;line-height:1;color:#fff}
+.live-pa-runner .chip-name{max-width:64px;overflow:hidden;text-overflow:ellipsis;font-size:8px;line-height:1.05;color:#dff8ff}
+.live-pa-runner.ours{border-color:rgba(63,217,255,.62)}
+.live-pa-runner.star{box-shadow:0 6px 10px rgba(0,0,0,.38),0 0 14px rgba(164,123,255,.35)}
 .live-pa-runner.r1{left:75%;top:68%}.live-pa-runner.r2{left:50%;top:17%}.live-pa-runner.r3{left:25%;top:68%}
 .live-pa-field.has-moves .live-pa-runner{opacity:.42}
-.live-pa-move-chip{position:absolute;z-index:6;left:var(--fx,50%);top:var(--fy,84%);transform:translate(-50%,-50%) scale(.88);max-width:64px;padding:2px 6px;border-radius:999px;border:1px solid rgba(63,217,255,.55);background:rgba(3,8,16,.9);box-shadow:0 0 10px rgba(63,217,255,.3);color:#eefbff;font-size:9px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;animation:liveRunnerMove .52s cubic-bezier(.2,.76,.25,1) var(--delay,.32s) both}
+.live-pa-move-chip{position:absolute;z-index:7;left:var(--fx,50%);top:var(--fy,84%);transform:translate(-50%,-50%) scale(.88);max-width:88px;display:inline-grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:4px;padding:3px 7px;border-radius:999px;border:1px solid rgba(63,217,255,.55);background:linear-gradient(180deg,rgba(16,58,88,.96),rgba(3,8,16,.92));box-shadow:0 5px 10px rgba(0,0,0,.36),0 0 10px rgba(63,217,255,.3);color:#eefbff;font-size:9px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;animation:liveRunnerMove .52s cubic-bezier(.2,.76,.25,1) var(--delay,.32s) both}
+.live-pa-move-chip .chip-no{font-family:var(--num);font-size:10px;color:#fff}
+.live-pa-move-chip .chip-name{overflow:hidden;text-overflow:ellipsis}
 .live-pa-move-chip.score{border-color:rgba(255,196,77,.74);box-shadow:0 0 14px rgba(255,196,77,.5);animation-name:liveRunnerScore}
 .live-pa-move-chip.out{border-color:rgba(255,122,107,.55);box-shadow:0 0 10px rgba(255,122,107,.28);animation-name:liveRunnerOut}
-.live-pa-move-chip::after{content:attr(data-tag);margin-left:4px;color:var(--imp);font-family:var(--num);font-size:8px}
+.live-pa-move-chip::after{content:attr(data-tag);color:var(--imp);font-family:var(--num);font-size:8px}
 .live-pa-home-pulse{position:absolute;z-index:5;left:50%;top:84%;width:30px;height:30px;border-radius:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,196,77,.7);background:rgba(255,196,77,.14);box-shadow:0 0 16px rgba(255,196,77,.6);pointer-events:none;animation:liveHomePulse .62s ease-out var(--delay,.54s) both}
 .live-pa-home-in{position:absolute;z-index:7;left:50%;top:91%;transform:translate(-50%,-50%);font-family:var(--num);font-size:9px;font-weight:900;color:#1d1300;background:var(--imp);border-radius:999px;padding:1px 6px;box-shadow:0 0 12px rgba(255,196,77,.48);pointer-events:none;animation:liveHomeIn .74s ease-out var(--delay,.58s) both}
 .live-pa-trace{position:absolute;z-index:2;left:50%;top:84%;width:var(--len,80px);height:0;border-top:2px solid rgba(255,196,77,.72);box-shadow:0 0 9px rgba(255,196,77,.34);transform:rotate(var(--rot,-90deg));transform-origin:left center;opacity:0;animation:liveBallTrace .58s ease-out var(--ball-delay,.38s) both}
@@ -380,7 +407,7 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .live-pa-szone{position:absolute;left:36%;top:63%;width:28%;height:21.5%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);border:1px solid rgba(210,235,255,.5);border-radius:2px;background:rgba(63,217,255,.06);box-shadow:inset 0 0 12px rgba(63,217,255,.14);z-index:3;pointer-events:none}
 .live-pa-szone span{border-right:1px solid rgba(210,235,255,.13);border-bottom:1px solid rgba(210,235,255,.13)}
 .live-pa-szone span:nth-child(3n){border-right:none}.live-pa-szone span:nth-child(n+7){border-bottom:none}
-.live-pa-mound{position:absolute;left:50%;top:50%;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);background:rgba(231,243,255,.85);box-shadow:0 0 8px rgba(63,217,255,.5);z-index:2;pointer-events:none}
+.live-pa-mound{position:absolute;left:50%;top:50%;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff8dc 0 28%,#d39555 29% 62%,rgba(80,42,18,.82) 63%);box-shadow:0 2px 6px rgba(0,0,0,.38),0 0 8px rgba(255,215,144,.34);z-index:5;pointer-events:none}
 /* 判定=色 (球種ではなく判定で色分け) */
 .j-strike{--jc:#3fd9ff}.j-ball{--jc:#ffcf3a}.j-foul{--jc:#a47bff}.j-inplay{--jc:#eaf8ff}.j-out{--jc:#ff7a6b}.j-hbp{--jc:#ff9d5c}.j-score{--jc:#ffc44d}
 /* 軌道線(残像) */
@@ -415,40 +442,64 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .lpa-call{color:var(--jc,#cfe6ff);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lpa-ty{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* --- 守備陣・打者走者・結果コールアウト(表示専用) --- */
-.lpf-fielder{position:absolute;left:var(--bx,50%);top:var(--by,50%);transform:translate(-50%,-50%);width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--num);font-size:8px;font-weight:800;color:#bcd0ea;background:rgba(18,38,66,.82);border:1px solid rgba(120,160,210,.42);z-index:2;pointer-events:none}
-.lpf-fielder.react{animation:lpfFielderMove var(--fly,.55s) cubic-bezier(.3,.6,.3,1) var(--rd,0s) both}
+.lpf-fielder{position:absolute;left:var(--bx,50%);top:var(--by,50%);transform:translate(-50%,-50%);min-width:26px;min-height:30px;display:grid;place-items:center;font-family:var(--num);font-size:8px;font-weight:800;color:#bcd0ea;z-index:4;pointer-events:none}
+.lpf-fielder .lpf-avatar{position:relative;display:grid;place-items:center;min-width:24px;min-height:26px;padding:2px 4px;border-radius:10px 10px 12px 12px;background:linear-gradient(180deg,rgba(35,78,124,.96),rgba(9,21,42,.94));border:1px solid rgba(140,200,255,.5);box-shadow:0 5px 9px rgba(0,0,0,.38),0 0 10px rgba(63,217,255,.16);animation:lpfIdle 2.4s ease-in-out infinite}
+.lpf-fielder .chip-no{font-size:11px;font-weight:950;line-height:1;color:#fff}
+.lpf-fielder .chip-pos{font-size:8px;line-height:1;color:#9edcff;letter-spacing:.02em}
+.lpf-fielder .chip-name{display:none;position:absolute;left:50%;top:100%;transform:translate(-50%,2px);max-width:56px;padding:1px 5px;border-radius:999px;background:rgba(3,8,16,.9);border:1px solid rgba(120,200,255,.24);font-family:var(--sans);font-size:8px;color:#eaf8ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lpf-fielder.primary .lpf-avatar,.lpf-fielder.react.primary .lpf-avatar{border-color:rgba(255,215,106,.72);box-shadow:0 5px 9px rgba(0,0,0,.38),0 0 16px rgba(255,196,77,.38)}
+.lpf-fielder.react .lpf-avatar{border-color:rgba(63,217,255,.72);box-shadow:0 5px 9px rgba(0,0,0,.38),0 0 14px rgba(63,217,255,.32)}
+.live-pa-stage.anim-full .lpf-fielder[title="P"].primary .lpf-avatar{animation:lpfIdle 2.4s ease-in-out infinite,lpfPitcherCue .46s ease-out var(--pa-pitcher-delay,0s) both}
+.live-pa-stage.anim-full .live-pa-home{animation:lpfBatterCue .42s ease-out var(--pa-pitcher-delay,0s) both}
+.mode-full .lpf-fielder .chip-name,.mode-cine .lpf-fielder.primary .chip-name{display:block}
+.lpf-fielder.react{animation:lpfFielderMove var(--fly,.48s) cubic-bezier(.3,.6,.3,1) var(--rd,0s) both}
 @keyframes lpfFielderMove{0%{left:var(--bx);top:var(--by)}100%{left:var(--rx);top:var(--ry)}}
+@keyframes lpfIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+@keyframes lpfPitcherCue{0%{filter:brightness(1);box-shadow:0 5px 9px rgba(0,0,0,.38),0 0 10px rgba(255,196,77,.12)}42%{filter:brightness(1.35);box-shadow:0 5px 9px rgba(0,0,0,.38),0 0 22px rgba(255,196,77,.62)}100%{filter:brightness(1);box-shadow:0 5px 9px rgba(0,0,0,.38),0 0 16px rgba(255,196,77,.38)}}
+@keyframes lpfBatterCue{0%{box-shadow:0 0 10px rgba(255,255,255,.22)}48%{box-shadow:0 0 20px rgba(255,196,77,.74);background:#fff4c2}100%{box-shadow:0 0 10px rgba(255,255,255,.22)}}
 .live-pa-stage.anim-off .lpf-fielder.react{animation:none;left:var(--bx);top:var(--by)}
 .lpf-callout{position:absolute;transform:translate(-50%,-50%);font-family:var(--num);font-size:11px;font-weight:900;padding:1px 8px;border-radius:999px;z-index:8;pointer-events:none;opacity:0;animation:lpfCallout .5s ease-out var(--cd,1s) both}
 .lpf-callout.hit{color:#04141c;background:var(--cy);box-shadow:0 0 10px rgba(63,217,255,.6)}
 .lpf-callout.out{color:#1d0504;background:var(--warn);box-shadow:0 0 10px rgba(255,122,107,.6)}
 .lpf-callout.hr{color:#1d1300;background:var(--imp);box-shadow:0 0 14px rgba(255,196,77,.7)}
+.lpf-callout.safe{color:#04141c;background:var(--ok);box-shadow:0 0 10px rgba(84,224,165,.6)}
 @keyframes lpfCallout{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .live-pa-stage.anim-off .lpf-callout{opacity:1;animation:none}
 /* 走者チップを少し大きく見やすく */
-.live-pa-runner{font-size:10px;padding:2px 6px;max-width:70px}
-.live-pa-move-chip{font-size:10px;padding:3px 7px}
+.live-pa-runner{font-size:10px;max-width:78px}
+.live-pa-move-chip{font-size:10px}
 /* ライブ窓直下の操作ボタン(スクロール不要) */
 .pa-live-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
 .pa-live-actions .btn{flex:1 1 auto;min-width:96px}
 /* --- %ベース打球(共通座標: 打球線/着弾/守備/コールアウトと一致) --- */
-.lpb-trace{position:absolute;left:var(--hx,50%);top:var(--hy,84%);height:0;width:var(--len,40%);border-top:2px solid var(--bc,#eaf8ff);transform:rotate(var(--rot,-90deg));transform-origin:left center;opacity:.55;z-index:4;pointer-events:none;box-shadow:0 0 6px var(--bc,#eaf8ff);animation:lpbTrace .5s ease-out var(--bdelay,.4s) both}
+.lpb-trace{position:absolute;left:var(--hx,50%);top:var(--hy,84%);height:0;width:var(--len,40%);border-top:2px solid var(--bc,#eaf8ff);transform:rotate(var(--rot,-90deg));transform-origin:left center;opacity:.55;z-index:4;pointer-events:none;box-shadow:0 0 6px var(--bc,#eaf8ff);animation:lpbTrace var(--bdur,.6s) ease-out var(--bdelay,.65s) both}
 .lpb-trace.grounder{border-top-style:dashed;opacity:.45}
-.lpb-ball{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:9px;height:9px;border-radius:50%;background:#fff7d1;transform:translate(-50%,-50%);z-index:6;pointer-events:none;box-shadow:0 0 10px rgba(255,247,209,.85);opacity:1;animation:lpbBall .5s cubic-bezier(.2,.7,.35,1) var(--bdelay,.4s) both}
-.lpb-land{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,.7);background:var(--bc,#eaf8ff);transform:translate(-50%,-50%);z-index:5;pointer-events:none;opacity:.82;animation:lpbLand .4s ease-out var(--ldelay,.9s) both}
+.lpb-ball{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:9px;height:9px;border-radius:50%;background:#fff7d1;transform:translate(-50%,-50%);z-index:6;pointer-events:none;box-shadow:0 0 10px rgba(255,247,209,.85);opacity:1;animation:lpbBall3d var(--bdur,.6s) cubic-bezier(.2,.7,.35,1) var(--bdelay,.65s) both}
+.lpb-shadow{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:12px;height:5px;border-radius:50%;background:rgba(0,0,0,.5);transform:translate(-50%,-50%);filter:blur(1px);opacity:.42;z-index:3;pointer-events:none;animation:lpbShadow var(--bdur,.6s) ease-out var(--bdelay,.65s) both}
+.lpb-shadow.grounder{opacity:.3}
+@keyframes lpbShadow{0%{left:var(--hx);top:var(--hy);opacity:0}15%{opacity:.42}100%{left:var(--tx);top:var(--ty);opacity:.42}}
+.lpb-land{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,.7);background:var(--bc,#eaf8ff);transform:translate(-50%,-50%);z-index:5;pointer-events:none;opacity:.82;animation:lpbLand .4s ease-out var(--ldelay,1.25s) both}
 @keyframes lpbTrace{0%{opacity:0;clip-path:inset(0 100% 0 0)}25%{opacity:.9}100%{opacity:.55;clip-path:inset(0 0 0 0)}}
-@keyframes lpbBall{0%{left:var(--hx);top:var(--hy);opacity:0}12%{opacity:1}55%{left:var(--mx);top:var(--my)}100%{left:var(--tx);top:var(--ty);opacity:1}}
+@keyframes lpbBall3d{0%{left:var(--hx);top:var(--hy);opacity:0;transform:translate(-50%,-50%) translateZ(0)}12%{opacity:1}50%{left:var(--mx);top:var(--my);transform:translate(-50%,-50%) translateZ(var(--peakz,40px))}100%{left:var(--tx);top:var(--ty);opacity:1;transform:translate(-50%,-50%) translateZ(0)}}
 @keyframes lpbLand{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}60%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}100%{opacity:.85;transform:translate(-50%,-50%) scale(1)}}
 /* 返球線 */
-.lpt-throw{position:absolute;height:0;width:var(--len,30%);border-top:2px dashed rgba(120,200,255,.85);transform:rotate(var(--rot,0deg));transform-origin:left center;opacity:0;z-index:5;pointer-events:none;box-shadow:0 0 6px rgba(120,200,255,.5);animation:lptThrow .42s ease-out var(--tdelay,1.1s) both}
+.lpt-throw{position:absolute;height:0;width:var(--len,30%);border-top:2px dashed rgba(120,200,255,.85);transform:rotate(var(--rot,0deg));transform-origin:left center;opacity:0;z-index:5;pointer-events:none;box-shadow:0 0 6px rgba(120,200,255,.5);animation:lptThrow .42s ease-out var(--tdelay,1.45s) both}
 @keyframes lptThrow{0%{opacity:0;clip-path:inset(0 100% 0 0)}30%{opacity:1}100%{opacity:.55;clip-path:inset(0 0 0 0)}}
 .live-pa-stage.anim-off .lpt-throw{opacity:.5}
 .live-pa-field.is-score{box-shadow:inset 0 0 26px rgba(255,196,77,.22)}
+.live-pa-field.is-score .live-pa-home{background:var(--imp);border-color:#fff2bd;box-shadow:0 0 18px rgba(255,196,77,.78)}
 /* --- 3Dフィールド(放送カメラ風の傾き。面ごと傾けて座標/アニメは不変) --- */
-.live-pa-field.field3d{transform:perspective(900px) rotateX(22deg);transform-origin:50% 80%;margin-top:6px;margin-bottom:-8%;box-shadow:0 18px 30px rgba(0,0,0,.45),inset 0 0 26px rgba(63,217,255,.06)}
+.live-pa-field.field3d{transform:rotateX(22deg);transform-style:preserve-3d;overflow:visible;transform-origin:50% 80%;margin-top:4px;margin-bottom:-7%;box-shadow:0 18px 30px rgba(0,0,0,.45),inset 0 0 26px rgba(63,217,255,.06)}
 .live-pa-field.field3d.is-score{box-shadow:0 18px 30px rgba(0,0,0,.45),inset 0 0 30px rgba(255,196,77,.24)}
-.mode-cine .live-pa-field.field3d{transform:perspective(1100px) rotateX(26deg);margin-bottom:-10%;box-shadow:0 26px 44px rgba(0,0,0,.5),inset 0 0 34px rgba(63,217,255,.08)}
-@media (max-width:760px){.live-pa-field.field3d{transform:perspective(760px) rotateX(18deg);margin-bottom:-6%}}
+.live-pa-stage.mode-cine{perspective:1300px}
+.mode-cine .live-pa-field.field3d{transform:rotateX(26deg);margin-bottom:-9%;box-shadow:0 26px 44px rgba(0,0,0,.5),inset 0 0 34px rgba(63,217,255,.08)}
+/* フェーズ2: 人(野手・走者)を地面から起こすビルボード(カメラ正対)。地面要素は寝かせたまま。 */
+.field3d .lpf-fielder{transform:translate(-50%,-86%) translateZ(7px) rotateX(-22deg);transform-origin:50% 100%}
+.field3d .live-pa-runner{transform:translate(-50%,-86%) translateZ(9px) rotateX(-22deg);transform-origin:50% 100%}
+.mode-cine .field3d .lpf-fielder{transform:translate(-50%,-86%) translateZ(7px) rotateX(-26deg)}
+.mode-cine .field3d .live-pa-runner{transform:translate(-50%,-86%) translateZ(9px) rotateX(-26deg)}
+.field3d .lpf-fielder::after,.field3d .live-pa-runner::after{content:'';position:absolute;left:50%;bottom:-4px;width:13px;height:4px;border-radius:50%;background:rgba(0,0,0,.5);transform:translateX(-50%);filter:blur(1px);z-index:-1;pointer-events:none}
+@media (max-width:760px){.live-pa-field.field3d{transform:rotateX(18deg);margin-bottom:-5%}.mode-cine .live-pa-field.field3d{transform:rotateX(20deg)}}
 /* --- キャラ感: 走者チップ強化 --- */
 .live-pa-move-chip{animation-duration:var(--rdur,.52s)}
 .live-pa-move-chip.ours{border-color:rgba(63,217,255,.7);color:#eafcff}
@@ -472,6 +523,77 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .cine-fieldwrap{display:flex;justify-content:center;width:100%}
 .live-pa-stage.mode-cine{border:none;background:transparent;padding:0;width:100%;margin:0}
 .live-pa-stage.mode-cine .live-pa-field{max-width:min(58vh,460px)}
+.live-pa-stage.mode-full{position:relative;border:none;background:transparent;padding:0;width:100%;height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);align-items:stretch;justify-content:stretch;gap:8px;perspective:1500px;min-height:0}
+.live-pa-stage.mode-full .live-pa-field{width:auto;height:auto;aspect-ratio:1;max-width:min(58vh,500px);max-height:58vh;margin:0 auto;border-radius:50%}
+.live-pa-stage.replay-no-batted-ball{perspective-origin:50% 58%}
+.live-pa-stage.replay-no-batted-ball .live-pa-field.field3d{transform:rotateX(18deg);transform-origin:50% 72%;margin:0 auto;max-width:min(54vh,470px);max-height:54vh}
+.live-pa-stage.replay-no-batted-ball .lpb-trace,.live-pa-stage.replay-no-batted-ball .lpb-shadow,.live-pa-stage.replay-no-batted-ball .lpb-ball,.live-pa-stage.replay-no-batted-ball .lpb-land,.live-pa-stage.replay-no-batted-ball .lpb-contact,.live-pa-stage.replay-no-batted-ball .lpb-catch,.live-pa-stage.replay-no-batted-ball .lpt-throw{display:none!important}
+.live-pa-stage.replay-no-batted-ball .live-pa-szone{border-color:rgba(255,255,255,.62);box-shadow:0 0 18px rgba(63,217,255,.22),inset 0 0 12px rgba(63,217,255,.18);background:rgba(3,8,18,.42)}
+.live-pa-stage.replay-no-batted-ball .live-pa-pitch-line{border-top-width:2px;opacity:.86}
+.live-pa-stage.replay-no-batted-ball .lpf-callout{left:50%!important;top:74%!important;font-size:15px;padding:4px 14px}
+.mode-full.replay-no-batted-ball .live-pa-field.field3d{transform:rotateX(18deg);transform-origin:50% 72%;max-width:min(54vh,480px);max-height:54vh;margin:0 auto}
+.mode-full .lpf-replay-frame{position:relative;width:100%;height:100%;min-height:min(390px,52vh);border:1px solid rgba(63,217,255,.18);border-radius:18px;overflow:hidden;background:radial-gradient(80% 74% at 50% 18%,rgba(63,217,255,.12),transparent 58%),linear-gradient(180deg,rgba(1,4,11,.98),rgba(4,10,20,.96));box-shadow:0 22px 48px rgba(0,0,0,.42),inset 0 0 32px rgba(63,217,255,.06)}
+.mode-full .lpf-camera{position:absolute;inset:0;display:grid;place-items:center;transform:none;animation:none}
+.mode-full .live-pa-field.field3d{transform:rotateX(26deg);transform-origin:50% 82%;margin:0 auto;background:radial-gradient(ellipse at 50% 80%,rgba(184,113,54,.5) 0 20%,transparent 21%),radial-gradient(ellipse at 50% 46%,rgba(29,118,82,.5) 0 58%,transparent 59%),linear-gradient(180deg,rgba(2,7,16,.96),rgba(4,18,26,.97));box-shadow:0 22px 44px rgba(0,0,0,.55),inset 0 0 40px rgba(63,217,255,.1)}
+.mode-full .lpf-fence{border-top-width:11px;box-shadow:0 -2px 0 rgba(117,238,255,.32),inset 0 16px 22px rgba(0,0,0,.34)}
+.mode-full .lpf-grass{opacity:.66;background-size:auto}
+.mode-full .lpf-dirt{background:linear-gradient(135deg,rgba(190,122,58,.52),rgba(118,74,38,.24));box-shadow:inset 0 0 24px rgba(65,35,14,.24)}
+.mode-full .lpf-foul-line{border-top-width:2px}
+.mode-full .lpf-mound-ring{width:44px;height:28px}
+.mode-full .live-pa-mound{width:13px;height:13px}
+.mode-full .lpf-stadium-light{opacity:.46}
+.mode-full .live-pa-base{width:22px;height:22px}
+.mode-full .live-pa-home{font-size:10px;padding:2px 6px}
+.mode-full .lpv-statbar{max-width:680px;margin:0 auto}
+.mode-full .lpv-statbar b{font-size:24px}
+.mode-full .lpf-callout{font-size:17px;padding:3px 14px}
+.mode-full .live-pa-move-chip{font-size:13px;padding:5px 10px;max-width:96px}
+.mode-full .live-pa-runner{font-size:12px;max-width:96px;min-width:36px}
+.mode-full .lpf-fielder .lpf-avatar{min-width:32px;min-height:34px}
+.mode-full .lpf-fielder .chip-no{font-size:14px}
+.mode-full .lpf-fielder .chip-pos{font-size:9px}
+.mode-full .lpf-fielder .chip-name{font-size:9px;max-width:72px}
+.mode-full .live-pa-runner .chip-no{font-size:13px}
+.mode-full .live-pa-runner .chip-name{font-size:9px;max-width:78px}
+.mode-full .lpb-trace{border-top-width:6px;opacity:.78;box-shadow:0 0 18px var(--bc)}
+.mode-full .lpb-trace.fly,.mode-full .lpb-trace.homer{border-top-width:5px}
+.mode-full .lpb-ball{width:18px;height:18px;box-shadow:0 0 26px rgba(255,247,209,.98)}
+.mode-full .lpb-land{width:18px;height:18px;box-shadow:0 0 22px var(--bc)}
+.mode-full .lpf-trail{border-top-width:3px;opacity:.52}
+.mode-full .lpf-pitch.final{width:22px;height:22px;filter:drop-shadow(0 0 10px var(--jc))}
+.mode-full.important .live-pa-field.field3d,.mode-full .live-pa-field.is-score{box-shadow:0 34px 70px rgba(0,0,0,.72),0 0 28px rgba(255,196,77,.16),inset 0 0 62px rgba(255,196,77,.2)}
+.mode-full.important .lpb-trace,.mode-full .live-pa-field.is-score .lpb-trace{border-top-width:7px;opacity:.9}
+.mode-full.important .lpf-fielder.react .lpf-avatar,.mode-full .live-pa-field.is-score .lpf-fielder.react .lpf-avatar{border-color:rgba(255,215,106,.9);box-shadow:0 5px 9px rgba(0,0,0,.4),0 0 24px rgba(255,196,77,.58)}
+.mode-full .field3d .lpf-fielder{transform:translate(-50%,-88%) translateZ(8px) rotateX(-26deg)}
+.mode-full .field3d .live-pa-runner{transform:translate(-50%,-88%) translateZ(10px) rotateX(-26deg)}
+.mode-full .lpf-batter-tag{position:absolute;left:50%;top:91%;z-index:7;transform:translate(-50%,-88%) translateZ(11px) rotateX(-26deg);display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 6px;align-items:center;min-width:88px;max-width:150px;padding:5px 8px;border:1px solid rgba(255,196,77,.76);border-radius:8px;background:linear-gradient(180deg,rgba(64,42,8,.94),rgba(4,8,16,.92));box-shadow:0 0 18px rgba(255,196,77,.44);color:#fff7df;font-size:10px;font-weight:900;pointer-events:none}
+.mode-full .lpf-batter-tag .chip-no{grid-row:1/3;font-family:var(--num);font-size:15px;color:var(--imp)}
+.mode-full .lpf-batter-tag .chip-pos{font-family:var(--num);font-size:9px;color:#ffe3a3}
+.mode-full .lpf-batter-tag .chip-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff}
+.mode-full .lpf-replay-title{position:absolute;left:14px;top:12px;z-index:8;font-family:var(--num);font-size:10px;font-weight:950;letter-spacing:.12em;color:#dff8ff;text-shadow:0 0 10px rgba(63,217,255,.45);pointer-events:none}
+.mode-full .lpf-replay-title b{display:block;font-size:18px;letter-spacing:0;color:#fff}
+.mode-full .lpf-track-svg{position:absolute;inset:0;z-index:6;width:100%;height:100%;pointer-events:none;overflow:visible}
+.mode-full .lpf-track-path{fill:none;stroke:rgba(255,196,77,.88);stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px rgba(255,196,77,.72));stroke-dasharray:100;stroke-dashoffset:100;animation:lpfSvgDraw 1.18s cubic-bezier(.16,.78,.24,1) var(--pa-ball-delay,.55s) forwards}
+.mode-full .lpf-track-path.pitch{stroke:rgba(210,245,255,.72);stroke-width:.62;filter:drop-shadow(0 0 3px rgba(63,217,255,.58));animation-duration:.58s;animation-delay:var(--pa-pitch-delay,.15s)}
+.mode-full .lpf-track-path.batted{stroke-width:1.55}
+.mode-full.important .lpf-track-path.batted,.mode-full .lpf-replay-frame.is-score .lpf-track-path.batted{stroke-width:2.05;stroke:rgba(255,215,106,.96)}
+.mode-full .lpf-track-ball{fill:#fff7d1;stroke:rgba(255,255,255,.86);stroke-width:.28;filter:drop-shadow(0 0 5px rgba(255,196,77,.95))}
+.mode-full .lpf-track-ball.pitch{fill:#dff8ff;filter:drop-shadow(0 0 4px rgba(63,217,255,.8))}
+.mode-full .lpf-impact-flash{position:absolute;left:50%;top:84%;z-index:7;width:42px;height:42px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,247,209,.9),rgba(255,196,77,.28) 48%,transparent 70%);opacity:0;pointer-events:none;animation:lpfReplayImpact .34s ease-out var(--pa-contact-delay,.48s) both}
+@keyframes lpfSvgDraw{to{stroke-dashoffset:0}}
+@keyframes lpfReplayImpact{0%{opacity:0;transform:translate(-50%,-50%) scale(.38)}42%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.42)}}
+.mode-full .lpf-minimap{position:absolute;left:12px;bottom:10px;z-index:5;width:92px;padding:6px;border:1px solid rgba(63,217,255,.24);border-radius:8px;background:rgba(3,8,18,.68);box-shadow:0 8px 18px rgba(0,0,0,.28);pointer-events:none}
+.mode-full .lpf-mini-field{position:relative;width:100%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(63,217,255,.18);background:radial-gradient(ellipse at 50% 78%,rgba(157,106,54,.38) 0 22%,transparent 23%),radial-gradient(ellipse at 50% 43%,rgba(38,126,92,.44) 0 61%,transparent 62%),rgba(4,13,24,.94)}
+.mode-full .lpf-mini-field::after{content:'';position:absolute;left:50%;top:79%;width:43%;height:43%;transform:translate(-50%,-50%) rotate(45deg);border-left:1px solid rgba(255,244,214,.35);border-top:1px solid rgba(255,244,214,.35)}
+.mode-full .lpf-mini-base{position:absolute;width:9px;height:9px;transform:translate(-50%,-50%) rotate(45deg);border:1px solid rgba(255,255,255,.38);background:rgba(255,255,255,.12)}
+.mode-full .lpf-mini-base.on{background:var(--imp);border-color:#fff2bd;box-shadow:0 0 10px rgba(255,196,77,.6)}
+.mode-full .lpf-mini-base.b1{left:78%;top:57%}.mode-full .lpf-mini-base.b2{left:50%;top:28%}.mode-full .lpf-mini-base.b3{left:22%;top:57%}
+.mode-full .lpf-mini-label{margin-top:4px;font-family:var(--num);font-size:9px;color:#cfe6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mode-full .lpv-statbar{position:static;z-index:1;transform:none;width:100%;max-width:680px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.mode-full .lpv-statbar>div{flex:1 1 0;min-width:88px}
+.mode-full .lpv-statbar>div{padding:5px 6px;border-radius:7px;border-color:rgba(63,217,255,.22);background:rgba(3,8,18,.72);box-shadow:inset 0 0 12px rgba(63,217,255,.04)}
+.mode-full .lpv-statbar span{font-size:9px;letter-spacing:.08em}
+.mode-full .lpv-statbar b{font-size:clamp(14px,1.5vw,20px)}
 .mode-cine .lpf-callout{font-size:15px;padding:2px 12px}
 .mode-cine .live-pa-move-chip{font-size:12px;padding:4px 9px}
 .mode-cine .live-pa-runner{font-size:11px}
@@ -481,7 +603,8 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .mode-cine .live-pa-home-in{font-size:13px;padding:2px 11px}
 .mode-cine .live-pa-field.is-score{box-shadow:inset 0 0 40px rgba(255,196,77,.34);animation:cineScorePulse 1.4s ease-out .9s 1}
 @keyframes cineScorePulse{0%{box-shadow:inset 0 0 0 rgba(255,196,77,0)}40%{box-shadow:inset 0 0 60px rgba(255,196,77,.5)}100%{box-shadow:inset 0 0 40px rgba(255,196,77,.3)}}
-@media (max-width:760px){.pa-stage-row{grid-template-columns:1fr}.live-pa-field{max-width:300px}.lpa-zonewrap{max-width:140px}}
+@media (max-width:980px){.mode-full .lpf-minimap{width:82px}.mode-full .lpf-replay-title b{font-size:16px}}
+@media (max-width:760px){.pa-stage-row{grid-template-columns:1fr}.live-pa-field{max-width:300px}.lpa-zonewrap{max-width:140px}.mode-full .lpf-minimap{display:none}}
 .pitch-card{margin-top:10px;border-top:1px solid rgba(72,180,255,.14);padding-top:10px;display:grid;grid-template-columns:132px 1fr;gap:10px;align-items:start}
 .pitch-zone{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:2px;width:132px;aspect-ratio:1;background:rgba(3,8,16,.72);border:1px solid rgba(72,180,255,.18);border-radius:8px;padding:6px}
 .pitch-cell{position:relative;border:1px solid rgba(72,180,255,.08);border-radius:4px;background:rgba(255,255,255,.02);min-width:0}
@@ -606,7 +729,7 @@ textarea.io{
 @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
 
 /* ---------- シネマティック演出 ---------- */
-.mbox.cine{width:min(720px,94vw);padding:16px;overflow:hidden;}
+.mbox.cine{width:min(980px,96vw);max-height:92vh;padding:16px;overflow-y:auto;overflow-x:hidden;}
 .cine-box{display:grid;gap:12px;}
 .cine-scorebar{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;}
 .cine-inning,.cine-score,.cine-count{border:1px solid rgba(63,217,255,.18);border-radius:8px;background:rgba(6,14,28,.78);padding:8px 10px;}
@@ -619,11 +742,16 @@ textarea.io{
 .cine-titleband{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(255,196,77,.18);border-radius:10px;background:linear-gradient(90deg,rgba(255,196,77,.13),rgba(63,217,255,.05));padding:10px 12px;}
 .cine-titleband h2{font-size:clamp(24px,3.5vw,38px);line-height:1;font-family:var(--num);letter-spacing:.08em;color:#fff;text-shadow:0 0 16px rgba(255,196,77,.28);}
 .cine-progress{font-family:var(--num);font-size:12px;color:var(--mut);white-space:nowrap;}
-.cine-stage{position:relative;min-height:340px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#06101e,#071625);border:1px solid rgba(63,217,255,.16);box-shadow:inset 0 0 40px rgba(63,217,255,.08);display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,360px);gap:14px;align-items:center;padding:14px;}
+.cine-stage{position:relative;min-height:430px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#06101e,#071625);border:1px solid rgba(63,217,255,.16);box-shadow:inset 0 0 40px rgba(63,217,255,.08);display:grid;grid-template-columns:minmax(230px,.85fr) minmax(420px,1.15fr);gap:14px;align-items:center;padding:14px;}
 .cine-sky{position:absolute;inset:0;background:radial-gradient(circle at 18% 12%, rgba(255,255,255,.11), transparent 16%),radial-gradient(circle at 80% 18%, rgba(164,123,255,.11), transparent 15%),radial-gradient(circle at 54% 84%, rgba(63,217,255,.1), transparent 18%);pointer-events:none;}
 .cine-summary{position:relative;z-index:1;display:grid;gap:10px;align-content:center;min-width:0;}
 .cine-actor{font-size:clamp(23px,3.2vw,34px);line-height:1.15;font-weight:900;color:#fff;text-shadow:0 0 16px rgba(63,217,255,.36);overflow-wrap:anywhere;}
 .cine-headline{font-size:clamp(18px,2.5vw,28px);line-height:1.35;font-weight:900;color:var(--imp);text-shadow:0 0 14px rgba(255,196,77,.3);overflow-wrap:anywhere;}
+.cine-bigr{position:relative;z-index:2;grid-column:1/-1;margin:-2px 0 2px;font-family:var(--num);font-size:clamp(32px,6vw,68px);line-height:.95;font-weight:950;text-align:center;color:#f3fdff;text-shadow:0 0 22px rgba(63,217,255,.46);letter-spacing:0;pointer-events:none;animation:cineBigResult .42s ease-out 1.65s both}
+.cine-bigr.gold{color:var(--imp);text-shadow:0 0 26px rgba(255,196,77,.66)}
+.cine-bigr.out{color:#ffd8d2;text-shadow:0 0 22px rgba(255,122,107,.58)}
+.cine-bigr.safe{color:#efffff;text-shadow:0 0 22px rgba(84,224,165,.42)}
+@keyframes cineBigResult{0%{opacity:0;transform:translateY(8px) scale(.86)}60%{opacity:1;transform:translateY(0) scale(1.06)}100%{opacity:1;transform:translateY(0) scale(1)}}
 .cine-current{font-family:var(--num);font-size:18px;color:#dff8ff;font-weight:900;}
 .cine-subline{font-size:13px;color:#c9d8ee;line-height:1.55;overflow-wrap:anywhere;}
 .cine-field{position:relative;z-index:1;align-self:center;justify-self:center;width:236px;height:236px;border-radius:50%;overflow:hidden;background:
@@ -719,9 +847,317 @@ textarea.io{
   .cine-scorebar{grid-template-columns:1fr 1fr;}
   .cine-count{grid-column:1/-1;}
   .cine-stage{grid-template-columns:1fr;min-height:0;}
+  .cine-bigr{font-size:clamp(28px,9vw,48px)}
   .cine-field{width:214px;height:214px;}
   .cine-info{grid-template-columns:1fr;}
 }
+#live-fullscreen-root{position:fixed;inset:0;z-index:45;display:none}
+#live-fullscreen-root.show{display:block}
+.live-fullscreen{position:absolute;inset:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:8px;padding:10px;padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));padding-bottom:max(10px,env(safe-area-inset-bottom));background:radial-gradient(80% 80% at 50% 8%,rgba(63,217,255,.14),transparent 54%),radial-gradient(60% 60% at 84% 18%,rgba(164,123,255,.12),transparent 52%),linear-gradient(180deg,#030712,#07111f 62%,#030712);overflow:hidden}
+.live-fullscreen::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(63,217,255,.06) 1px,transparent 1px),linear-gradient(180deg,rgba(63,217,255,.04) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 80%);pointer-events:none}
+.lfs-top,.lfs-main,.lfs-bottom{position:relative;z-index:1}
+.lfs-top{display:grid;grid-template-columns:1fr;gap:6px;align-items:stretch;border:1px solid rgba(72,180,255,.22);border-radius:10px;background:linear-gradient(180deg,rgba(5,12,26,.92),rgba(3,8,18,.82));box-shadow:0 12px 28px rgba(0,0,0,.3),0 0 22px rgba(63,217,255,.08);padding:7px}
+.lfs-broadcast{display:grid;grid-template-columns:minmax(0,1.1fr) auto minmax(0,1.1fr);gap:10px;align-items:center}
+.lfs-b-team{min-width:0;display:grid;gap:3px;border-left:4px solid rgba(63,217,255,.72);padding-left:10px}
+.lfs-b-team.home{border-left-color:rgba(255,196,77,.8);text-align:right;border-left:0;border-right:4px solid rgba(255,196,77,.8);padding-left:0;padding-right:10px}
+.lfs-b-team small{font-family:var(--num);font-size:10px;color:var(--mut);letter-spacing:.13em}
+.lfs-b-team b{font-size:clamp(15px,1.7vw,24px);line-height:1.05;color:#f3fbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lfs-b-score{display:flex;align-items:center;gap:9px;border:1px solid rgba(255,196,77,.38);border-radius:9px;background:linear-gradient(180deg,rgba(255,196,77,.18),rgba(4,11,22,.92));padding:6px 12px;font-family:var(--num);font-size:clamp(24px,3.3vw,40px);font-weight:950;color:#fff;text-shadow:0 0 18px rgba(255,196,77,.42);box-shadow:inset 0 0 18px rgba(255,196,77,.08)}
+.lfs-b-score.live-lead{border-color:rgba(255,215,106,.55);box-shadow:inset 0 0 18px rgba(255,196,77,.1),0 0 18px rgba(255,196,77,.16)}
+.lfs-b-score span{min-width:1.2em;text-align:center}
+.lfs-b-score i{font-style:normal;color:var(--mut);font-size:.55em}
+.lfs-b-status{display:grid;grid-template-columns:minmax(0,1.1fr) auto auto;gap:8px;align-items:center;border-top:1px solid rgba(72,180,255,.14);padding-top:6px}
+.lfs-b-situation{min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:7px;color:#eaf8ff;font-weight:900}
+.lfs-b-situation .tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--num);font-size:12px;border:1px solid rgba(63,217,255,.2);border-radius:999px;background:rgba(63,217,255,.07);padding:4px 8px;white-space:nowrap}
+.lfs-b-situation .outtag{border-color:rgba(255,107,107,.28);color:#ffd4d4;background:rgba(255,107,107,.08)}
+.lfs-vs{min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;color:#dff6ff;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lfs-vs b{color:#fff}
+.lfs-vs .vs{font-family:var(--num);color:var(--imp);letter-spacing:.1em}
+.lfs-bso{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.lfs-count{display:flex;align-items:center;gap:3px;font-family:var(--num);font-size:11px;color:#cfe6ff}
+.lfs-count b{font-size:12px;color:#fff;margin-right:2px}
+.lfs-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18)}
+.lfs-count.ball .lfs-dot.on{background:#3fffc4;box-shadow:0 0 10px rgba(63,255,196,.55)}
+.lfs-count.strike .lfs-dot.on{background:#ffd766;box-shadow:0 0 10px rgba(255,215,102,.5)}
+.lfs-count.out .lfs-dot.on{background:#ff646d;box-shadow:0 0 10px rgba(255,100,109,.55)}
+.lfs-runner{display:flex;align-items:center;gap:8px}
+.lfs-diamond{position:relative;width:34px;height:24px}
+.lfs-base-dot{position:absolute;width:11px;height:11px;transform:rotate(45deg);border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.08)}
+.lfs-base-dot.b1{right:2px;top:10px}.lfs-base-dot.b2{left:50%;top:1px;margin-left:-5px}.lfs-base-dot.b3{left:2px;top:10px}
+.lfs-base-dot.on{background:#ffd76a;border-color:#fff1b8;box-shadow:0 0 12px rgba(255,215,106,.55)}
+.lfs-team{border:1px solid rgba(63,217,255,.2);border-radius:8px;background:rgba(4,11,22,.78);padding:9px 12px;min-width:0}
+.lfs-team small,.lfs-meta small{display:block;font-family:var(--num);font-size:9px;letter-spacing:.12em;color:var(--mut);line-height:1.1}
+.lfs-team b{display:block;font-size:16px;line-height:1.15;color:#eefbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lfs-score{display:flex;align-items:center;justify-content:center;min-width:154px;border:1px solid rgba(255,196,77,.34);border-radius:8px;background:linear-gradient(180deg,rgba(255,196,77,.14),rgba(4,11,22,.86));font-family:var(--num);font-size:34px;font-weight:950;color:#fff;text-shadow:0 0 18px rgba(255,196,77,.36)}
+.lfs-strip{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.lfs-meta{border:1px solid rgba(72,180,255,.16);border-radius:8px;background:rgba(4,11,22,.68);padding:7px 9px;min-width:0}
+.lfs-meta b{display:block;font-size:13px;line-height:1.2;color:#e9f7ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lfs-linescore{grid-column:1/-1;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(72,180,255,.18);border-radius:8px;background:rgba(3,8,16,.62)}
+.lfs-linescore table,.lfs-batstats table{width:100%;border-collapse:collapse;font-family:var(--num);font-size:12px;white-space:nowrap}
+.lfs-linescore th,.lfs-linescore td,.lfs-batstats th,.lfs-batstats td{border-right:1px solid rgba(72,180,255,.12);border-bottom:1px solid rgba(72,180,255,.08);padding:3px 6px;text-align:center}
+.lfs-linescore th{color:var(--mut);font-size:10px;font-weight:800;letter-spacing:.08em}
+.lfs-linescore td.team{text-align:left;font-family:inherit;font-weight:900;color:#eefbff;min-width:116px}
+.lfs-linescore td.total{color:var(--imp);font-weight:950;background:rgba(255,196,77,.08)}
+.lfs-linescore td.hit{color:var(--cy);font-weight:900}
+.lfs-main{display:grid;grid-template-columns:minmax(112px,168px) minmax(0,1.6fr) minmax(112px,168px);gap:8px;align-items:stretch;min-height:0}
+.lfs-field-zone{position:relative;display:grid;place-items:center;min-width:0;min-height:0}
+.lfs-stage{width:100%;height:100%;display:grid;place-items:center;min-height:0}
+.lfs-stage[data-stage="chase"]{place-items:stretch}
+.lfs-stage[data-stage="chase"] .ball-replay{min-height:0;height:100%;border-radius:14px}
+.lfs-result-callout{position:absolute;left:50%;top:32%;z-index:7;width:min(70%,560px);pointer-events:none;text-align:center;transform:translate(-50%,-50%);animation:lfsTelop 1.08s cubic-bezier(.16,.9,.2,1) calc(var(--pa-callout-delay,var(--result-delay,1.9s)) + .24s) both}
+.lfs-result-callout::before{content:"";position:absolute;left:50%;top:50%;width:92%;height:70%;border-radius:999px;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,rgba(63,217,255,.14),rgba(63,217,255,0) 70%);opacity:.58;z-index:-1}
+.lfs-result-main{display:inline-block;max-width:100%;padding:6px 16px;border:1px solid rgba(255,255,255,.2);border-radius:9px;background:linear-gradient(90deg,rgba(3,8,16,.56),rgba(8,22,38,.28),rgba(3,8,16,.56));font-family:var(--num);font-size:clamp(28px,4.6vw,62px);font-weight:950;line-height:.95;letter-spacing:0;color:#f5fdff;text-shadow:0 0 16px rgba(63,217,255,.52),0 2px 0 rgba(0,0,0,.26);box-shadow:0 12px 24px rgba(0,0,0,.24),inset 0 0 20px rgba(255,255,255,.04)}
+.lfs-result-sub{margin-top:5px;font-size:clamp(10px,1.25vw,15px);font-weight:900;letter-spacing:.08em;color:#dff6ff;text-shadow:0 0 10px rgba(63,217,255,.32)}
+.lfs-result-callout.hit .lfs-result-main,.lfs-result-callout.safe .lfs-result-main,.lfs-result-callout.walk .lfs-result-main{border-color:rgba(84,224,165,.42);color:#ecfff7;text-shadow:0 0 14px rgba(84,224,165,.48),0 2px 0 rgba(0,0,0,.28);box-shadow:0 12px 24px rgba(0,0,0,.24),0 0 20px rgba(84,224,165,.12),inset 0 0 18px rgba(84,224,165,.06)}
+.lfs-result-callout.out .lfs-result-main,.lfs-result-callout.strikeout .lfs-result-main,.lfs-result-callout.dp .lfs-result-main{border-color:rgba(255,122,107,.48);color:#ffe2dc;text-shadow:0 0 14px rgba(255,122,107,.48),0 2px 0 rgba(0,0,0,.28);box-shadow:0 12px 24px rgba(0,0,0,.24),0 0 18px rgba(255,122,107,.12),inset 0 0 18px rgba(255,122,107,.06)}
+.lfs-result-callout.run .lfs-result-main,.lfs-result-callout.hr .lfs-result-main,.lfs-result-callout.comeback .lfs-result-main,.lfs-result-callout.tie .lfs-result-main{border-color:rgba(255,215,106,.58);color:#fff7d6;text-shadow:0 0 15px rgba(255,215,106,.56),0 0 22px rgba(255,138,61,.22),0 2px 0 rgba(0,0,0,.28);box-shadow:0 12px 24px rgba(0,0,0,.24),0 0 24px rgba(255,196,77,.14),inset 0 0 22px rgba(255,196,77,.08)}
+.lfs-result-callout.hr .lfs-result-main{background:linear-gradient(90deg,rgba(255,255,255,.14),rgba(255,196,77,.2),rgba(255,255,255,.1));font-size:clamp(32px,5vw,68px)}
+.lfs-result-callout.comeback::before,.lfs-result-callout.tie::before,.lfs-result-callout.hr::before{background:radial-gradient(ellipse at center,rgba(255,196,77,.24),rgba(164,123,255,.12) 44%,rgba(255,196,77,0) 72%)}
+@keyframes lfsTelop{0%{opacity:0;transform:translate(-50%,-45%) scale(.78)}22%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}45%{transform:translate(-50%,-50%) scale(.99)}100%{opacity:.96;transform:translate(-50%,-50%) scale(1)}}
+.lfs-bottom-result{min-width:0;max-width:260px;pointer-events:none;flex:0 1 260px}
+.lfs-bottom-result .live-result-banner{font-size:clamp(15px,1.65vw,24px);min-height:32px;margin:0;padding:5px 10px;animation:liveResultPop .42s ease-out var(--pa-callout-delay,var(--result-delay,1.9s)) both}
+.lfs-stats-panel{position:relative;z-index:2;min-width:0;height:100%;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(63,217,255,.24);border-radius:10px;background:linear-gradient(180deg,rgba(4,11,22,.9),rgba(4,11,22,.76));box-shadow:0 18px 40px rgba(0,0,0,.34),0 0 22px rgba(63,217,255,.1);padding:9px}
+.lfs-stats-panel.away{border-color:rgba(255,255,255,.2);box-shadow:0 18px 40px rgba(0,0,0,.34),0 0 18px rgba(164,123,255,.1)}
+.lfs-stats-panel.home{border-color:rgba(63,217,255,.3)}
+.lfs-stats-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+.lfs-stats-head b{font-size:13px;color:#eefbff;letter-spacing:.06em}
+.lfs-stats-head small{display:block;margin-top:2px;color:var(--mut);font-size:10px;letter-spacing:.08em}
+.lfs-batstats th{color:var(--mut);font-size:10px;font-weight:800;letter-spacing:.06em;background:rgba(63,217,255,.04)}
+.lfs-batstats td{text-align:right}
+.lfs-batstats td.name{text-align:left;font-family:inherit;font-weight:800;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.lfs-batstats tr.hot td{color:#fff7df;background:rgba(255,196,77,.045)}
+.lfs-batstats tr.current td{background:rgba(63,217,255,.14);box-shadow:inset 3px 0 0 var(--cy)}
+.lfs-batstats .pos{color:var(--cy);font-weight:900}
+.lfs-batstats .impstat{color:var(--imp);font-weight:950}
+.lfs-data-panel{position:absolute;right:12px;bottom:12px;z-index:6;width:min(390px,44%);max-height:min(56vh,430px);overflow:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(255,196,77,.34);border-radius:10px;background:rgba(3,7,18,.94);box-shadow:0 18px 42px rgba(0,0,0,.48),0 0 26px rgba(255,196,77,.14);padding:10px;animation:lfsDataIn .22s ease-out both}
+.lfs-data-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.lfs-data-head b{color:#fff8d8;letter-spacing:.08em}
+.lfs-data-head .btn{min-width:0;padding:5px 8px;font-size:11px}
+.lfs-data-section{border:1px solid rgba(72,180,255,.12);border-radius:8px;background:rgba(255,255,255,.025);padding:8px;margin-top:8px}
+.lfs-data-section h4{margin:0 0 7px;color:#eaf7ff;font-size:11px;letter-spacing:.1em}
+.lfs-data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.lfs-data-grid .kv{min-width:0}
+.lfs-data-list{display:grid;gap:5px;margin:0;padding:0;list-style:none}
+.lfs-data-list li{display:flex;justify-content:space-between;gap:10px;min-width:0;color:#d6eaff;font-size:12px;line-height:1.3}
+.lfs-data-list li span:first-child{color:var(--mut);white-space:nowrap}
+.lfs-data-list li b{min-width:0;font-weight:850;color:#f4fbff;text-align:right;overflow:hidden;text-overflow:ellipsis}
+.lfs-data-list li.wide{display:grid;gap:3px}
+.lfs-data-list li.wide b{text-align:left;white-space:normal;line-height:1.4}
+.lfs-data-note{border:1px solid rgba(63,217,255,.12);border-radius:8px;background:rgba(63,217,255,.045);margin-top:8px;padding:7px 8px;color:#dff6ff;font-size:12px;line-height:1.45}
+.lfs-data-grid .kv{border:1px solid rgba(72,180,255,.1);border-radius:7px;background:rgba(3,8,18,.42);padding:7px 8px}
+@keyframes lfsDataIn{0%{opacity:0;transform:translateX(14px) scale(.98)}100%{opacity:1;transform:translateX(0) scale(1)}}
+.ball-replay{position:relative;overflow:hidden;min-height:210px;border:1px solid rgba(255,196,77,.28);border-radius:10px;background:radial-gradient(70% 58% at 50% 80%,rgba(34,126,90,.18),transparent 60%),radial-gradient(80% 70% at 50% 18%,rgba(63,217,255,.08),transparent 62%),linear-gradient(180deg,#01040b,#050811 58%,#02040a);box-shadow:inset 0 0 24px rgba(255,196,77,.05)}
+.ball-replay-camera{position:absolute;inset:0;transform-origin:50% 72%;animation:ballReplayCamera 1.45s ease-out .18s both}
+.ball-replay-field{position:absolute;left:50%;bottom:-10%;width:92%;height:60%;transform:translateX(-50%) perspective(440px) rotateX(58deg);transform-origin:50% 100%;border-radius:50% 50% 18% 18%;background:radial-gradient(ellipse at 50% 68%,rgba(174,113,54,.54) 0 18%,transparent 19%),radial-gradient(ellipse at 50% 44%,rgba(31,122,88,.64) 0 62%,rgba(8,44,42,.56) 63%,transparent 64%);border-top:2px solid rgba(120,238,255,.26);box-shadow:0 -8px 30px rgba(0,0,0,.55),inset 0 0 28px rgba(63,217,255,.08)}
+.ball-replay-field::before,.ball-replay-field::after{content:'';position:absolute;left:50%;bottom:17%;width:44%;border-top:1px solid rgba(255,247,216,.5);transform-origin:left center}
+.ball-replay-field::before{transform:rotate(-42deg)}.ball-replay-field::after{transform:rotate(-138deg)}
+.ball-replay-svg{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.ball-replay-path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;animation:ballReplayDraw 1.05s cubic-bezier(.16,.78,.24,1) .2s forwards}
+.ball-replay-path.pitch{stroke:rgba(210,245,255,.78);stroke-width:1.1;filter:drop-shadow(0 0 3px rgba(63,217,255,.52));animation-duration:.52s}
+.ball-replay-path.hit{stroke:rgba(255,196,77,.98);stroke-width:2.5;filter:drop-shadow(0 0 5px rgba(255,196,77,.75));animation-delay:.58s}
+.ball-replay-path.glow{stroke:rgba(255,196,77,.34);stroke-width:6;filter:none}
+.ball-replay-ball{fill:#fff7d1;stroke:#fff;stroke-width:.35;filter:drop-shadow(0 0 5px rgba(255,196,77,.92))}
+.ball-replay-ball.pitch{fill:#dff8ff;filter:drop-shadow(0 0 4px rgba(63,217,255,.78))}
+.ball-replay-impact{position:absolute;left:50%;top:72%;z-index:4;width:38px;height:38px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,247,209,.9),rgba(255,196,77,.24) 48%,transparent 72%);opacity:0;animation:ballReplayFlash .34s ease-out .55s both;pointer-events:none}
+.ball-replay-stats{position:absolute;left:8px;right:8px;top:8px;z-index:5;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.ball-replay-stat{min-width:0;border:1px solid rgba(63,217,255,.16);border-radius:7px;background:rgba(3,8,18,.74);padding:5px 6px}
+.ball-replay-stat span{display:block;color:var(--mut);font-family:var(--num);font-size:8px;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ball-replay-stat b{display:block;margin-top:1px;color:#fff7d6;font-family:var(--num);font-size:12px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ball-replay-label{position:absolute;z-index:4;transform:translate(-50%,-50%);max-width:86px;padding:3px 6px;border:1px solid rgba(120,200,255,.25);border-radius:7px;background:rgba(3,8,18,.82);box-shadow:0 8px 18px rgba(0,0,0,.32);font-size:10px;line-height:1.15;color:#eaf8ff;pointer-events:none}
+.ball-replay-label.gold{border-color:rgba(255,196,77,.72);color:#fff7df;box-shadow:0 0 16px rgba(255,196,77,.24),0 8px 18px rgba(0,0,0,.32)}
+.ball-replay-label small{display:block;color:var(--mut);font-family:var(--num);font-size:8px}.ball-replay-label.gold small{color:#ffe0a1}
+.ball-replay-result{position:absolute;left:10px;right:10px;bottom:8px;z-index:5;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center;border:1px solid rgba(255,196,77,.22);border-radius:8px;background:rgba(3,8,18,.76);padding:6px 8px;font-size:11px;color:#dff6ff}
+.ball-replay-result b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff;font-size:12px}
+.ball-replay-result span{font-family:var(--num);color:var(--imp);font-weight:950}
+.ball-replay.no-flight .ball-replay-camera{transform-origin:50% 64%;animation:ballReplayNoFlightCamera 1.2s ease-out .12s both}
+.ball-replay.no-flight .ball-replay-field{bottom:-3%;height:54%;width:84%;transform:translateX(-50%) perspective(420px) rotateX(50deg)}
+.ball-replay.no-flight .ball-replay-path.hit,.ball-replay.no-flight .ball-replay-impact{display:none}
+.ball-replay.no-flight .ball-replay-path.pitch{stroke-width:1.35}
+@keyframes ballReplayDraw{to{stroke-dashoffset:0}}
+@keyframes ballReplayFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}45%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.35)}}
+@keyframes ballReplayCamera{0%{transform:translateY(3%) scale(.985)}100%{transform:translateY(-1.5%) scale(1.025)}}
+@keyframes ballReplayNoFlightCamera{0%{transform:translateY(1%) scale(.995)}100%{transform:translateY(0) scale(1)}}
+@media (max-width:720px){.ball-replay{min-height:190px}.ball-replay-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ball-replay-stat:nth-child(n+5){display:none}}
+.lfs-bottom{display:grid;grid-template-columns:minmax(120px,260px) minmax(0,1fr) auto;align-items:center;gap:8px;border:1px solid rgba(72,180,255,.16);border-radius:10px;background:rgba(4,11,22,.76);padding:7px 8px}
+.lfs-desc{min-width:0;color:#cfe6ff;font-size:13px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lfs-playbar{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:7px;min-width:0;padding:5px 8px;border:1px solid rgba(63,217,255,.18);border-radius:8px;background:linear-gradient(90deg,rgba(63,217,255,.08),rgba(255,255,255,.025))}
+.lfs-play-badge{font-family:var(--num);font-size:12px;font-weight:950;letter-spacing:.08em;color:#f5fdff}
+.lfs-play-main{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:850;color:#eaf7ff}
+.lfs-play-sub{grid-column:2;color:var(--mut);font-size:11px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lfs-playbar.gold{border-color:rgba(255,196,77,.34);background:linear-gradient(90deg,rgba(255,196,77,.12),rgba(255,255,255,.03))}
+.lfs-playbar.gold .lfs-play-badge{color:var(--imp)}
+.lfs-playbar.out{border-color:rgba(255,122,107,.32)}
+.lfs-playbar.out .lfs-play-badge{color:#ffd8d2}
+.lfs-playbar.safe{border-color:rgba(84,224,165,.3)}
+.lfs-playbar.safe .lfs-play-badge{color:#eafff7}
+.lfs-actions{display:flex;gap:6px;flex-wrap:nowrap;justify-content:flex-end}
+.lfs-actions .btn{min-width:76px;padding:8px 10px}
+.live-fullscreen.replay-no-batted-ball .lfs-field-zone{align-items:center}
+.live-fullscreen.replay-no-batted-ball .lfs-result-callout{top:42%;width:min(74%,520px)}
+.live-fullscreen.replay-no-batted-ball .lfs-result-callout::before{background:radial-gradient(ellipse at center,rgba(63,217,255,.18),rgba(164,123,255,.08) 48%,rgba(63,217,255,0) 74%)}
+@media (max-width:1180px){
+  .lfs-main{grid-template-columns:minmax(112px,160px) minmax(0,1.55fr) minmax(112px,160px);gap:7px}
+  .lfs-batstats table{font-size:11px}
+  .lfs-batstats th,.lfs-batstats td{padding:4px 5px}
+  .lfs-batstats .col-sb{display:none}
+}
+@media (max-width:980px){
+  .live-fullscreen{padding:10px;gap:8px}
+  .lfs-top{padding:7px}
+  .lfs-broadcast{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:7px}
+  .lfs-b-score{padding:7px 10px}
+  .lfs-b-status{grid-template-columns:1fr;gap:7px}
+  .lfs-vs{justify-content:flex-start}
+  .lfs-bso{justify-content:flex-start}
+  .lfs-score{min-width:124px;font-size:26px}
+  .lfs-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lfs-main{grid-template-columns:minmax(112px,154px) minmax(0,1.3fr) minmax(112px,154px);gap:7px}
+  .lfs-stats-panel{padding:7px}
+  .lfs-batstats th,.lfs-batstats td{padding:4px}
+  .lfs-batstats .col-rbi,.lfs-batstats .col-sb{display:none}
+  .lfs-data-panel{width:min(360px,52%);max-height:min(58vh,390px)}
+  .lfs-bottom-result{min-width:0}
+  .lfs-bottom{align-items:stretch}
+  .lfs-desc{white-space:normal}
+  .mode-full .lpv-statbar{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mode-full .lpf-minimap{width:82px}
+  .mode-full .lpf-replay-title b{font-size:16px}
+}
+@media (max-width:720px){
+  .lfs-broadcast{grid-template-columns:1fr}
+  .lfs-b-team.home{border-left:4px solid rgba(255,196,77,.8);border-right:0;text-align:left;padding-left:10px;padding-right:0}
+  .lfs-b-score{justify-self:start}
+  .lfs-main{grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr) auto}
+  .lfs-field-zone{grid-column:1/-1;grid-row:1}
+  .lfs-stats-panel{max-height:28vh}
+  .lfs-data-panel{right:10px;bottom:10px;width:calc(100% - 20px);max-height:48vh}
+  .lfs-bottom{grid-template-columns:1fr}
+}
+
+/* ============================================================
+   試合中継画面 (BROADCAST MATCH)
+============================================================ */
+.match-broadcast{display:grid;gap:8px}
+.mb-scorebar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;border:1px solid rgba(72,180,255,.24);border-radius:12px;padding:10px 14px;background:linear-gradient(180deg,rgba(5,12,26,.95),rgba(3,8,18,.88));box-shadow:0 4px 18px rgba(0,0,0,.28),0 0 14px rgba(63,217,255,.06)}
+.mb-team{min-width:0}
+.mb-team.home{text-align:right}
+.mb-team small{display:block;font-family:var(--num);font-size:9px;letter-spacing:.18em;color:var(--mut);margin-bottom:3px}
+.mb-team b{display:block;font-size:clamp(13px,1.7vw,20px);font-weight:900;color:#f3fbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mb-team.away b{border-left:3px solid rgba(164,123,255,.7);padding-left:8px}
+.mb-team.home b{border-right:3px solid rgba(255,196,77,.7);padding-right:8px}
+.mb-score-center{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0}
+.mb-scorebox{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,196,77,.42);border-radius:10px;background:linear-gradient(180deg,rgba(255,196,77,.16),rgba(4,11,22,.95));padding:6px 18px;font-family:var(--num);font-size:clamp(26px,3.5vw,44px);font-weight:950;color:#fff;text-shadow:0 0 22px rgba(255,196,77,.4);box-shadow:inset 0 0 20px rgba(255,196,77,.08)}
+.mb-scorebox.lead{border-color:rgba(255,215,106,.65);box-shadow:inset 0 0 20px rgba(255,196,77,.12),0 0 20px rgba(255,196,77,.22)}
+.mb-scorebox i{font-style:normal;color:rgba(255,255,255,.22);font-size:.5em}
+.mb-situation{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.mb-live{font-family:var(--num);font-size:9px;letter-spacing:.26em;font-weight:800;background:linear-gradient(90deg,var(--bl),var(--pu));color:#fff;padding:2px 8px;border-radius:3px;transform:skewX(-12deg)}
+.mb-inn{font-family:var(--num);font-size:12px;font-weight:800;color:#eaf8ff;background:rgba(63,217,255,.1);border:1px solid rgba(63,217,255,.22);border-radius:6px;padding:2px 8px}
+.mb-outs{font-family:var(--num);font-size:11px;color:var(--warn)}
+.mb-log-bar{border:1px solid rgba(72,180,255,.12);border-radius:10px;background:rgba(2,6,14,.82);padding:6px 12px;max-height:90px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.mb-log-entry{display:flex;align-items:baseline;gap:6px;padding:2px 0;border-bottom:1px dashed rgba(72,180,255,.07);font-size:11.5px;line-height:1.5;color:#c8daf2}
+.mb-log-entry:last-child{border-bottom:none}
+.mb-log-entry .mb-inn-tag{font-family:var(--num);font-size:9px;color:var(--cy);flex-shrink:0;font-weight:700;min-width:52px}
+.mb-log-entry.impact{color:#b9f7ff;font-weight:700}
+.mb-log-entry.impact .mb-inn-tag::before{content:'◆ ';color:var(--imp)}
+.mb-fx-bar{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--mut);flex-wrap:wrap}
+.mb-fx-bar .btn{min-height:30px;padding:3px 8px;font-size:11px}
+.mb-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;border:1px solid rgba(72,180,255,.18);border-radius:12px;background:rgba(4,10,22,.72);padding:8px 12px;box-shadow:0 0 14px rgba(63,217,255,.08)}
+.mb-controls .btn{min-height:38px;padding:6px 14px;font-size:13px}
+.mb-controls .btn.pri{font-weight:700}
+.mb-result-wrap{border:1px solid rgba(255,196,77,.25);border-radius:14px;padding:14px;background:rgba(255,221,146,.06);box-shadow:0 0 18px rgba(255,196,77,.12)}
+.mb-result-label{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:999px;background:rgba(63,217,255,.12);color:#b9f7ff;font-weight:700;margin-bottom:10px;font-size:14px}
+.mb-result-label.win{background:rgba(63,217,255,.18);color:#b9f7ff}
+.mb-result-label.lose{background:rgba(255,122,107,.14);color:var(--warn)}
+.mb-result-label.draw{background:rgba(148,132,255,.14);color:var(--pu)}
+.mb-result-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,196,77,.18);font-size:13px}
+.mb-result-stat:last-child{border-bottom:none}
+
+/* ============================================================
+   ホームHQ画面
+============================================================ */
+.hq-wrap{display:grid;gap:10px}
+.hq-header{position:relative;overflow:hidden;border:1px solid rgba(72,180,255,.2);border-radius:14px;padding:18px 20px 16px;background:radial-gradient(ellipse at 82% 50%,rgba(164,123,255,.2),transparent 52%),radial-gradient(ellipse at 18% 60%,rgba(63,217,255,.16),transparent 46%),linear-gradient(135deg,rgba(10,18,38,.98),rgba(6,12,28,.96));box-shadow:0 0 24px rgba(63,217,255,.07)}
+.hq-header::before{content:'';position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;border:1px solid rgba(164,123,255,.15);pointer-events:none}
+.hq-header::after{content:'';position:absolute;left:-40px;bottom:-80px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(63,217,255,.1);pointer-events:none}
+.hq-eyebrow{font-family:var(--num);font-size:9px;letter-spacing:.38em;color:var(--cy);margin-bottom:5px}
+.hq-title{font-size:clamp(18px,2.5vw,28px);font-weight:900;letter-spacing:.03em;line-height:1.2;background:linear-gradient(90deg,#fff 0%,var(--cy) 50%,var(--pu));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+.hq-sub{font-size:11px;color:var(--mut);margin-bottom:12px;font-family:var(--num);letter-spacing:.04em}
+.hq-resources{display:flex;gap:8px;flex-wrap:wrap}
+.hq-res{display:flex;align-items:center;gap:8px;border:1px solid rgba(72,180,255,.16);border-radius:9px;background:rgba(3,8,18,.55);padding:6px 12px}
+.hq-res-icon{font-size:18px;line-height:1;flex-shrink:0}
+.hq-res-info{display:grid}
+.hq-res-val{font-family:var(--num);font-size:20px;font-weight:950;color:#fff;line-height:1}
+.hq-res-lbl{font-size:9px;color:var(--mut);letter-spacing:.1em;line-height:1.3}
+.hq-nav-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.hq-nav-btn{display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,rgba(14,24,44,.9),rgba(8,14,26,.96));padding:13px 8px;cursor:pointer;font-size:12px;color:var(--tx);font-weight:700}
+.hq-nav-btn:hover{border-color:var(--cy);box-shadow:0 0 12px rgba(63,217,255,.2)}
+.hq-nav-btn.hq-active{border-color:rgba(255,196,77,.45);background:linear-gradient(180deg,rgba(255,196,77,.1),rgba(8,14,26,.96));box-shadow:0 0 14px rgba(255,196,77,.18)}
+.hq-nav-ic{font-size:22px;line-height:1;margin-bottom:1px}
+.hq-missions{display:grid;gap:8px}
+.hq-mission{border:1px solid rgba(63,217,255,.2);border-radius:12px;background:linear-gradient(90deg,rgba(63,217,255,.07),rgba(3,8,18,.96));padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.hq-mission.exp-type{border-color:rgba(164,123,255,.22);background:linear-gradient(90deg,rgba(164,123,255,.08),rgba(3,8,18,.96))}
+.hq-mission-icon{font-size:24px;flex-shrink:0}
+.hq-mission-info{flex:1;min-width:0}
+.hq-mission-title{font-size:14px;font-weight:800;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hq-mission-sub{font-size:11px;color:var(--mut)}
+.hq-players-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hq-player-card{border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,rgba(63,217,255,.05),rgba(9,15,28,.97));padding:12px;overflow:hidden;position:relative}
+.hq-player-card::before{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;border:1px solid var(--line);opacity:.4}
+.hq-player-name{font-size:13px;font-weight:800;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hq-player-role{font-size:10px;color:var(--cy);margin-bottom:5px}
+.hq-player-stat{font-size:11px;color:var(--mut);line-height:1.5}
+.hq-news-list{display:grid;gap:6px}
+.hq-news-item{border-left:3px solid rgba(63,217,255,.38);padding:7px 10px;font-size:12px;line-height:1.55;background:rgba(63,217,255,.04);border-radius:0 8px 8px 0;color:#d9e6f7}
+.hq-sec-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.hq-sec-eye{font-family:var(--num);font-size:9px;letter-spacing:.28em;color:var(--cy)}
+.hq-sec-title{font-size:14px;font-weight:800}
+
+/* ============================================================
+   ホームラン全画面シネマ
+============================================================ */
+#hr-cine-root{position:fixed;inset:0;z-index:60;display:none;pointer-events:none}
+#hr-cine-root.show{display:block;pointer-events:auto}
+.hr-cine{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 50% 88%,rgba(255,196,77,.22),transparent 55%),radial-gradient(ellipse at 25% 20%,rgba(90,139,255,.15),transparent 46%),radial-gradient(ellipse at 80% 28%,rgba(164,123,255,.12),transparent 42%),#010307;animation:hrFadeIn .32s ease-out both}
+.hr-cine-stars{position:absolute;inset:0;pointer-events:none}
+.hr-cine-stars::before{content:'';position:absolute;inset:0;background:radial-gradient(1px 1px at 8% 12%,rgba(255,255,255,.65),transparent 1px),radial-gradient(1.5px 1.5px at 22% 7%,rgba(255,255,255,.45),transparent 2px),radial-gradient(1px 1px at 55% 5%,rgba(255,255,255,.55),transparent 1px),radial-gradient(1px 1px at 74% 16%,rgba(255,255,255,.38),transparent 1px),radial-gradient(1.5px 1.5px at 89% 10%,rgba(164,123,255,.55),transparent 2px),radial-gradient(1px 1px at 40% 21%,rgba(255,255,255,.3),transparent 1px),radial-gradient(1px 1px at 95% 28%,rgba(63,217,255,.45),transparent 1px),radial-gradient(1px 1px at 13% 34%,rgba(255,255,255,.35),transparent 1px),radial-gradient(1px 1px at 66% 33%,rgba(255,255,255,.28),transparent 1px),radial-gradient(1px 1px at 48% 42%,rgba(255,255,255,.22),transparent 1px),radial-gradient(1.5px 1.5px at 82% 44%,rgba(63,217,255,.3),transparent 2px)}
+.hr-cine-ground{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(960px,110vw);height:200px;pointer-events:none;animation:hrGroundIn .6s ease-out .05s both}
+.hr-cine-grass{position:absolute;bottom:0;left:0;right:0;height:150px;background:radial-gradient(ellipse at 50% 100%,rgba(29,122,86,.56),rgba(12,50,32,.4) 46%,transparent 70%)}
+.hr-cine-fence-line{position:absolute;bottom:120px;left:6%;right:6%;height:0;border-top:3px solid rgba(63,217,255,.4);border-left:3px solid rgba(63,217,255,.22);border-right:3px solid rgba(63,217,255,.22);border-radius:50% 50% 0 0;box-shadow:0 -4px 18px rgba(63,217,255,.28),0 -12px 38px rgba(63,217,255,.1)}
+.hr-cine-home-plate{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);width:26px;height:18px;background:rgba(255,255,255,.9);clip-path:polygon(50% 100%,0 40%,10% 0,90% 0,100% 40%);box-shadow:0 0 22px rgba(255,255,255,.7)}
+.hr-cine-light{position:absolute;top:0;width:3px;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,248,190,.22) 50%,rgba(255,248,190,0));opacity:0;animation:hrLightIn 1.2s ease-out .7s both}
+.hr-cine-light.l1{left:12%;height:72%;transform-origin:50% 0;transform:rotate(-10deg)}
+.hr-cine-light.l2{left:22%;height:60%;transform:rotate(-5deg);animation-delay:.8s}
+.hr-cine-light.l3{right:12%;height:72%;transform:rotate(10deg);animation-delay:.9s}
+.hr-cine-light.l4{right:22%;height:60%;transform:rotate(5deg);animation-delay:1.0s}
+.hr-cine-flash{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 52% 54%,rgba(255,247,209,.95),rgba(255,196,77,.45) 18%,transparent 48%);opacity:0;animation:hrFlashBurst .48s ease-out .04s both}
+.hr-cine-ball-dot{position:absolute;left:50%;bottom:36%;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#fff7d1,#ffd94d);box-shadow:0 0 22px rgba(255,196,77,1),0 0 48px rgba(255,196,77,.55);transform:translate(-50%,-50%);animation:hrBallFly .96s cubic-bezier(.22,.84,.36,.96) .28s both}
+.hr-cine-ball-trail{position:absolute;left:50%;bottom:36%;pointer-events:none;width:180px;border-top:2px solid rgba(255,196,77,.65);border-radius:50% 50% 0 0;height:140px;transform:rotate(-12deg);transform-origin:left bottom;box-shadow:0 0 10px rgba(255,196,77,.4);opacity:0;animation:hrTrailIn .7s ease-out .28s both}
+.hr-cine-center{position:relative;z-index:4;text-align:center;padding:0 24px}
+.hr-cine-label-line{font-family:var(--num);font-size:clamp(9px,1.2vw,13px);letter-spacing:.48em;color:rgba(63,217,255,.85);font-weight:700;margin-bottom:8px;opacity:0;animation:hrLabelSlide .42s ease-out 1.05s both}
+.hr-cine-big-text{font-family:var(--num);font-size:clamp(46px,9vw,104px);font-weight:950;line-height:.88;letter-spacing:.04em;background:linear-gradient(180deg,#fffde0 0%,#ffd94d 30%,#ff9a00 62%,#ff4800 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(255,180,0,.85));opacity:0;animation:hrBigIn .55s cubic-bezier(.12,.9,.2,1) 1.18s both}
+.hr-cine-batter-line{font-family:var(--num);font-size:clamp(13px,1.8vw,22px);font-weight:900;color:#fff;letter-spacing:.1em;margin-top:10px;opacity:0;animation:hrFadeSlide .38s ease-out 1.62s both}
+.hr-cine-runs-line{font-size:clamp(11px,1.4vw,16px);color:var(--imp);font-weight:700;margin-top:3px;letter-spacing:.08em;opacity:0;animation:hrFadeSlide .36s ease-out 1.75s both}
+.hr-cine-score-box{display:inline-block;margin-top:12px;border:1px solid rgba(255,196,77,.52);border-radius:8px;background:rgba(255,196,77,.14);padding:5px 18px;font-family:var(--num);font-size:clamp(14px,2vw,22px);font-weight:950;color:#fff;opacity:0;animation:hrScalePop .38s cubic-bezier(.2,.9,.3,1) 1.9s both}
+.hr-cine-stats-row{display:flex;gap:12px;justify-content:center;margin-top:14px;opacity:0;animation:hrFadeSlide .38s ease-out 2.05s both}
+.hr-cine-stat{min-width:80px;text-align:center;border:1px solid rgba(255,196,77,.3);border-radius:9px;background:rgba(255,196,77,.09);padding:7px 10px}
+.hr-cine-stat span{display:block;font-family:var(--num);font-size:9px;letter-spacing:.12em;color:rgba(255,240,180,.65);margin-bottom:3px}
+.hr-cine-stat b{display:block;font-family:var(--num);font-size:clamp(16px,2.2vw,26px);font-weight:950;color:#fff;line-height:1}
+.hr-cine-stat small{font-size:9px;color:rgba(255,240,180,.55);margin-left:1px}
+.hr-cine-rings{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hr-cine-ring-el{position:absolute;border-radius:50%;border:1px solid rgba(255,196,77,.5);left:50%;top:50%;transform:translate(-50%,-50%) scale(.2);opacity:0;animation:hrRingOut 1.55s ease-out var(--rd,.85s) both}
+.hr-cine-skip{position:absolute;right:16px;bottom:16px;z-index:10;font-family:var(--num);font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.16);border-radius:8px;background:rgba(3,6,12,.5);padding:6px 14px;cursor:pointer;opacity:0;animation:hrFadeIn .28s ease-out 1.0s both}
+.hr-cine-skip:hover{color:#fff;border-color:rgba(255,255,255,.45)}
+@keyframes hrFadeIn{0%{opacity:0}100%{opacity:1}}
+@keyframes hrGroundIn{0%{opacity:0;transform:translateX(-50%) translateY(28px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes hrFlashBurst{0%{opacity:0}18%{opacity:1}100%{opacity:0}}
+@keyframes hrBallFly{0%{left:50%;bottom:36%;opacity:0;transform:translate(-50%,-50%) scale(.4)}7%{opacity:1;transform:translate(-50%,-50%) scale(1)}48%{left:64%;bottom:64%;transform:translate(-50%,-50%) scale(1.15)}88%{left:78%;bottom:90%;opacity:.7;transform:translate(-50%,-50%) scale(.5)}100%{left:82%;bottom:98%;opacity:0;transform:translate(-50%,-50%) scale(.2)}}
+@keyframes hrTrailIn{0%{opacity:0;clip-path:inset(0 100% 0 0)}25%{opacity:.8}100%{opacity:.5;clip-path:inset(0 0 0 0)}}
+@keyframes hrBigIn{0%{opacity:0;transform:scale(1.45);filter:drop-shadow(0 0 58px rgba(255,196,77,1))}38%{opacity:1;transform:scale(.94)}68%{transform:scale(1.02)}100%{opacity:1;transform:scale(1);filter:drop-shadow(0 0 26px rgba(255,180,0,.82))}}
+@keyframes hrLabelSlide{0%{opacity:0;letter-spacing:.72em}100%{opacity:1;letter-spacing:.48em}}
+@keyframes hrFadeSlide{0%{opacity:0;transform:translateY(7px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes hrScalePop{0%{opacity:0;transform:scale(.78)}60%{opacity:1;transform:scale(1.07)}100%{opacity:1;transform:scale(1)}}
+@keyframes hrRingOut{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}22%{opacity:.85}100%{opacity:0;transform:translate(-50%,-50%) scale(2.3)}}
+@keyframes hrLightIn{0%{opacity:0}40%{opacity:.7}100%{opacity:.45}}
 </style>
 </head>
 <body>
@@ -731,6 +1167,8 @@ textarea.io{
   <aside id="side"></aside>
 </div>
 <div id="modal-root"></div>
+<div id="live-fullscreen-root"></div>
+<div id="hr-cine-root"></div>
 <div id="toast"></div>
 <div id="portrait-warn"><div>🛰<br>このゲームは横画面専用です。<br>iPadを横向きにしてください。</div></div>
 
@@ -931,7 +1369,7 @@ const BAL={
 /* ===== 2. 乱数(シード式・決定論的) ======================== */
 let save=null;
 const UI={screen:'home',sel:null,modal:null,playersTab:'bat',layer2:false,lineupPick:null,
-  expPlanet:'pl01',expParty:[null,null,null],oppSel:'npc1',exportText:'',liveFxLevel:'full',liveFxBurst:false,liveFxLastKey:''};
+  expPlanet:'pl01',expParty:[null,null,null],oppSel:'npc1',exportText:'',liveFxLevel:'full',liveFxBurst:false,liveFxLastKey:'',liveFullscreenOpen:false,liveStatsOpen:false,liveDataOpen:false,liveStageMode:'chase',hrCineEvt:null};
 
 function rnd(){ // mulberry32: save.rngState を進める
   let t = save.rngState = (save.rngState + 0x6D2B79F5) | 0;
@@ -1611,9 +2049,75 @@ function openRecentCinematics(ms,startRaw){
     recent.sort((a,b)=>{ const diff=b.prio-a.prio; return diff || (a.seq - b.seq); });
     ms.effectQueue=recent.slice(0,CINE_MAX_EVENTS);
     ms.effectIndex=0;
-    UI.modal={kind:'matchEffect'};
+    // ホームランはバースト時以外に専用全画面シネマを先に表示
+    const hrEvt = !UI.liveFxBurst ? recent.find(e=>e.type==='homerun') : null;
+    if(hrEvt){ UI.hrCineEvt = hrEvt; } // closeHRCinematic()がUI.modal='matchEffect'をセット
+    else { UI.modal={kind:'matchEffect'}; }
   }
 }
+function renderHRCinematic(){
+  const root = document.getElementById('hr-cine-root');
+  if(!root) return;
+  const evt = UI.hrCineEvt;
+  if(!evt){ root.className=''; root.innerHTML=''; return; }
+  const batter = evt.batterName || evt.actor || '打者';
+  const isGS = (evt.runs||0) >= 4;
+  const bigText = isGS ? 'GRAND SLAM' : 'HOME RUN';
+  const runsText = isGS ? `満塁本塁打 ${evt.runs}点` : (evt.runs||0)>1 ? `${evt.runs}点本塁打` : 'ソロホームラン';
+  const score = evt.scoreAfter ? `${evt.scoreAfter.p} - ${evt.scoreAfter.n}` : '';
+  const innText = evt.inning ? `${evt.inning}回${evt.half==='bottom'?'裏':'表'}` : '';
+  const pw = Number(evt.batterPower||60);
+  const zone = evt.fieldZone||'CF';
+  const dist = Math.round(108 + (pw-50)*1.5 + (zone==='CF'?8:0));
+  const exitV = Math.round(148 + (pw-50)*1.1);
+  const angle = Math.round(28 + (pw-50)*0.25);
+  const r1=240, r2=380, r3=540;
+  root.className='show';
+  root.innerHTML=`
+    <div class="hr-cine">
+      <div class="hr-cine-stars"></div>
+      <div class="hr-cine-ground">
+        <div class="hr-cine-grass"></div>
+        <div class="hr-cine-fence-line"></div>
+        <div class="hr-cine-home-plate"></div>
+      </div>
+      <div class="hr-cine-light l1"></div>
+      <div class="hr-cine-light l2"></div>
+      <div class="hr-cine-light l3"></div>
+      <div class="hr-cine-light l4"></div>
+      <div class="hr-cine-flash"></div>
+      <div class="hr-cine-ball-trail"></div>
+      <div class="hr-cine-ball-dot"></div>
+      <div class="hr-cine-rings">
+        <div class="hr-cine-ring-el" style="width:${r1}px;height:${r1}px;--rd:.8s"></div>
+        <div class="hr-cine-ring-el" style="width:${r2}px;height:${r2}px;--rd:.92s"></div>
+        <div class="hr-cine-ring-el" style="width:${r3}px;height:${r3}px;--rd:1.05s"></div>
+      </div>
+      <div class="hr-cine-center">
+        <div class="hr-cine-label-line">銀河リーグ${innText?` · ${esc(innText)}`:''}${evt.pitcher?` · ${esc(evt.pitcher)}→`:''}${esc(batter)}</div>
+        <div class="hr-cine-big-text">${bigText}</div>
+        <div class="hr-cine-batter-line">${esc(batter)}</div>
+        <div class="hr-cine-runs-line">${runsText}</div>
+        ${score?`<div class="hr-cine-score-box">${score}</div>`:''}
+        <div class="hr-cine-stats-row">
+          <div class="hr-cine-stat"><span>飛距離</span><b>${dist}<small>m</small></b></div>
+          <div class="hr-cine-stat"><span>打球速度</span><b>${exitV}<small>km/h</small></b></div>
+          <div class="hr-cine-stat"><span>打球角度</span><b>${angle}<small>°</small></b></div>
+        </div>
+      </div>
+      <button class="hr-cine-skip" onclick="closeHRCinematic()">SKIP ▶</button>
+    </div>
+  `;
+}
+function closeHRCinematic(){
+  UI.hrCineEvt = null;
+  const ms = save && save.activeMatch;
+  if(ms && ms.effectQueue && ms.effectQueue.length && typeof ms.effectIndex==='number'){
+    UI.modal = {kind:'matchEffect'};
+  }
+  render();
+}
+
 function advanceOnePA(){
   const ms=save.activeMatch;
   if(!ms || ms.finished || ms.pendingDecision) return;
@@ -1713,7 +2217,7 @@ function finalizeMatch(ms){
   addNews(`${mvp} が活躍して ${title}`);
   mlog(ms,ms.inning,'sys','試合終了 '+p+' - '+n+'（'+(outcome==='win'?'勝利':outcome==='lose'?'敗北':'引き分け')+'）',outcome==='win');
 }
-function closeMatch(){ const m=save.activeMatch; if(m) recordSeasonResult(m); save.activeMatch=null; persist(); render(); }
+function closeMatch(){ const m=save.activeMatch; if(m) recordSeasonResult(m); UI.liveFullscreenOpen=false; UI.liveDataOpen=false; save.activeMatch=null; persist(); render(); }
 /* ===== 簡易シーズン/順位表(表示・進行のみ。試合ロジック非変更) ===== */
 function seasonSchedule(){ return ['npc1','npc2','npc3','npc1','npc2','npc3']; } // 各球団と2回ずつ=6試合
 function defaultSeason(){ return {no:1, schedule:seasonSchedule(), idx:0, results:[], done:false}; }
@@ -2180,6 +2684,7 @@ function cineBallFlightStyle(info){
   return `${cineBattedStyle(info)};--mx:${mx}px;--my:${my}px`;
 }
 function cineBallFromEvent(evt){
+  if(typeof livePAHasBattedBall === 'function' && !livePAHasBattedBall(evt)) return null;
   if(!evt || !(evt.traj || evt.battedBallType || evt.fieldZone || evt.depth)) return null;
   const zoneByDir = {
     left:'LF', leftCenter:'LC', center:'CF', rightCenter:'RC', right:'RF',
@@ -2323,7 +2828,7 @@ function cineCapturePA(ms,half,bt,res,info){
   const result = `現在: ${scoreSnap.p} - ${scoreSnap.n} | ${baseAfter}`;
   const resultText = info.outcomeText||info.resultText||res;
   const ballInfo = info.ballInfo || cineBattedBallInfo({type,label,desc,resultText,runs:info.runs||0});
-  pushCinematicEvent(ms,{label,displayLabel:label,type,inning:ms.inning,half,outsBefore:info.outsBefore,outsAfter:ms.outs,bases:cineBaseTextFromSnap(basesBeforeSnap),basesBefore:basesBeforeSnap,basesAfter:basesSnap,baseBeforeText,baseAfterText,scoreBefore:scoreBeforeSnap,scoreAfter:scoreSnap,runs:info.runs||0,runsScored:info.runs||0,batterName:actor,pitcherName:pitcher,actor,pitcher,result:res,resultId:res,resultText,resultSummary:result,rbi:info.runs||0,runnerMovements,scoringSummary,advanceSummary,desc,traj:ballInfo&&ballInfo.traj,dir:ballInfo&&ballInfo.dir,depth:ballInfo&&ballInfo.depth,fieldZone:ballInfo&&ballInfo.fieldZone,fieldedBy:ballInfo&&ballInfo.fieldedBy,battedBallType:ballInfo&&ballInfo.traj,batterPower:bt.power,prio,theme,tags});
+  pushCinematicEvent(ms,{label,displayLabel:label,type,inning:ms.inning,half,outsBefore:info.outsBefore,outsAfter:ms.outs,bases:cineBaseTextFromSnap(basesBeforeSnap),basesBefore:basesBeforeSnap,basesAfter:basesSnap,baseBeforeText,baseAfterText,scoreBefore:scoreBeforeSnap,scoreAfter:scoreSnap,runs:info.runs||0,runsScored:info.runs||0,batterName:actor,pitcherName:pitcher,actor,pitcher,result:res,resultId:res,resultText,resultSummary:result,rbi:info.runs||0,runnerMovements,scoringSummary,advanceSummary,desc,traj:ballInfo&&ballInfo.traj,dir:ballInfo&&ballInfo.dir,depth:ballInfo&&ballInfo.depth,fieldZone:ballInfo&&ballInfo.fieldZone,fieldedBy:ballInfo&&ballInfo.fieldedBy,battedBallType:ballInfo&&ballInfo.traj,batterPower:bt.power,batterSpeed:bt.speed,prio,theme,tags});
 }
 function cineSnap(ms,half,bt,res,info){ cineCapturePA(ms,half,bt,res,info); }
 function cineCaptureSteal(ms,half,runner,ok){
@@ -2403,7 +2908,7 @@ function renderCinematicStage(evt,ms){
   const inningText = evt.inning ? `${evt.inning}回${cineHalfText(evt.half)}` : '回不明';
   const label = cineDisplayLabel(evt);
   const headline = cineHeadline(evt);
-  const battedInfo = cineBallFromEvent(evt);
+  const battedInfo = livePAHasBattedBall(evt) ? cineBallFromEvent(evt) : null;
   const hasBattedInfo = battedInfo && typeof battedInfo.x === 'number' && typeof battedInfo.y === 'number';
   const trajClass = hasBattedInfo ? `batted ${battedInfo.traj||battedInfo.battedBallType}` : cineTrajectoryClass(evt);
   const trajStyle = hasBattedInfo ? cineBattedStyle(battedInfo) : '';
@@ -2413,6 +2918,7 @@ function renderCinematicStage(evt,ms){
   const runnerNames = runnerChips ? '' : basesSnap.map((name,i)=>name ? `<span class="cine-run-name r${i+1}">${esc(name)}</span>` : '').join('');
   const homeFlash = cineHomeFlashHtml(evt);
   const tagsHtml = (evt.tags||[]).map(t=>`<span class="cine-tag">${esc(t)}</span>`).join('');
+  const bigResult = livePAResultBanner(evt,'cine');
   return `
       <div class="mback" onclick="skipCinematics()"></div>
       <div class="mbox cine ${evt.theme||''}">
@@ -2430,6 +2936,7 @@ function renderCinematicStage(evt,ms){
             <h2>${esc(label)}</h2>
             <div class="cine-progress">PLAY ${esc(progress)}</div>
           </div>
+          ${bigResult}
           <div class="cine-stage">
             <div class="cine-sky"></div>
             <div class="cine-summary">
@@ -2709,7 +3216,7 @@ function sellMaterial(mid){
 }
 
 function selectPlayer(pid){ UI.sel = pid; render(); }
-function setScreen(screen){ UI.screen = screen; UI.modal = null; if(screen!=='lineup') UI.lineupPick=null; render(); }
+function setScreen(screen){ UI.screen = screen; UI.modal = null; UI.liveFullscreenOpen = false; UI.liveDataOpen = false; if(screen!=='lineup') UI.lineupPick=null; render(); }
 function selectOpp(id){ UI.oppSel = id; render(); }
 function setLiveFxLevel(level){ UI.liveFxLevel = ['off','simple','full'].includes(level) ? level : 'full'; render(); }
 function selectExpPlanet(id){ UI.expPlanet = id; UI.expParty = [null, null, null]; render(); }
@@ -2875,50 +3382,65 @@ function renderNav(){
 
 function renderHome(){
   const main = document.getElementById('main');
-  const recent = save.recentResults.slice(0, 5).map(r => `<div class="card"><div class="kv"><b>${esc(r.opp)}</b><span>${esc(r.score)}</span></div><div class="note">${esc(r.outcome)}</div></div>`).join('') || '<p class="note">まだ試合結果がありません。</p>';
-  const tips=[];
-  if(save.team.credits>=SCOUT_COST) tips.push({title:'スカウト可能',desc:`${SCOUT_COST}クレジットで新選手を獲得できます`});
-  if(save.activeExpedition && !save.activeExpedition.finished) tips.push({title:'探索を進行',desc:'探索中のパネルで次のステップまたは選択肢を進めましょう'});
-  if(save.recentResults.length){
-    const last = save.recentResults[0];
-    tips.push({title:'直近の試合',desc:`前回は${last.outcome}でした。次の相手に備えよう`});
-  }
-  if(save.inventory.trainingData>0) tips.push({title:'育成できる',desc:`訓練データが ${save.inventory.trainingData} あります。選手を強化できます`});
-  if(save.activeMatch && !save.activeMatch.finished) tips.push({title:'試合進行中',desc:'対戦中の試合を再開して勝利を目指しましょう'});
-  const tipHtml = tips.length ? `<div class="tip-list">${tips.map(t=>`<div class="tip-item"><span class="marker"></span><div><strong>${esc(t.title)}</strong><div>${esc(t.desc)}</div></div></div>`).join('')}</div>` : '<p class="note">次に何をするか迷ったら、試合・探索・スカウトから始めてみてください。</p>';
-  let active='';
+  const s = ensureSeason();
+  const rec = seasonRecordSelf();
+  const seasonLine = `SEASON ${s.no} · ${rec.w}勝${rec.l}敗${rec.d?rec.d+'分':''} · 第${Math.min(s.idx+1,s.schedule.length)}/${s.schedule.length}節`;
+
+  // ミッション(進行中の試合/探索)
+  let missions = '';
   if(save.activeMatch){
     const ms = save.activeMatch;
-    const state = ms.finished ? '終了' : `${ms.inning}回 ${ms.outs}アウト`;
-    active += `<div class="panel"><div class="ph"><div><span class="eyebrow">進行中の試合</span><h2>${esc(NPC_TEAMS[ms.oppId].short)} 戦</h2></div></div><p>${state}</p><div class="btnrow"><button class="btn pri" onclick="setScreen('match')">試合画面へ</button></div></div>`;
+    const state = ms.finished ? '試合終了' : `${ms.inning}回 ${ms.outs}アウト`;
+    const score = `${pTot(ms)} - ${nTot(ms)}`;
+    missions += `<div class="hq-mission" onclick="setScreen('match')"><div class="hq-mission-icon">⚾</div><div class="hq-mission-info"><div class="hq-mission-title">${esc(NPC_TEAMS[ms.oppId].name)} 戦</div><div class="hq-mission-sub">${state} · ${score}</div></div><button class="btn pri sm" onclick="event.stopPropagation();setScreen('match')">再開 ▶</button></div>`;
   }
-  if(save.activeExpedition){
+  if(save.activeExpedition && !save.activeExpedition.finished){
     const ex = save.activeExpedition;
     const planet = PLANETS[ex.planetId];
-    active += `<div class="panel"><div class="ph"><div><span class="eyebrow">進行中の探索</span><h2>${esc(planet.name)}</h2></div></div><p>ステップ ${ex.step}/${ex.total}  調査率 ${ex.survey}%</p><div class="btnrow"><button class="btn pri" onclick="setScreen('explore')">探索画面へ</button></div></div>`;
+    missions += `<div class="hq-mission exp-type" onclick="setScreen('explore')"><div class="hq-mission-icon">🛸</div><div class="hq-mission-info"><div class="hq-mission-title">${esc(planet.name)} 探索</div><div class="hq-mission-sub">ステップ ${ex.step}/${ex.total} · 調査率 ${ex.survey}%</div></div><button class="btn sm" onclick="event.stopPropagation();setScreen('explore')">続ける</button></div>`;
   }
-  const newsHtml = save.news.length ? save.news.map(n => `<div class="news-item">${esc(n.text)}</div>`).join('') : '<p class="note">チームニュースはここに表示されます。</p>';
-  const hero = save.players.slice(0,3).map(p => summaryCard(p)).join('');
+
+  // ナビグリッド
+  const navDefs=[
+    {id:'match',  ic:'⚾', lbl:'試合',   hot:!!save.activeMatch&&!save.activeMatch.finished},
+    {id:'lineup', ic:'📋', lbl:'編成',   hot:false},
+    {id:'players',ic:'🧑', lbl:'選手',   hot:false},
+    {id:'base',   ic:'🏗', lbl:'施設',   hot:false},
+    {id:'explore',ic:'🛸', lbl:'探索',   hot:!!save.activeExpedition&&!save.activeExpedition.finished},
+    {id:'scout',  ic:'🔭', lbl:'スカウト',hot:save.team.credits>=SCOUT_COST},
+    {id:'save',   ic:'💾', lbl:'保存',   hot:false},
+  ];
+  const navHtml = navDefs.map(b=>`<button class="hq-nav-btn${b.hot?' hq-active':''}" onclick="setScreen('${b.id}')"><span class="hq-nav-ic">${b.ic}</span><span>${b.lbl}</span></button>`).join('');
+
+  // 注目選手(上位3名)
+  const heroes = save.players.slice(0,3).map(p=>{
+    const stat = p.isPitcher
+      ? `${p.sp.games}試合 · SO ${p.sp.so}`
+      : (p.sb_.ab>0 ? `打率 ${fmtAvg(p.sb_.h/p.sb_.ab)} · ${p.sb_.hr}HR` : '出場待機中');
+    return `<div class="hq-player-card">${typeChip(p.type)}<div class="hq-player-name" style="margin-top:4px">${esc(p.name)}</div><div class="hq-player-role">${esc(ROLE_INFO[p.role]||p.role)} · Lv${p.level}</div><div class="hq-player-stat">${stat}</div></div>`;
+  }).join('');
+
+  // ニュース
+  const newsHtml = save.news.length
+    ? save.news.slice(0,5).map(n=>`<div class="hq-news-item">${esc(n.text)}</div>`).join('')
+    : '<p class="note">チームニュースはまだありません。</p>';
+
   main.innerHTML = `
-    <section class="panel">
-      <div class="ph"><div><span class="eyebrow">ホーム</span><h2>アストロ・パイオニアーズ</h2></div><div class="sub">${esc(save.team.name)}</div></div>
-      <div class="kv"><b>クレジット</b><span>${save.team.credits}</span></div>
-      <div class="kv"><b>訓練データ</b><span>${save.inventory.trainingData}</span></div>
-      <div class="btnrow">
-        <button class="btn pri" onclick="setScreen('match')">試合</button>
-        <button class="btn pri" onclick="setScreen('lineup')">編成</button>
-        <button class="btn pri" onclick="setScreen('players')">選手</button>
-        <button class="btn pri" onclick="setScreen('base')">施設</button>
-        <button class="btn pri" onclick="setScreen('explore')">探索</button>
-        <button class="btn pri" onclick="setScreen('scout')">スカウト</button>
-        <button class="btn pri" onclick="setScreen('save')">保存</button>
+    <div class="hq-wrap">
+      <div class="hq-header">
+        <div class="hq-eyebrow">GALAXY BASEBALL GM · COMMAND CENTER</div>
+        <div class="hq-title">${esc(save.team.name)}</div>
+        <div class="hq-sub">${seasonLine}</div>
+        <div class="hq-resources">
+          <div class="hq-res"><span class="hq-res-icon">💰</span><div class="hq-res-info"><span class="hq-res-val">${save.team.credits}</span><span class="hq-res-lbl">CREDITS</span></div></div>
+          <div class="hq-res"><span class="hq-res-icon">📊</span><div class="hq-res-info"><span class="hq-res-val">${save.inventory.trainingData}</span><span class="hq-res-lbl">TRAINING DATA</span></div></div>
+        </div>
       </div>
-    </section>
-    <section class="panel"><div class="ph"><div><span class="eyebrow">おすすめ行動</span><h2>次にやること</h2></div></div>${tipHtml}</section>
-    ${active}
-    <section class="panel"><div class="ph"><div><span class="eyebrow">銀河スポーツニュース</span><h2>最新情報</h2></div></div>${newsHtml}</section>
-    <section class="panel"><div class="ph"><div><span class="eyebrow">注目選手</span><h2>最近の活躍</h2></div></div><div class="player-grid">${hero}</div></section>
-    <section class="panel"><div class="ph"><div><span class="eyebrow">最近の結果</span><h2>直近の試合</h2></div></div>${recent}</section>
+      <div class="hq-nav-grid">${navHtml}</div>
+      ${missions ? `<div><div class="hq-sec-head"><span class="hq-sec-eye">MISSIONS</span><span class="hq-sec-title">進行中のミッション</span></div><div class="hq-missions">${missions}</div></div>` : ''}
+      ${heroes ? `<div><div class="hq-sec-head"><span class="hq-sec-eye">ROSTER</span><span class="hq-sec-title">注目選手</span></div><div class="hq-players-strip">${heroes}</div></div>` : ''}
+      <div><div class="hq-sec-head"><span class="hq-sec-eye">INTEL</span><span class="hq-sec-title">銀河スポーツニュース</span></div><div class="hq-news-list">${newsHtml}</div></div>
+    </div>
   `;
 }
 
@@ -3136,6 +3658,96 @@ function paResultLabel(evt){
   const map={K:'三振',BB:'四球',HBP:'死球',HR:'本塁打','1B':'単打','2B':'二塁打','3B':'三塁打',OUT:'アウト',SF:'犠牲フライ',DP:'併殺'};
   return map[id] || (evt && (evt.resultText || evt.resultSummary || evt.result)) || '結果不明';
 }
+function livePAResultDisplay(evt){
+  const id = evt && (evt.resultId || evt.result);
+  const runs = Number((evt && (evt.runs || evt.runsScored)) || 0);
+  const tags = Array.isArray(evt && evt.tags) ? evt.tags.join(' ') : '';
+  const text = `${tags} ${(evt && (evt.resultText || evt.resultSummary || evt.desc || evt.label)) || ''}`;
+  const gold = runs > 0 || id === 'HR' || /逆転|サヨナラ|勝利|HOME RUN|GRAND SLAM/.test(text);
+  if(/逆転/.test(text)) return {label:'逆転!', cls:'gold'};
+  if(id === 'HR') return {label:'本塁打!', cls:'gold'};
+  if(runs >= 2) return {label:`${runs} RUNS!`, cls:'gold'};
+  if(runs === 1) return {label:'HOME IN!', cls:'gold'};
+  if(id === 'K') return {label:'STRIKEOUT!', cls:'out'};
+  if(id === 'BB') return {label:'WALK!', cls:'safe'};
+  if(id === 'HBP') return {label:'ON BASE!', cls:'safe'};
+  if(id === 'DP') return {label:'DOUBLE PLAY!', cls:'out'};
+  if(id === 'OUT' || id === 'SF') return {label:'OUT!', cls:'out'};
+  if(['1B','2B','3B'].includes(id)) return {label:'HIT!', cls:'safe'};
+  return {label:(paResultLabel(evt) || 'PLAY!'), cls:gold ? 'gold' : 'safe'};
+}
+function livePAResultBanner(evt, kind){
+  const r = livePAResultDisplay(evt);
+  const cls = kind === 'cine' ? `cine-bigr ${r.cls}` : `live-result-banner ${r.cls}`;
+  return `<div class="${esc(cls)}">${esc(r.label)}</div>`;
+}
+function liveFSResultRuns(evt){
+  const direct = Number((evt && (evt.runs || evt.runsScored)) || 0);
+  if(direct > 0) return direct;
+  const moves = Array.isArray(evt && evt.runnerMovements) ? evt.runnerMovements : [];
+  return moves.filter(m=>m && m.to === 'home').length;
+}
+function liveFSScoreSwing(evt){
+  const before = evt && evt.scoreBefore;
+  const after = evt && evt.scoreAfter;
+  if(!before || !after || typeof before.p !== 'number' || typeof before.n !== 'number' || typeof after.p !== 'number' || typeof after.n !== 'number') return {tied:false,comeback:false};
+  const runs = liveFSResultRuns(evt);
+  if(runs <= 0) return {tied:false,comeback:false};
+  const half = evt && evt.half;
+  const bottom = half === 'bottom';
+  const top = half === 'top';
+  const tied = before.p !== before.n && after.p === after.n;
+  const comeback = bottom ? (before.p <= before.n && after.p > after.n) : top ? (before.n <= before.p && after.n > after.p) : false;
+  return {tied,comeback};
+}
+function liveFSResultSubtext(evt, info){
+  if(!evt) return '';
+  const id = evt.resultId || evt.result;
+  const runs = info && info.runs ? info.runs : liveFSResultRuns(evt);
+  const swing = info && info.swing ? info.swing : liveFSScoreSwing(evt);
+  if(swing.comeback) return '逆転';
+  if(swing.tied) return '同点';
+  if(id === 'HR') return runs >= 2 ? `${runs}ランホームラン` : 'ソロホームラン';
+  if(runs >= 2) return `${runs}点タイムリー`;
+  if(runs === 1) return 'タイムリー';
+  return evt.resultText || evt.resultSummary || paResultLabel(evt);
+}
+function liveFSResultInfo(evt){
+  const id = evt && (evt.resultId || evt.result);
+  const runs = liveFSResultRuns(evt);
+  const swing = liveFSScoreSwing(evt);
+  const text = `${evt && evt.resultText || ''} ${evt && evt.resultSummary || ''} ${Array.isArray(evt && evt.tags) ? evt.tags.join(' ') : ''}`;
+  let label = 'PLAY!';
+  let kind = 'safe';
+  if(swing.comeback){ label = 'COMEBACK!'; kind = 'comeback'; }
+  else if(swing.tied){ label = 'GAME TIED!'; kind = 'tie'; }
+  else if(id === 'HR'){ label = 'HOME RUN!!'; kind = 'hr'; }
+  else if(runs >= 2){ label = `${runs} RUNS SCORED!`; kind = 'run'; }
+  else if(runs === 1){ label = 'RUN SCORED!'; kind = 'run'; }
+  else if(id === 'DP' || /DOUBLE PLAY/i.test(text)){ label = 'DOUBLE PLAY!'; kind = 'dp'; }
+  else if(id === 'K'){ label = 'STRIKEOUT!'; kind = 'strikeout'; }
+  else if(id === 'BB'){ label = 'WALK'; kind = 'walk'; }
+  else if(id === 'HBP'){ label = 'HIT BY PITCH'; kind = 'safe'; }
+  else if(id === 'OUT' || id === 'SF'){ label = 'OUT!'; kind = 'out'; }
+  else if(id === '3B'){ label = 'TRIPLE!'; kind = 'hit'; }
+  else if(id === '2B'){ label = 'DOUBLE!'; kind = 'hit'; }
+  else if(id === '1B'){ label = 'HIT!'; kind = 'hit'; }
+  else if(/HOME IN|RUN SCORED/i.test(text)){ label = 'HOME IN!'; kind = 'run'; }
+  const sub = liveFSResultSubtext(evt,{runs,swing});
+  const bannerCls = (kind === 'out' || kind === 'strikeout' || kind === 'dp') ? 'out' : (kind === 'run' || kind === 'hr' || kind === 'comeback' || kind === 'tie') ? 'gold' : 'safe';
+  return {label,kind,sub,bannerCls,runs,swing};
+}
+function liveFSResultCallout(evt, style){
+  const info = liveFSResultInfo(evt);
+  return `<div class="lfs-result-callout ${esc(info.kind)}" style="${esc(style || '')}"><div class="lfs-result-main">${esc(info.label)}</div><div class="lfs-result-sub">${esc(info.sub || '')}</div></div>`;
+}
+function liveFSPlayBar(evt){
+  const info = liveFSResultInfo(evt);
+  const actor = evt && (evt.batterName || evt.actor) ? (evt.batterName || evt.actor) : 'PLAY';
+  const main = evt && (evt.resultText || evt.resultSummary || evt.desc) ? (evt.resultText || evt.resultSummary || evt.desc) : paResultLabel(evt);
+  const cls = `lfs-desc lfs-playbar ${info.bannerCls}`;
+  return `<div class="${esc(cls)}"><span class="lfs-play-badge">${esc(info.label)}</span><span class="lfs-play-main">${esc(actor)}: ${esc(main)}</span><span class="lfs-play-sub">${esc(info.sub || fieldMetaText(evt))}</span></div>`;
+}
 function baseSnapText(bases){
   const b=Array.isArray(bases)?bases:[null,null,null];
   const names=['1塁','2塁','3塁'];
@@ -3334,7 +3946,26 @@ function livePABallStyle(info){
   const my = Math.round(y * 0.58 - arc);
   return `--x:${x}px;--y:${y}px;--len:${len}px;--rot:${rot}deg;--arc:${arc}px;--mx:${mx}px;--my:${my}px`;
 }
+// Display-only batted-ball gate. Never use this for PA resolution, scoring, stats, or save data.
+function livePAHasBattedBall(evt){
+  if(!evt || typeof evt !== 'object') return false;
+  const id = String(evt.resultId || evt.result || '').toUpperCase();
+  const type = String(evt.type || '').toLowerCase();
+  const text = `${evt.resultText || ''} ${evt.resultSummary || ''} ${evt.desc || ''} ${evt.label || ''}`.toLowerCase();
+  if(['K','SO','BB','IBB','HBP','CI'].includes(id)) return false;
+  if(type === 'k' || type === 'strikeout' || type === 'walk' || type === 'hbp') return false;
+  if(/strikeout|walk|hit by pitch|catcher'?s interference|三振|四球|死球|打撃妨害|見逃し|空振り/.test(text)) return false;
+
+  if(['1B','2B','3B','HR','OUT','SF','DP','E','ROE'].includes(id)) return true;
+  if(['homerun','triple','double','score','sf','dp'].includes(type)) return true;
+  if(['grounder','liner','fly','homer'].includes(String(evt.traj || evt.battedBallType || '').toLowerCase())) return true;
+  if(evt.fieldedBy) return true;
+  if(evt.fieldZone || evt.depth) return true;
+  if(/hit|single|double|triple|home run|homer|ground|fly|liner|sacrifice fly|double play|error|ヒット|単打|二塁打|三塁打|本塁打|ホームラン|ゴロ|フライ|ライナー|犠牲フライ|併殺|失策|エラー/.test(text)) return true;
+  return false;
+}
 function liveSafeBallFromEvent(evt){
+  if(!livePAHasBattedBall(evt)) return null;
   try{
     return typeof cineBallFromEvent === 'function' ? cineBallFromEvent(evt) : null;
   }catch(e){
@@ -3388,6 +4019,217 @@ function liveRunnerMeta(name){
   if(!p) return {ours:false, speed:50, rarity:1};
   return {ours:true, speed:(p.ab && p.ab.speed)||50, rarity:p.rarity||1};
 }
+function livePANameShort(name, fallback=''){
+  const s = String(name || fallback || '').trim();
+  if(!s) return '';
+  return s.length > 5 ? s.slice(0,5) : s;
+}
+function livePAOwnOrderNo(ms, name){
+  if(!ms || !Array.isArray(ms.order) || !name) return null;
+  const idx = ms.order.findIndex(pid=>{ const p=getPlayer(pid); return p && p.name===name; });
+  return idx >= 0 ? idx + 1 : null;
+}
+function livePARunnerChipHtml(name, cls=''){
+  const meta = liveRunnerMeta(name);
+  const no = livePAOwnOrderNo(save && save.activeMatch, name) || (meta.ours ? 'P' : 'A');
+  const fullCls = `${cls}${meta.ours?' ours':''}${meta.rarity>=3?' star':''}`.trim();
+  return `<span class="${esc(fullCls)}" title="${esc(name || '')}"><span class="chip-no">${esc(no)}</span><span class="chip-name">${esc(livePANameShort(name,'RUN'))}</span></span>`;
+}
+const LIVE_FIELDER_NO = {P:1,C:2,'1B':3,'2B':4,'3B':5,SS:6,LF:7,CF:8,RF:9};
+function livePAFielderDisplay(ms, evt, pos){
+  const isOurDefense = evt && evt.half === 'top';
+  if(isOurDefense && ms && ms.positions){
+    const pid = pos === 'P' ? ms.pitcher : Object.keys(ms.positions).find(id=>ms.positions[id] === pos);
+    const p = pid ? getPlayer(pid) : null;
+    const orderNo = pid && Array.isArray(ms.order) ? ms.order.indexOf(pid) + 1 : 0;
+    if(p) return {no:orderNo > 0 ? orderNo : (LIVE_FIELDER_NO[pos] || pos), name:livePANameShort(p.name,pos), pos};
+  }
+  const opp = ms ? oppData(ms.oppId) : null;
+  if(pos === 'P' && opp && opp.pit) return {no:1, name:livePANameShort(opp.pit.name,'AWAY P'), pos};
+  const n = LIVE_FIELDER_NO[pos] || 0;
+  const away = opp && opp.bats && opp.bats[n-1];
+  return {no:n || pos, name:livePANameShort(away && away.name, `AWAY ${pos}`), pos};
+}
+function livePAFielderChipHtml(ms, evt, pos, cls=''){
+  const d = livePAFielderDisplay(ms, evt, pos);
+  return `<span class="lpf-avatar"><span class="chip-no">${esc(d.no)}</span><span class="chip-pos">${esc(d.pos)}</span><span class="chip-name">${esc(d.name)}</span></span>`;
+}
+function livePABatterDisplay(ms, evt){
+  const name = (evt && (evt.batterName || evt.actor)) || 'BATTER';
+  const isOurBat = evt && evt.half === 'bottom';
+  if(isOurBat && ms && Array.isArray(ms.order)){
+    const orderNo = livePAOwnOrderNo(ms, name);
+    const pid = ms.order.find(id=>{ const p=getPlayer(id); return p && p.name===name; });
+    const p = pid ? getPlayer(pid) : null;
+    const pos = (pid && ms.positions && ms.positions[pid]) || (p && p.pos && p.pos[0]) || 'B';
+    return {no:orderNo || 'B', name:livePANameShort(name,'BATTER'), pos};
+  }
+  const opp = ms ? oppData(ms.oppId) : null;
+  const idx = opp && Array.isArray(opp.bats) ? opp.bats.findIndex(b=>b && b.name===name) : -1;
+  return {no:idx >= 0 ? idx + 1 : 'A', name:livePANameShort(name,'BATTER'), pos:'B'};
+}
+function livePABatterTagHtml(ms, evt, fullscreen){
+  if(!fullscreen) return '';
+  const d = livePABatterDisplay(ms, evt);
+  return `<span class="lpf-batter-tag" title="${esc((evt && (evt.batterName || evt.actor)) || '')}"><span class="chip-no">${esc(d.no)}</span><span class="chip-pos">${esc(d.pos)}</span><span class="chip-name">${esc(d.name)}</span></span>`;
+}
+function livePAReplayTitle(evt, hasBall, fullscreen){
+  if(!fullscreen) return '';
+  const id = evt && (evt.resultId || evt.result);
+  const title = hasBall ? '打球トラッキング' : (id === 'K' ? 'ピッチトンネル' : 'ゾーン解析');
+  const sub = evt && evt.prio >= CINE_MIN_PRIO ? '重要場面リプレイ' : 'ライブリプレイ';
+  return `<div class="lpf-replay-title"><span>${esc(sub)}</span><b>${esc(title)}</b></div>`;
+}
+function livePAMinimapHtml(bases, fullscreen){
+  if(!fullscreen) return '';
+  const b = Array.isArray(bases) ? bases : [null,null,null];
+  return `<div class="lpf-minimap" aria-label="俯瞰ミニマップ">
+    <div class="lpf-mini-field">
+      <span class="lpf-mini-base b1${b[0]?' on':''}"></span>
+      <span class="lpf-mini-base b2${b[1]?' on':''}"></span>
+      <span class="lpf-mini-base b3${b[2]?' on':''}"></span>
+    </div>
+    <div class="lpf-mini-label">${esc(liveFSBaseText(b))}</div>
+  </div>`;
+}
+function livePASvgPoint(p){
+  const x = Number(p && p.x);
+  const y = Number(p && p.y);
+  return {
+    x: Number.isFinite(x) ? +x.toFixed(1) : 50,
+    y: Number.isFinite(y) ? +y.toFixed(1) : 84
+  };
+}
+function livePAReplaySvgPath(evt, hasBall, chart){
+  const fin = chart && chart.final;
+  const zonePt = livePASvgPoint(livePAFieldZoneTarget(fin && fin.zone));
+  const pitch = `M 50 50 C 50 61 ${zonePt.x} ${Math.max(62,zonePt.y-10).toFixed(1)} ${zonePt.x} ${zonePt.y}`;
+  if(!hasBall) return {pitch, batted:'', end:zonePt};
+  const imp = livePASvgPoint(livePAImpactPoint(evt));
+  const cx = +((50 + imp.x) / 2).toFixed(1);
+  const lift = evt && (evt.traj === 'homer' || evt.depth === 'overFence') ? 18 : evt && evt.traj === 'fly' ? 12 : evt && evt.traj === 'liner' ? 5 : 0;
+  const cy = +(((84 + imp.y) / 2) - lift).toFixed(1);
+  return {pitch, batted:`M 50 84 Q ${cx} ${cy} ${imp.x} ${imp.y}`, end:imp};
+}
+function livePACameraStyle(evt, hasBall){
+  return ''; // ボール追従カメラは独立リプレイ枠へ移動。既存フィールドは変形しない(安定表示)。
+}
+function livePAReplaySvg(evt, hasBall, chart, fullscreen){
+  return ''; // フィールド上のSVGトラックは撤去(極太バー/座標崩れの原因)。ボール追従は renderBallTrackingReplay へ。
+  if(!fullscreen) return '';
+  const paths = livePAReplaySvgPath(evt, hasBall, chart);
+  const pitchDur = hasBall ? '0.58s' : '0.82s';
+  const battedDur = evt && evt.resultId === 'HR' ? '1.18s' : '0.92s';
+  const pitchBall = `<circle class="lpf-track-ball pitch" r="1.05"><animateMotion dur="${pitchDur}" begin="0.15s" fill="freeze" path="${esc(paths.pitch)}"></animateMotion></circle>`;
+  const batted = hasBall
+    ? `<path class="lpf-track-path batted" d="${esc(paths.batted)}" pathLength="100"></path><circle class="lpf-track-ball" r="1.35"><animateMotion dur="${battedDur}" begin="0.60s" fill="freeze" path="${esc(paths.batted)}"></animateMotion></circle>`
+    : '';
+  return `<svg class="lpf-track-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path class="lpf-track-path pitch" d="${esc(paths.pitch)}" pathLength="100"></path>
+    ${batted}
+    ${pitchBall}
+  </svg>${hasBall?'<span class="lpf-impact-flash"></span>':''}`;
+}
+function ballReplayStat(label,value,unit){
+  const text = value === null || value === undefined || value === '' ? '-' : String(value);
+  return `<div class="ball-replay-stat"><span>${esc(label)}</span><b>${esc(text)}${unit && text !== '-' ? esc(unit) : ''}</b></div>`;
+}
+function ballReplayFirstValue(obj, keys){
+  if(!obj) return null;
+  for(const k of keys){
+    if(obj[k] !== null && obj[k] !== undefined && obj[k] !== '') return obj[k];
+  }
+  return null;
+}
+function ballReplayPointStyle(x,y){
+  return `left:${clampN(Number(x)||50,4,96).toFixed(1)}%;top:${clampN(Number(y)||50,8,92).toFixed(1)}%`;
+}
+function ballReplayLabel(text,meta,x,y,gold){
+  return `<span class="ball-replay-label${gold?' gold':''}" style="${esc(ballReplayPointStyle(x,y))}"><b>${esc(text || '-')}</b><small>${esc(meta || '-')}</small></span>`;
+}
+function ballReplayStatsHtml(evt,chart,hasBall){
+  const fin = chart && chart.final;
+  const pitchSpeed = fin && fin.speed ? fin.speed : ballReplayFirstValue(evt,['pitchSpeed','pitchVelocity']);
+  const hitSpeed = hasBall ? ballReplayFirstValue(evt,['exitVelocity','battedSpeed','hitSpeed','ballSpeed']) : null;
+  const runnerSpeed = ballReplayFirstValue(evt,['runnerSpeed','sprintSpeed']);
+  const firstReach = ballReplayFirstValue(evt,['firstBaseTime','timeToFirst']);
+  const secondReach = ballReplayFirstValue(evt,['secondBaseTime','timeToSecond']);
+  const thirdReach = ballReplayFirstValue(evt,['thirdBaseTime','timeToThird']);
+  const homeReach = ballReplayFirstValue(evt,['homeTime','timeToHome']);
+  const distance = hasBall ? ballReplayFirstValue(evt,['estimatedDistance','distance','flyDistance']) : null;
+  const hang = hasBall ? ballReplayFirstValue(evt,['hangTime','flightTime']) : null;
+  return [
+    ballReplayStat('球速',pitchSpeed,'km/h'),
+    ballReplayStat('打球',hitSpeed,'km/h'),
+    ballReplayStat('走力',runnerSpeed,'km/h'),
+    ballReplayStat('一塁到達',firstReach,'s'),
+    ballReplayStat('二塁到達',secondReach,'s'),
+    ballReplayStat('三塁到達',thirdReach,'s'),
+    ballReplayStat('本塁到達',homeReach,'s'),
+    ballReplayStat(hasBall?'飛距離':'滞空',hasBall ? distance : hang,hasBall?'m':'s')
+  ].join('');
+}
+function ballReplayParticipantLabels(evt,ms,hasBall){
+  const batter = evt && (evt.batterName || evt.actor) || '-';
+  const pitcher = liveFSPitcherName(ms,evt);
+  const labels = [
+    ballReplayLabel(pitcher,'P / #1',50,55,true),
+    ballReplayLabel(batter,'BATTER',50,77,true)
+  ];
+  if(hasBall){
+    const pos = evt && evt.fieldedBy || evt && evt.fieldZone || 'F';
+    const f = livePAFielderDisplay(ms,evt,pos);
+    const imp = livePASvgPoint(livePAImpactPoint(evt));
+    labels.push(ballReplayLabel(f.name || pos,`${pos} / #${f.no || '-'}`,imp.x,Math.max(18,imp.y-6),true));
+  }else{
+    const ch = livePAChart(evt,ms);
+    const fin = ch && ch.final;
+    const zone = livePASvgPoint(livePAFieldZoneTarget(fin && fin.zone));
+    labels.push(ballReplayLabel('ZONE',fin && fin.count || 'CALL',zone.x,Math.max(28,zone.y-8),false));
+  }
+  const moves = Array.isArray(evt && evt.runnerMovements) ? evt.runnerMovements : [];
+  moves.slice(0,2).forEach((m,i)=>{
+    const p = livePAPoint(m.to === 'home' ? 'home' : (m.to || m.from || 'home'));
+    labels.push(ballReplayLabel(livePARunnerShortName(m.runner),m.to === 'home' ? 'HOME IN' : livePABaseLabel(m.to),parseFloat(p.x)+(i?5:-5),parseFloat(p.y)-7,false));
+  });
+  return labels.join('');
+}
+function renderBallTrackingReplay(evt,ms,chart){
+  if(!evt || typeof evt !== 'object') return '';
+  chart = chart || livePAChart(evt,ms);
+  const ball = liveSafeBallFromEvent(evt);
+  const hasBall = !!(ball && typeof ball.x === 'number' && typeof ball.y === 'number');
+  const fin = chart && chart.final;
+  const zone = livePASvgPoint(livePAFieldZoneTarget(fin && fin.zone));
+  const pitchPath = hasBall
+    ? 'M 50 45 C 50 56 50 64 50 72'
+    : `M 50 45 C 50 57 ${zone.x} ${Math.max(58,zone.y-8).toFixed(1)} ${zone.x} ${zone.y}`;
+  const imp = hasBall ? livePASvgPoint(livePAImpactPoint(evt)) : zone;
+  const lift = evt && (evt.traj === 'homer' || evt.resultId === 'HR') ? 18 : evt && evt.traj === 'fly' ? 12 : evt && evt.traj === 'liner' ? 6 : 0;
+  const cx = +((50 + imp.x) / 2).toFixed(1);
+  const cy = +(((72 + imp.y) / 2) - lift).toFixed(1);
+  const hitPath = `M 50 72 C 50 62 ${cx} ${cy} ${imp.x} ${imp.y}`;
+  const pitchBall = `<circle class="ball-replay-ball pitch" r="1.2"><animateMotion dur=".52s" begin=".12s" fill="freeze" path="${esc(pitchPath)}"></animateMotion></circle>`;
+  const hitBall = hasBall ? `<circle class="ball-replay-ball" r="1.55"><animateMotion dur=".95s" begin=".58s" fill="freeze" path="${esc(hitPath)}"></animateMotion></circle>` : '';
+  const hitPaths = hasBall ? `<path class="ball-replay-path hit glow" d="${esc(hitPath)}" pathLength="100"></path><path class="ball-replay-path hit" d="${esc(hitPath)}" pathLength="100"></path>` : '';
+  const result = evt.resultText || evt.resultSummary || paResultLabel(evt);
+  const bases = Array.isArray(evt.basesAfter) ? liveFSBaseText(evt.basesAfter) : '-';
+  return `<div class="ball-replay${hasBall?'':' no-flight'}" aria-label="Ball tracking replay">
+    <div class="ball-replay-camera">
+      <div class="ball-replay-field"></div>
+      <svg class="ball-replay-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path class="ball-replay-path pitch" d="${esc(pitchPath)}" pathLength="100"></path>
+        ${hitPaths}
+        ${pitchBall}
+        ${hitBall}
+      </svg>
+      ${hasBall ? '<span class="ball-replay-impact"></span>' : ''}
+      ${ballReplayParticipantLabels(evt,ms,hasBall)}
+    </div>
+    <div class="ball-replay-stats">${ballReplayStatsHtml(evt,chart,hasBall)}</div>
+    <div class="ball-replay-result"><b>${esc(result)}</b><span>${esc(bases)}</span></div>
+  </div>`;
+}
 function livePARunnerMoveChips(evt,animate,baseDelay){
   if(!animate) return {chips:'',home:''};
   const moves = Array.isArray(evt && evt.runnerMovements) ? evt.runnerMovements : [];
@@ -3407,7 +4249,8 @@ function livePARunnerMoveChips(evt,animate,baseDelay){
     const cls = `live-pa-move-chip${m.to==='home'?' score':''}${m.to==='out'?' out':''}${isBatter?' batter':''}${meta.rarity>=3?' star':''}${meta.ours?' ours':''}`;
     const tag = m.to==='home' ? '生還' : (m.to==='out' ? 'OUT' : livePABaseLabel(m.to));
     const style = `--fx:${from.x};--fy:${from.y};--tx:${to.x};--ty:${to.y};--delay:${delay}s;--rdur:${dur}s`;
-    return `<span class="${esc(cls)}" data-tag="${esc(tag)}" style="${esc(style)}" title="${esc(m.runner)}">${esc(livePARunnerShortName(m.runner))}</span>`;
+    const no = livePAOwnOrderNo(save && save.activeMatch, m.runner) || (meta.ours ? 'P' : 'A');
+    return `<span class="${esc(cls)}" data-tag="${esc(tag)}" style="${esc(style)}" title="${esc(m.runner)}"><span class="chip-no">${esc(no)}</span><span class="chip-name">${esc(livePARunnerShortName(m.runner))}</span></span>`;
   }).join('');
   const homeText = homeCount>1 ? `HOME IN x${homeCount}` : 'HOME IN';
   const home = homeDelay===null ? '' : `<span class="live-pa-home-pulse" style="--delay:${esc(homeDelay)}s"></span><span class="live-pa-home-in" style="--delay:${esc(homeDelay)}s">${esc(homeText)}</span>`;
@@ -3434,6 +4277,44 @@ function livePAEventKey(evt){
 function livePAChart(evt,ms){
   if(!evt || !evt.resultId) return null;
   try{ return pitchChartForEvent(evt, ms||null); }catch(e){ return null; }
+}
+// 1プレーを投球→接触/判定→打球/走者→返球→結果の順に見せる表示専用タイムライン。
+function livePATimeline(evt, hasBall){
+  const moves = Array.isArray(evt && evt.runnerMovements) ? evt.runnerMovements : [];
+  const hasMoves = moves.length > 0;
+  const id = evt && (evt.resultId || evt.result);
+  if(hasBall){
+    const longBall = id === 'HR' || (evt && (evt.depth === 'deep' || evt.depth === 'overFence'));
+    const landDelay = longBall ? 1.32 : 1.20;
+    const throwDelay = longBall ? 1.58 : 1.42;
+    return {
+      pitcherDelay:0,
+      pitchDelay:0.15,
+      pitchDur:0.32,
+      contactDelay:0.48,
+      ballDelay:0.60,
+      reactDelay:0.85,
+      runBase:1.00,
+      landDelay,
+      throwDelay,
+      labelDelay:1.66,
+      calloutDelay: id === 'HR' ? 2.02 : 1.90
+    };
+  }
+  const labelDelay = hasMoves ? 1.28 : 0.86;
+  return {
+    pitcherDelay:0,
+    pitchDelay:0.15,
+    pitchDur:0.36,
+    contactDelay:0.52,
+    ballDelay:0.60,
+    reactDelay:0,
+    runBase:1.02,
+    landDelay:0,
+    throwDelay:0,
+    labelDelay,
+    calloutDelay:hasMoves ? 1.72 : 1.18
+  };
 }
 // 球種 → 軌道の種類(表示専用)。コード内の球種名に合わせて分類。
 function livePitchTrajClass(type){
@@ -3493,11 +4374,12 @@ function livePAFieldZoneTarget(zone){
   return {x:+(50+(col-2)*7).toFixed(1), y:+(74+(row-2)*5.5).toFixed(1)};
 }
 // フィールド内のピッチトンネル(軌道線＋球マーク)。マウンド→ゾーンへ順次。
-function livePAFieldPitches(chart, evt, animate){
+function livePAFieldPitches(chart, evt, animate, tm){
   if(!chart || !chart.pitches || !chart.pitches.length) return {html:'', timing:null};
+  tm = tm || livePATimeline(evt, false);
   const pitches=chart.pitches, len=pitches.length;
-  const stagger=Math.min(0.28, Math.max(0.15, 1.1/len));
-  const flyDur=0.40;
+  const stagger=Math.min(0.08, Math.max(0.04, 0.24/Math.max(1,len-1)));
+  const flyDur=tm.pitchDur || 0.32;
   const relX=50, relY=50;
   const hash=chartHash([evt.inning,evt.half,evt.batterName,evt.pitcherName,evt.resultId,len].join('|'));
   let html='';
@@ -3514,7 +4396,7 @@ function livePAFieldPitches(chart, evt, animate){
     else if(traj==='curve'){ mx+=dir*6; my-=6; }
     else if(traj==='fork'){ my-=7; }
     else if(traj==='change'){ my-=2; }
-    const pd=(animate? (i*stagger) : 0).toFixed(2);
+    const pd=(animate? Math.max(0, (tm.pitchDelay || 0.15) + (i-(len-1))*stagger) : 0).toFixed(2);
     const dx=t.x-relX, dy=t.y-relY;
     const tlen=Math.max(1,Math.sqrt(dx*dx+dy*dy)).toFixed(1);
     const trot=Math.round(Math.atan2(dy,dx)*180/Math.PI);
@@ -3523,17 +4405,7 @@ function livePAFieldPitches(chart, evt, animate){
     html += `<span class="lpf-trail ${jg}${p.final?' final':''}" style="${trailStyle}"></span>`;
     html += `<span class="lpf-pitch ${sh} ${jg} traj-${traj}${p.final?' final':''}" style="${mStyle}" title="${esc(p.no+'球目 '+p.call+' '+p.type+' '+p.speed+'km/h')}"></span>`;
   });
-  const lastStart=(len-1)*stagger, pitchEnd=lastStart+flyDur;
-  const ballDelay=pitchEnd+0.05, landDelay=ballDelay+0.5;
-  const timing={
-    contactDelay:+(pitchEnd).toFixed(2),
-    ballDelay:+(ballDelay).toFixed(2),
-    landDelay:+(landDelay).toFixed(2),
-    runBase:+(ballDelay+0.32).toFixed(2),
-    throwDelay:+(landDelay+0.12).toFixed(2),
-    labelDelay:+(landDelay+0.4).toFixed(2)
-  };
-  return {html, timing};
+  return {html, timing:tm};
 }
 // 打球の着弾点(%): 打球線・着弾・コールアウト・守備反応・返球の共通座標ソース
 function livePAImpactPoint(evt){
@@ -3559,15 +4431,17 @@ function livePABattedFx(evt, animate, tm){
   const dx=imp.x-hx, dy=imp.y-hy;
   const len=Math.max(1,Math.sqrt(dx*dx+dy*dy)).toFixed(1);
   const rot=Math.round(Math.atan2(dy,dx)*180/Math.PI);
-  const arc = traj==='homer'?18 : traj==='fly'?12 : traj==='liner'?4 : 0;
-  const mx=((hx+imp.x)/2).toFixed(1), my=((hy+imp.y)/2 - arc).toFixed(1);
+  // 高さはZ方向の放物線(--peakz)で表現。地面の軌道(中間点)は直進にする。
+  const peakz = traj==='homer'?84 : traj==='fly'?60 : traj==='liner'?22 : traj==='grounder'?0 : 32;
+  const mx=((hx+imp.x)/2).toFixed(1), my=((hy+imp.y)/2).toFixed(1);
   const id=evt.resultId;
   const hit=['1B','2B','3B','HR'].includes(id);
   const bc = id==='HR'?'var(--imp)' : hit?'var(--cy)':'rgba(231,243,255,.9)';
   const pw = clampN(((evt.batterPower||50)-40)/38,0,1).toFixed(2); // パワーで打球発光を強める
-  const bdelay=(tm.ballDelay||0.4).toFixed(2), ldelay=(tm.landDelay||0.9).toFixed(2);
-  const style=`--hx:${hx}%;--hy:${hy}%;--tx:${imp.x}%;--ty:${imp.y}%;--mx:${mx}%;--my:${my}%;--len:${len}%;--rot:${rot}deg;--bc:${bc};--pw:${pw};--bdelay:${bdelay}s;--ldelay:${ldelay}s`;
-  return `<span class="lpb-trace ${esc(traj)}" style="${style}"></span><span class="lpb-ball ${esc(traj)}" style="${style}"></span><span class="lpb-land ${esc(traj)}" style="${style}"></span>`;
+  const bdelay=(tm.ballDelay||0.65).toFixed(2), ldelay=(tm.landDelay||1.25).toFixed(2);
+  const bdur=Math.max(0.3,(Number(tm.landDelay||1.25)-Number(tm.ballDelay||0.65))).toFixed(2);
+  const style=`--hx:${hx}%;--hy:${hy}%;--tx:${imp.x}%;--ty:${imp.y}%;--mx:${mx}%;--my:${my}%;--len:${len}%;--rot:${rot}deg;--bc:${bc};--pw:${pw};--peakz:${peakz}px;--bdelay:${bdelay}s;--ldelay:${ldelay}s;--bdur:${bdur}s`;
+  return `<span class="lpb-trace ${esc(traj)}" style="${style}"></span><span class="lpb-shadow ${esc(traj)}" style="${style}"></span><span class="lpb-ball ${esc(traj)}" style="${style}"></span><span class="lpb-land ${esc(traj)}" style="${style}"></span>`;
 }
 // 返球線(表示専用): 外野打球後、runnerMovements から返球先を推定
 function livePAReturnThrow(evt, animate, tm){
@@ -3586,8 +4460,69 @@ function livePAReturnThrow(evt, animate, tm){
   const dx=target.x-imp.x, dy=target.y-imp.y;
   const len=Math.max(1,Math.sqrt(dx*dx+dy*dy)).toFixed(1);
   const rot=Math.round(Math.atan2(dy,dx)*180/Math.PI);
-  const delay=(tm.throwDelay||1.1).toFixed(2);
+  const delay=(tm.throwDelay||1.45).toFixed(2);
   return `<span class="lpt-throw" style="left:${imp.x}%;top:${imp.y}%;--len:${len}%;--rot:${rot}deg;--tdelay:${delay}s"></span>`;
+}
+// 守備の送球(表示専用): 内野ゴロ→一塁 / 併殺→二塁(封殺)→一塁 / 外野安打→本塁・三塁返球。判定は結果に従う。
+function livePADefense(evt, animate, tm){
+  if(!animate) return '';
+  const id=evt.resultId, zone=evt.fieldZone||'', traj=evt.traj, rtext=evt.resultText||'';
+  if(id==='HR') return ''; // 柵越え本塁打は返球なし
+  const BASE={home:[50,84], b1:[78,57], b2:[50,28], b3:[22,57]};
+  const imp=livePAImpactPoint(evt);
+  const t0=(typeof tm.throwDelay==='number'?tm.throwDelay:1.45);
+  const seg=(from,to,delay)=>{
+    const dx=to[0]-from[0], dy=to[1]-from[1];
+    const len=Math.max(1,Math.sqrt(dx*dx+dy*dy)).toFixed(1);
+    const rot=Math.round(Math.atan2(dy,dx)*180/Math.PI);
+    return `<span class="lpt-throw" style="left:${from[0]}%;top:${from[1]}%;--len:${len}%;--rot:${rot}deg;--tdelay:${delay.toFixed(2)}s"></span>`;
+  };
+  const tag=(pos,delay,text,kind)=>`<span class="lpf-callout ${kind}" style="left:${pos[0]}%;top:${pos[1]}%;--cd:${delay.toFixed(2)}s">${text}</span>`;
+  let html='';
+  if(/併殺/.test(rtext)){ // ゲッツー: 処理野手→二塁(封殺)→一塁
+    html+=seg([imp.x,imp.y],BASE.b2,t0)+tag(BASE.b2,t0+0.28,'OUT','out');
+    html+=seg(BASE.b2,BASE.b1,t0+0.36)+tag(BASE.b1,t0+0.66,'OUT','out');
+  }else if(id==='OUT' && traj==='grounder'){ // 内野ゴロ: 処理野手→一塁
+    html+=seg([imp.x,imp.y],BASE.b1,t0)+tag(BASE.b1,t0+0.3,'OUT','out');
+  }else if(['LF','LC','CF','RC','RF'].includes(zone)){ // 外野: 走者の進塁に合わせ返球
+    const moves=Array.isArray(evt.runnerMovements)?evt.runnerMovements:[];
+    const outMove=moves.find(m=>m&&(m.to==='out'||m.result==='out'));
+    const toHome=moves.find(m=>m&&m.to==='home');
+    const toThird=moves.find(m=>m&&(m.to===3||m.to==='3'));
+    if(outMove){ const p=livePAPoint(outMove.to==='out'?'out':outMove.to); const tp=[parseFloat(p.x),parseFloat(p.y)]; html+=seg([imp.x,imp.y],tp,t0)+tag(tp,t0+0.3,'OUT','out'); }
+    else if(toHome){ html+=seg([imp.x,imp.y],BASE.home,t0)+tag(BASE.home,t0+0.3,'SAFE','safe'); }
+    else if(toThird){ html+=seg([imp.x,imp.y],BASE.b3,t0)+tag(BASE.b3,t0+0.3,'SAFE','safe'); }
+  }
+  return html;
+}
+function livePANoBallCallout(evt, animate, tm){
+  if(!animate || !evt) return '';
+  const id = evt.resultId || evt.result;
+  const label = id === 'K' ? 'K' : id === 'BB' ? 'WALK' : id === 'HBP' ? 'HBP' : id === 'OUT' ? 'OUT' : '';
+  if(!label) return '';
+  const kind = id === 'K' || id === 'OUT' ? 'out' : 'safe';
+  const pos = id === 'HBP' ? [60,77] : [50,77];
+  const cd = ((tm && tm.labelDelay) || 0.9).toFixed(2);
+  return `<span class="lpf-callout ${kind}" style="left:${pos[0]}%;top:${pos[1]}%;--cd:${cd}s">${esc(label)}</span>`;
+}
+function livePAStatValue(value, unit=''){
+  if(value === null || value === undefined || value === '' || value === '-') return `<b>-</b>`;
+  return `<b>${esc(String(value))}${unit?`<small>${esc(unit)}</small>`:''}</b>`;
+}
+// 中継風スタットバー(表示専用)。既存evt/配球チャートから読める値を優先し、不明値は -。
+function livePAStatBar(evt, hasBall, chart){
+  if(!hasBall) return ''; // 打球がない打席ではスタットバーを出さない
+  const fin = chart && chart.final;
+  const pw = Number(evt && evt.batterPower);
+  const sp = Number(evt && evt.batterSpeed);
+  const batted = Number.isFinite(pw) ? Math.round(118 + (pw-40)*0.95 + (evt.resultId==='HR'?12:0)) : null;
+  const runSpeed = Number.isFinite(sp) ? Math.round(24 + (sp-40)*0.22) : null;
+  const reach = Number.isFinite(sp) ? (4.5 - (sp-40)*0.018).toFixed(2) : null;
+  const pitchSpeed = fin && fin.speed ? fin.speed : null;
+  const cell = (label,val,unit) => (val===null||val===undefined||val==='') ? '' :
+    `<div><span>${label}</span><b>${esc(String(val))}<small>${unit}</small></b></div>`;
+  const cells = cell('打球速度',batted,'km/h')+cell('走者速度',runSpeed,'km/h')+cell('一塁到達',reach,'s')+cell('球速',pitchSpeed,'km/h');
+  return cells ? `<div class="lpv-statbar">${cells}</div>` : '';
 }
 // 配球チャート(小さめの補助表示): ゾーン＋球マーク＋メタ＋簡易ログ
 function livePAMiniChart(chart, evt){
@@ -3627,7 +4562,7 @@ const LIVE_ZONE_REACT = {
   IF_L:['3B','SS'], IF_C:['SS','2B'], IF_R:['1B','2B']
 };
 // 守備陣チップ(表示専用)。打球方向に応じて近い守備が動く。安打は届かず/凡打は捕る。
-function livePAFielders(evt, hasBall, animate, reactDelay){
+function livePAFielders(evt, hasBall, animate, reactDelay, ms){
   const order=['P','C','1B','2B','3B','SS','LF','CF','RF'];
   const zone = hasBall ? (evt.fieldZone || 'CF') : null;
   const imp = zone ? livePAImpactPoint(evt) : null;
@@ -3651,61 +4586,107 @@ function livePAFielders(evt, hasBall, animate, reactDelay){
       const f = ri===0 ? primaryF : secondF;
       const rx=+(base[0]+(land[0]-base[0])*f).toFixed(1);
       const ry=+(base[1]+(land[1]-base[1])*f).toFixed(1);
-      const style=`--bx:${base[0]}%;--by:${base[1]}%;--rx:${rx}%;--ry:${ry}%;--rd:${(reactDelay||0).toFixed(2)}s;--fly:.55s;left:${base[0]}%;top:${base[1]}%`;
-      return `<span class="lpf-fielder react" style="${style}">${pos}</span>`;
+      const style=`--bx:${base[0]}%;--by:${base[1]}%;--rx:${rx}%;--ry:${ry}%;--rd:${(reactDelay||0).toFixed(2)}s;--fly:.48s;left:${base[0]}%;top:${base[1]}%`;
+      const cls = `lpf-fielder react${ri===0?' primary':''}`;
+      return `<span class="${esc(cls)}" style="${style}" title="${esc(pos)}">${livePAFielderChipHtml(ms,evt,pos,cls)}</span>`;
     }
-    return `<span class="lpf-fielder" style="left:${base[0]}%;top:${base[1]}%">${pos}</span>`;
+    const cls = `lpf-fielder${pos==='P'||pos==='C'?' primary':''}`;
+    return `<span class="${esc(cls)}" style="left:${base[0]}%;top:${base[1]}%" title="${esc(pos)}">${livePAFielderChipHtml(ms,evt,pos,cls)}</span>`;
   }).join('');
 }
 function renderLivePAStage(evt,opts){
   if(!evt || typeof evt !== 'object') return '';
   opts = opts || {};
   const cinematic = opts.mode==='cinematic';
+  const fullscreen = opts.mode==='fullscreen';
+  const bigMode = cinematic || fullscreen;
   const requestedLevel = ['off','simple','full'].includes(opts.level) ? opts.level : liveFxLevel();
-  const important = !cinematic && typeof evt.prio === 'number' && evt.prio >= CINE_MIN_PRIO;
-  const level = cinematic ? 'full' : (opts.animate === false || important ? 'off' : requestedLevel);
-  const animate = cinematic ? true : (level !== 'off' && !important);
-  const stageClass = `live-pa-stage anim-${level}${important?' important':''}${cinematic?' mode-cine':''}`;
+  const important = typeof evt.prio === 'number' && evt.prio >= CINE_MIN_PRIO;
+  const inlineImportant = !bigMode && important;
+  const level = bigMode ? 'full' : (opts.animate === false || inlineImportant ? 'off' : requestedLevel);
+  const animate = bigMode ? true : (level !== 'off' && !inlineImportant);
   const paKey = opts.key || livePAEventKey(evt);
   const bases = Array.isArray(evt.basesAfter) ? evt.basesAfter.slice(0,3) : [null,null,null];
   while(bases.length<3) bases.push(null);
   const ball = liveSafeBallFromEvent(evt);
-  const hasBall = ball && typeof ball.x === 'number' && typeof ball.y === 'number';
+  const hasBall = !!(ball && typeof ball.x === 'number' && typeof ball.y === 'number');
+  const noBattedBall = !hasBall;
+  const stageClass = `live-pa-stage anim-${level}${important?' important':''}${cinematic?' mode-cine':''}${fullscreen?' mode-full':''}${noBattedBall?' replay-no-batted-ball':''}`;
   const chart = opts.chart || livePAChart(evt, opts.ms);
-  const fp = livePAFieldPitches(chart, evt, animate);
-  const tm = fp.timing || {contactDelay:0.34,ballDelay:0.38,landDelay:0.88,runBase:1.0,throwDelay:1.0,labelDelay:1.3};
-  const runners = bases.map((name,i)=>name ? `<span class="live-pa-runner r${i+1}" title="${esc(name)}">${esc(name)}</span>` : '').join('');
+  const tm = livePATimeline(evt, hasBall);
+  const fp = livePAFieldPitches(chart, evt, animate, tm);
+  const runners = bases.map((name,i)=>name ? livePARunnerChipHtml(name,`live-pa-runner r${i+1}`) : '').join('');
   const moveFx = livePARunnerMoveChips(evt,animate,tm.runBase);
   const moveCount = Array.isArray(evt.runnerMovements) ? evt.runnerMovements.length : 0;
-  const stageStyle = `--contact-delay:${tm.contactDelay}s;--ball-delay:${tm.ballDelay}s;--land-delay:${tm.landDelay}s`;
+  const stageStyle = [
+    `--pa-pitcher-delay:${tm.pitcherDelay}s`,
+    `--pa-pitch-delay:${tm.pitchDelay}s`,
+    `--pa-contact-delay:${tm.contactDelay}s`,
+    `--pa-ball-delay:${tm.ballDelay}s`,
+    `--pa-defense-delay:${tm.reactDelay}s`,
+    `--pa-run-delay:${tm.runBase}s`,
+    `--pa-land-delay:${tm.landDelay}s`,
+    `--pa-throw-delay:${tm.throwDelay}s`,
+    `--pa-label-delay:${tm.labelDelay}s`,
+    `--pa-callout-delay:${tm.calloutDelay}s`,
+    `--contact-delay:${tm.contactDelay}s`,
+    `--ball-delay:${tm.ballDelay}s`,
+    `--land-delay:${tm.landDelay}s`,
+    `--result-delay:${tm.calloutDelay}s`
+  ].join(';');
   const zone = `<span class="live-pa-szone">${Array.from({length:9},()=>'<span></span>').join('')}</span>`;
-  const fielders = livePAFielders(evt, hasBall, animate, tm.ballDelay);
+  const fielders = livePAFielders(evt, hasBall, animate, tm.reactDelay, opts.ms);
   const battedFx = hasBall ? livePABattedFx(evt, animate, tm) : '';
-  const throwFx = (hasBall && animate) ? livePAReturnThrow(evt, animate, tm) : '';
+  const throwFx = (hasBall && animate) ? livePADefense(evt, animate, tm) : '';
+  const statBar = livePAStatBar(evt, hasBall, chart);
+  const useFullscreenReplayFrame = false;
+  const replayTitle = useFullscreenReplayFrame ? livePAReplayTitle(evt, hasBall, fullscreen) : '';
+  const batterTag = livePABatterTagHtml(opts.ms, evt, fullscreen);
+  const minimap = useFullscreenReplayFrame ? livePAMinimapHtml(bases, fullscreen) : '';
+  const replaySvg = useFullscreenReplayFrame ? livePAReplaySvg(evt, hasBall, chart, fullscreen) : '';
+  const cameraStyle = useFullscreenReplayFrame ? livePACameraStyle(evt, hasBall) : '';
+  const replayFrameClass = `lpf-replay-frame${Number(evt.runs||evt.runsScored||0)?' is-score':''}${important?' important':''}`;
   let callout='', contactFx='', catchFx='', flashFx='';
   if(hasBall){
     const imp=livePAImpactPoint(evt);
     const id=evt.resultId;
     const isOut = !['1B','2B','3B','HR'].includes(id);
-    const c = id==='HR' ? {cls:'hr',t:'HR'} : isOut ? {cls:'out',t:'OUT'} : {cls:'hit',t:'HIT'};
+    const infieldOut = isOut && evt.traj==='grounder' && animate; // ゴロ/併殺は送球先でOUT表示するため打球地点には出さない(静止時は送球を描かないので打球地点に出す)
     const cd=(tm.labelDelay||1.3).toFixed(2);
-    callout=`<span class="lpf-callout ${c.cls}" style="left:${imp.x}%;top:${imp.y}%;--cd:${cd}s">${c.t}</span>`;
+    if(id==='HR') callout=`<span class="lpf-callout hr" style="left:${imp.x}%;top:${imp.y}%;--cd:${cd}s">HR</span>`;
+    else if(!isOut) callout=`<span class="lpf-callout hit" style="left:${imp.x}%;top:${imp.y}%;--cd:${cd}s">HIT</span>`;
+    else if(!infieldOut) callout=`<span class="lpf-callout out" style="left:${imp.x}%;top:${imp.y}%;--cd:${cd}s">OUT</span>`;
     const pw = clampN(((evt.batterPower||50)-40)/38,0,1).toFixed(2);
     contactFx=`<span class="lpb-contact" style="--cdelay:${tm.contactDelay}s;--pw:${pw}"></span>`;
     if(isOut) catchFx=`<span class="lpb-catch" style="left:${imp.x}%;top:${imp.y}%;--kdelay:${(tm.landDelay||0.9).toFixed(2)}s"></span>`;
+  }else{
+    callout = livePANoBallCallout(evt, animate, tm);
   }
-  if(cinematic && (evt.resultId==='HR' || (evt.runs||0)>0)){
+  if(bigMode && (evt.resultId==='HR' || (evt.runs||0)>0)){
     flashFx=`<span class="lpf-flash ${evt.resultId==='HR'?'hr':'score'}"></span>`;
   }
   return `
     <div class="${esc(stageClass)}" data-pa-seq="${esc(paKey)}" style="${esc(stageStyle)}" aria-label="打席ライブステージ">
-      <div class="live-pa-field field3d${moveCount?' has-moves':''}${hasBall?' has-ball':''}${evt.runs?' is-score':''}">
+      ${bigMode ? '' : livePAResultBanner(evt,'inline')}
+      ${statBar}
+      ${useFullscreenReplayFrame ? `<div class="${esc(replayFrameClass)}"><div class="lpf-camera" style="${esc(cameraStyle)}">` : ''}
+      <div class="live-pa-field field3d${moveCount?' has-moves':''}${hasBall?' has-ball':' no-batted-ball'}${evt.runs?' is-score':''}">
+        <span class="lpf-stands"></span>
+        <span class="lpf-stadium-light"></span>
+        <span class="lpf-grass"></span>
+        <span class="lpf-fence"></span>
+        <span class="lpf-dirt"></span>
+        <span class="lpf-foul-line left"></span>
+        <span class="lpf-foul-line right"></span>
+        <span class="lpf-mound-ring"></span>
+        <span class="live-pa-mound"></span>
         ${flashFx}
         <span class="live-pa-base b1${bases[0]?' on':''}" data-label="1B"></span>
         <span class="live-pa-base b2${bases[1]?' on':''}" data-label="2B"></span>
         <span class="live-pa-base b3${bases[2]?' on':''}" data-label="3B"></span>
         ${zone}
         <span class="live-pa-home">HOME</span>
+        ${batterTag}
         ${fielders}
         ${fp.html}
         ${battedFx}
@@ -3717,8 +4698,378 @@ function renderLivePAStage(evt,opts){
         ${moveFx.home}
         ${callout}
       </div>
+      ${useFullscreenReplayFrame ? `</div>${replaySvg}${replayTitle}${minimap}</div>` : ''}
     </div>
   `;
+}
+function liveFSHalfText(half){
+  if(half==='top') return 'TOP';
+  if(half==='bottom') return 'BOT';
+  return 'LIVE';
+}
+function liveFSBaseText(bases){
+  const b = Array.isArray(bases) ? bases : [null,null,null];
+  const on = ['1塁','2塁','3塁'].filter((_,i)=>!!b[i]);
+  return on.length ? on.join('・') : '走者なし';
+}
+function liveFSPitcherName(ms,evt){
+  if(evt && (evt.pitcherName || evt.pitcher)) return evt.pitcherName || evt.pitcher;
+  if(!ms) return '-';
+  try{
+    if(evt && evt.half==='top') return getPlayer(ms.pitcher).name;
+    return oppData(ms.oppId).pit.name;
+  }catch(e){
+    return '-';
+  }
+}
+function liveFSTeamHits(ms,side){
+  if(!ms) return 0;
+  if(ms.hits && typeof ms.hits[side] === 'number') return ms.hits[side];
+  if(side === 'p') return Object.values(ms.bstats || {}).reduce((s,t)=>s + (Number(t.h)||0),0);
+  return Object.values(ms.pstats || {}).reduce((s,t)=>s + (Number(t.h)||0),0);
+}
+function liveFSScoreCell(v){
+  if(v === 'X') return 'X';
+  return typeof v === 'number' ? String(v) : '-';
+}
+function renderLiveFSLineScore(ms){
+  const innings = Array.from({length:9},(_,i)=>i+1);
+  const row = (name, arr, total, hits) => {
+    const cells = innings.map(n=>`<td>${esc(liveFSScoreCell(arr[n-1]))}</td>`).join('');
+    return `<tr><td class="team">${esc(name)}</td>${cells}<td class="total">${esc(String(total))}</td><td class="hit">${esc(String(hits))}</td><td>-</td></tr>`;
+  };
+  const head = innings.map(n=>`<th>${n}</th>`).join('');
+  return `<div class="lfs-linescore"><table>
+    <thead><tr><th>TEAM</th>${head}<th>R</th><th>H</th><th>E</th></tr></thead>
+    <tbody>
+      ${row(NPC_TEAMS[ms.oppId].short || NPC_TEAMS[ms.oppId].name, ms.score.n || [], nTot(ms), liveFSTeamHits(ms,'n'))}
+      ${row(save.team.name, ms.score.p || [], pTot(ms), liveFSTeamHits(ms,'p'))}
+    </tbody>
+  </table></div>`;
+}
+function liveFSDotGroup(label, filled, total, cls){
+  const n = Math.max(0,Math.min(Number(filled)||0,total));
+  const dots = Array.from({length:total},(_,i)=>`<span class="lfs-dot${i<n?' on':''}"></span>`).join('');
+  return `<span class="lfs-count ${esc(cls)}"><b>${esc(label)}</b>${dots}</span>`;
+}
+function liveFSCountDots(chart, outs){
+  const fin = chart && chart.final;
+  let balls = 0, strikes = 0;
+  if(fin && typeof fin.count === 'string'){
+    const m = fin.count.match(/^(\d+)-(\d+)/);
+    if(m){ balls = Number(m[1])||0; strikes = Number(m[2])||0; }
+  }
+  const o = Math.max(0,Math.min(Number(outs)||0,3));
+  return `<div class="lfs-bso" aria-label="Ball Strike Out">
+    ${liveFSDotGroup('B',Math.min(balls,3),3,'ball')}
+    ${liveFSDotGroup('S',Math.min(strikes,2),2,'strike')}
+    ${liveFSDotGroup('O',Math.min(o,2),2,'out')}
+  </div>`;
+}
+function liveFSRunnerDiamond(bases){
+  const b = Array.isArray(bases) ? bases : [null,null,null];
+  return `<span class="lfs-runner"><span class="lfs-diamond" aria-label="${esc(liveFSBaseText(b))}">
+    <span class="lfs-base-dot b3${b[2]?' on':''}"></span>
+    <span class="lfs-base-dot b2${b[1]?' on':''}"></span>
+    <span class="lfs-base-dot b1${b[0]?' on':''}"></span>
+  </span><span>${esc(liveFSBaseText(b))}</span></span>`;
+}
+function renderLiveFSBroadcastBoard(ms,evt,ctx){
+  const opp = NPC_TEAMS[ms.oppId] || {};
+  const awayName = opp.short || opp.name || 'AWAY';
+  const homeName = save.team.name || 'HOME';
+  const awayScore = ctx.scoreSnap.n;
+  const homeScore = ctx.scoreSnap.p;
+  const leadCls = homeScore !== awayScore ? ' live-lead' : '';
+  return `<div class="lfs-broadcast">
+    <div class="lfs-b-team away"><small>AWAY</small><b>${esc(awayName)}</b></div>
+    <div class="lfs-b-score${leadCls}"><span>${esc(String(awayScore))}</span><i>-</i><span>${esc(String(homeScore))}</span></div>
+    <div class="lfs-b-team home"><small>HOME</small><b>${esc(homeName)}</b></div>
+    <div class="lfs-b-status" style="grid-column:1/-1">
+      <div class="lfs-b-situation">
+        <span class="tag">${esc(ctx.inning+' '+ctx.half)}</span>
+        <span class="tag outtag">${esc(String(ctx.outs))} OUT</span>
+        <span class="tag">RUNNER ${liveFSRunnerDiamond(ctx.bases)}</span>
+      </div>
+      <div class="lfs-vs"><span>P <b>${esc(ctx.pitcher)}</b></span><span class="vs">VS</span><span>B <b>${esc(ctx.batter)}</b></span></div>
+      ${liveFSCountDots(ctx.chart,ctx.outs)}
+    </div>
+  </div>`;
+}
+function liveFSBatAvg(t){
+  const ab = Number(t && t.ab || 0), h = Number(t && t.h || 0);
+  return ab > 0 ? fmtAvg(h / ab) : '-';
+}
+function liveFSStatCell(v, cls=''){
+  const c = cls ? ` class="${cls}"` : '';
+  return `<td${c}>${v === null || v === undefined ? '-' : esc(String(v))}</td>`;
+}
+function renderLiveFSBattingStats(ms,evt,side='p'){
+  const current = evt && (evt.batterName || evt.actor);
+  const isHome = side === 'p';
+  const opp = oppData(ms.oppId);
+  const teamName = isHome ? save.team.name : (opp.team && (opp.team.name || opp.team.short)) || 'AWAY';
+  const sourceNote = isHome ? 'LIVE BOX' : 'LINEUP';
+  const rows = isHome
+    ? (ms.order || []).map((pid,i)=>{
+      const p = getPlayer(pid);
+      if(!p) return '';
+      const t = ms.bstats[pid] || zeroBat();
+      const pos = (ms.positions && ms.positions[pid]) || (p.pos && p.pos[0]) || 'DH';
+      const hot = (t.h || t.rbi || t.hr || t.sb) ? ' hot' : '';
+      const cur = current && p.name === current ? ' current' : '';
+      return `<tr class="${esc((hot+cur).trim())}">
+        <td class="pos">${esc(pos)}</td>
+        <td>${esc(i+1)}</td>
+        <td class="name">${esc(p.name)}</td>
+        <td>${esc(liveFSBatAvg(t))}</td>
+        <td>${t.ab||0}</td>
+        ${liveFSStatCell(t.h||0,t.h?'impstat':'')}
+        ${liveFSStatCell(t.rbi||0,t.rbi?'impstat col-rbi':'col-rbi')}
+        ${liveFSStatCell(t.hr||0,t.hr?'impstat col-hr':'col-hr')}
+        ${liveFSStatCell(t.sb||0,'col-sb')}
+      </tr>`;
+    }).join('')
+    : (opp.bats || []).map((b,i)=>{
+      const cur = current && b.name === current ? ' current' : '';
+      return `<tr class="${esc(cur.trim())}">
+        <td class="pos">-</td>
+        <td>${esc(i+1)}</td>
+        <td class="name">${esc(b.name)}</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td class="col-rbi">-</td>
+        <td class="col-hr">-</td>
+        <td class="col-sb">-</td>
+      </tr>`;
+    }).join('');
+  return `<div class="lfs-stats-panel ${isHome?'home':'away'}">
+    <div class="lfs-stats-head"><div><b>${isHome?'HOME BATTING':'AWAY BATTING'}</b><small>${esc(sourceNote)}</small></div><span class="mut">${esc(teamName)}</span></div>
+    <div class="lfs-batstats"><table>
+      <thead><tr><th>POS</th><th>#</th><th>PLAYER</th><th>AVG</th><th>AB</th><th>H</th><th class="col-rbi">RBI</th><th class="col-hr">HR</th><th class="col-sb">SB</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
+}
+function liveFSDetailBallText(evt){
+  if(!livePAHasBattedBall(evt)) return '-';
+  const zone = {LF:'レフト方向',LC:'左中間',CF:'センター方向',RC:'右中間',RF:'ライト方向',IF_L:'内野左方向',IF_C:'内野中央',IF_R:'内野右方向'};
+  const traj = {grounder:'ゴロ',liner:'ライナー',fly:'フライ',homer:'大きな打球'};
+  const depth = {infield:'内野',shallow:'浅め',medium:'中間',deep:'深い',overFence:'フェンス越え'};
+  const parts = [zone[evt.fieldZone], depth[evt.depth], traj[evt.traj]].filter(Boolean);
+  return parts.length ? parts.join(' / ') : (evt.resultText || evt.resultSummary || '-');
+}
+function liveFSDetailBallRows(evt){
+  const hasBall = livePAHasBattedBall(evt);
+  const zone = {LF:'レフト方向',LC:'左中間',CF:'センター方向',RC:'右中間',RF:'ライト方向',IF_L:'内野左方向',IF_C:'内野中央',IF_R:'内野右方向'};
+  const traj = {grounder:'ゴロ',liner:'ライナー',fly:'フライ',homer:'大きな打球'};
+  const depth = {infield:'内野',shallow:'浅め',medium:'中間',deep:'深い',overFence:'フェンス越え'};
+  return [
+    ['方向', hasBall ? (zone[evt && evt.fieldZone] || '-') : '-'],
+    ['種類', hasBall ? (traj[evt && evt.traj] || '-') : '-'],
+    ['深さ', hasBall ? (depth[evt && evt.depth] || '-') : '-']
+  ].map(([k,v])=>`<li><span>${esc(k)}</span><b>${esc(v)}</b></li>`).join('');
+}
+function liveFSBaseName(v){
+  if(v === 'batter') return '打者';
+  if(v === 'home') return '本塁';
+  if(v === 'out') return 'アウト';
+  const n = Number(v);
+  if(n === 1) return '一塁';
+  if(n === 2) return '二塁';
+  if(n === 3) return '三塁';
+  return '-';
+}
+function liveFSRunnerMoveText(m){
+  if(!m) return '';
+  const runner = m.runner || (m.from === 'batter' ? '打者' : '走者');
+  if(m.to === 'home') return `${runner}が本塁生還`;
+  if(m.to === 'out' || m.result === 'out') return `${runner}が${liveFSBaseName(m.outAt || m.to)}でアウト`;
+  const to = liveFSBaseName(m.to);
+  if(to !== '-') return `${runner}が${to}へ進塁`;
+  return `${runner}が進塁`;
+}
+function liveFSDetailMoveRows(evt){
+  const moves = Array.isArray(evt && evt.runnerMovements) ? evt.runnerMovements : [];
+  if(!moves.length) return '<li><span>走者</span><b>-</b></li>';
+  return moves.slice(0,5).map(m=>{
+    if(!m) return '';
+    return `<li class="wide"><span>${esc(liveFSBaseName(m.from))}から</span><b>${esc(liveFSRunnerMoveText(m))}</b></li>`;
+  }).join('') || '<li><span>走者</span><b>-</b></li>';
+}
+function liveFSRunnerSummary(evt,kind){
+  const moves = Array.isArray(evt && evt.runnerMovements) ? evt.runnerMovements : [];
+  const picked = kind === 'scored' ? moves.filter(m=>m && m.to === 'home') : moves.filter(m=>m && m.to !== 'home' && m.to !== 'out');
+  if(!picked.length) return '-';
+  if(kind === 'scored') return picked.map(m=>m.runner || '走者').join(', ');
+  return picked.map(liveFSRunnerMoveText).filter(Boolean).join(' / ');
+}
+function liveFSRecentPlayRows(ms,evt){
+  const raw = Array.isArray(ms && ms.cineRaw) ? ms.cineRaw : [];
+  const plays = raw.filter(e=>e && (e.resultId || e.type === 'steal' || e.type === 'stealFail')).slice(-4).reverse();
+  if(!plays.length && evt) plays.push(evt);
+  return plays.map(e=>{
+    const inn = e.inning ? `${e.inning}${liveFSHalfText(e.half)}` : 'LIVE';
+    const who = e.batterName || e.actor || 'PLAY';
+    const what = e.resultText || e.resultSummary || paResultLabel(e);
+    return `<li><span>${esc(inn)}</span><b>${esc(who)}: ${esc(what)}</b></li>`;
+  }).join('') || '<li><span>LOG</span><b>-</b></li>';
+}
+function renderLiveFSDataPanel(ms,evt,chart){
+  const scoredText = liveFSRunnerSummary(evt,'scored');
+  const advancedText = liveFSRunnerSummary(evt,'advanced');
+  const fin = chart && chart.final;
+  const pitch = fin ? `${fin.type || '-'} ${fin.speed || '-'}km/h (${fin.count || '-'})` : '-';
+  const hit = liveFSDetailBallText(evt);
+  const runs = Number(evt.runs || evt.runsScored || 0);
+  const batter = evt.batterName || evt.actor || '-';
+  const pitcher = liveFSPitcherName(ms,evt);
+  const resultText = evt.resultText || evt.resultSummary || paResultLabel(evt);
+  const outsAfter = typeof evt.outsAfter === 'number' ? evt.outsAfter : ms.outs || 0;
+  const scoreText = evt.scoreAfter && typeof evt.scoreAfter.p === 'number' ? `${evt.scoreAfter.p} - ${evt.scoreAfter.n}` : `${pTot(ms)} - ${nTot(ms)}`;
+  return `<div class="lfs-data-panel">
+    <div class="lfs-data-head"><b>DATA</b><button class="btn ghost" onclick="toggleLiveData()">CLOSE</button></div>
+    <div class="lfs-data-section">
+      <h4>LAST PLAY</h4>
+      <div class="lfs-data-grid">
+        <div class="kv"><b>BATTER</b><span>${esc(batter)}</span></div>
+        <div class="kv"><b>PITCHER</b><span>${esc(pitcher)}</span></div>
+        <div class="kv"><b>RESULT</b><span>${esc(resultText)}</span></div>
+        <div class="kv"><b>RUNS</b><span>${esc(String(runs))}</span></div>
+      </div>
+      <div class="lfs-data-note">${esc(resultText)}</div>
+    </div>
+    <div class="lfs-data-section">
+      <h4>PITCH / BALL</h4>
+      <ul class="lfs-data-list">
+        <li><span>最終球</span><b>${esc(pitch)}</b></li>
+        <li><span>打球</span><b>${esc(hit)}</b></li>
+        ${liveFSDetailBallRows(evt)}
+        <li><span>アウト</span><b>${esc(String(outsAfter))}</b></li>
+        <li><span>スコア</span><b>${esc(scoreText)}</b></li>
+      </ul>
+    </div>
+    <div class="lfs-data-section">
+      <h4>RUNNERS</h4>
+      <ul class="lfs-data-list">
+        <li><span>生還</span><b>${esc(scoredText || '-')}</b></li>
+        <li><span>進塁</span><b>${esc(advancedText || '-')}</b></li>
+        ${liveFSDetailMoveRows(evt)}
+      </ul>
+    </div>
+    <div class="lfs-data-section">
+      <h4>RECENT LOG</h4>
+      <ul class="lfs-data-list">
+        ${liveFSRecentPlayRows(ms,evt)}
+      </ul>
+    </div>
+  </div>`;
+}
+function renderLiveFullscreen(){
+  const root = document.getElementById('live-fullscreen-root');
+  if(!root) return;
+  const ms = save && save.activeMatch;
+  const evt = ms && ms.lastPAEvent;
+  if(!UI.liveFullscreenOpen || !ms || !evt){
+    root.className='';
+    root.innerHTML='';
+    return;
+  }
+  if(ms.finished){
+    UI.liveFullscreenOpen = false;
+    UI.liveDataOpen = false;
+    root.className='';
+    root.innerHTML='';
+    return;
+  }
+  const scoreSnap = evt.scoreAfter && typeof evt.scoreAfter.p === 'number' && typeof evt.scoreAfter.n === 'number'
+    ? evt.scoreAfter
+    : {p:pTot(ms), n:nTot(ms)};
+  const inning = evt.inning || ms.inning || 1;
+  const half = liveFSHalfText(evt.half);
+  const outs = typeof evt.outsAfter === 'number' ? Math.max(0,Math.min(evt.outsAfter,3)) : (ms.outs || 0);
+  const bases = Array.isArray(evt.basesAfter) ? evt.basesAfter : ms.bases;
+  const batter = evt.batterName || evt.actor || '-';
+  const pitcher = liveFSPitcherName(ms,evt);
+  const fsBall = liveSafeBallFromEvent(evt);
+  const fsHasBall = !!(fsBall && typeof fsBall.x === 'number' && typeof fsBall.y === 'number');
+  const fsTimeline = livePATimeline(evt, fsHasBall);
+  const fsTimelineStyle = `--pa-callout-delay:${fsTimeline.calloutDelay}s;--result-delay:${fsTimeline.calloutDelay}s`;
+  const result = livePAResultBanner(evt,'inline');
+  const resultCallout = liveFSResultCallout(evt, fsTimelineStyle);
+  const playBar = liveFSPlayBar(evt);
+  const chart = livePAChart(evt,ms);
+  const stage = renderLivePAStage(evt,{mode:'fullscreen',ms,chart,key:`fs:${livePAEventKey(evt)}`});
+  const chaseStage = renderBallTrackingReplay(evt,ms,chart);
+  const stageMode = (UI.liveStageMode==='field') ? 'field' : 'chase';
+  const lineScore = renderLiveFSLineScore(ms);
+  const broadcastBoard = renderLiveFSBroadcastBoard(ms,evt,{scoreSnap,inning,half,outs,bases,batter,pitcher,chart});
+  const awayStats = renderLiveFSBattingStats(ms,evt,'n');
+  const homeStats = renderLiveFSBattingStats(ms,evt,'p');
+  const dataPanel = UI.liveDataOpen ? renderLiveFSDataPanel(ms,evt,chart) : '';
+  const canAdvance = !ms.finished && !ms.pendingDecision;
+  root.className='show';
+  root.innerHTML = `
+    <div class="live-fullscreen${fsHasBall?'':' replay-no-batted-ball'}" role="dialog" aria-label="Live game view">
+      <div class="lfs-top">
+        ${broadcastBoard}
+        ${lineScore}
+      </div>
+      <div class="lfs-main">
+        ${awayStats}
+        <div class="lfs-field-zone">
+          <div class="lfs-stage" data-stage="${stageMode}">${stageMode==='chase'?chaseStage:stage}</div>
+          ${resultCallout}
+          ${dataPanel}
+        </div>
+        ${homeStats}
+      </div>
+      <div class="lfs-bottom">
+        <div class="lfs-bottom-result" style="${esc(fsTimelineStyle)}">${result}</div>
+        ${playBar}
+        <div class="lfs-actions">
+          <button class="btn" onclick="toggleLiveStageMode()">${stageMode==='chase'?'FIELD':'REPLAY'}</button>
+          <button class="btn" onclick="toggleLiveData()">${UI.liveDataOpen?'HIDE DATA':'DATA'}</button>
+          <button class="btn pri" ${canAdvance?'':'disabled'} onclick="advanceLiveFullscreenOne()">NEXT PA</button>
+          <button class="btn" ${canAdvance?'':'disabled'} onclick="skipLiveFullscreen()">SKIP</button>
+          <button class="btn ghost" onclick="closeLiveFullscreen()">CLOSE</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+function openLiveFullscreen(){
+  const ms = save && save.activeMatch;
+  if(!ms || !ms.lastPAEvent){ toast('まだ表示できる打席がありません'); return; }
+  UI.liveFullscreenOpen = true;
+  UI.liveFxBurst = false;
+  render();
+}
+function closeLiveFullscreen(){
+  UI.liveFullscreenOpen = false;
+  UI.liveDataOpen = false;
+  render();
+}
+function toggleLiveStats(){
+  UI.liveStatsOpen = !UI.liveStatsOpen;
+  render();
+}
+function toggleLiveData(){
+  UI.liveDataOpen = !UI.liveDataOpen;
+  render();
+}
+function toggleLiveStageMode(){
+  UI.liveStageMode = (UI.liveStageMode==='field') ? 'chase' : 'field';
+  render();
+}
+function advanceLiveFullscreenOne(){
+  UI.liveFxBurst = false;
+  advanceOnePA();
+}
+function skipLiveFullscreen(){
+  UI.liveFxBurst = true;
+  advanceToInningEnd();
 }
 function renderLastPACard(ms){
   const evt=ms.lastPAEvent;
@@ -3741,12 +5092,9 @@ function renderLastPACard(ms){
   const chart=livePAChart(evt,ms);
   const liveOpts={level:fxLevel,animate:shouldAnimate,key:paKey,ms,chart};
   UI.liveFxLastKey=paKey;
-  const hasBatted = !!liveSafeBallFromEvent(evt);
+  const hasBatted = livePAHasBattedBall(evt);
   const battedRow = hasBatted ? `<div class="kv"><b>打球</b><span>${esc(fieldMetaText(evt))}</span></div>` : '';
   const dirChips = hasBatted ? `<span class="pa-chip">${esc(paDirectionLabel(evt))}</span><span class="pa-chip">${esc(paTrajectoryLabel(evt))}</span>` : '';
-  const liveActions = ms.finished
-    ? `<button class="btn pri sm" onclick="closeMatch()">試合を閉じる</button>`
-    : `<button class="btn pri sm" onclick="UI.liveFxBurst=false;advanceOnePA()">次の打席へ ▶</button><button class="btn sm" onclick="UI.liveFxBurst=true;advanceToInningEnd()">イニングまで</button><button class="btn sm" onclick="UI.liveFxBurst=true;advanceToGameEnd()">試合終了まで</button>`;
   const scoredLine = (scoredText && scoredText!=='なし') ? `<div class="pa-move"><b>生還:</b> ${esc(scoredText)}</div>` : '';
   const advancedLine = (advancedText && advancedText!=='なし') ? `<div class="pa-move"><b>進塁:</b> ${esc(advancedText)}</div>` : '';
   return `
@@ -3756,7 +5104,7 @@ function renderLastPACard(ms){
         ${renderLivePAStage(evt,liveOpts)}
         ${livePAMiniChart(chart,evt)}
       </div>
-      <div class="pa-live-actions">${liveActions}</div>
+      <div class="pa-live-actions"><button class="btn sm" onclick="openLiveFullscreen()">LIVE VIEW</button></div>
       <div class="pa-result">${esc(evt.resultText || evt.result || '結果不明')}</div>
       <div class="pa-grid">
         <div class="kv"><b>打者</b><span>${esc(evt.batterName||evt.actor||'—')}</span></div>
@@ -3802,51 +5150,64 @@ function renderMatch(){
     return;
   }
   const ms = save.activeMatch;
-  const score = `${pTot(ms)} - ${nTot(ms)}`;
-  const status = ms.finished ? '試合終了' : `${ms.inning}回 ${ms.outs}アウト`;
-  const currentHalf = !ms.finished && typeof ms.score.p[ms.inning-1] === 'number' ? 'bottom' : 'top';
-  const currentBatter = !ms.finished ? (currentHalf==='bottom' ? getPlayer(ms.order[ms.batIdx.p%9]).name : oppData(ms.oppId).bats[ms.batIdx.n%9].name) : '—';
-  const offense = !ms.finished ? (currentHalf==='bottom' ? save.team.name : NPC_TEAMS[ms.oppId].name) : '—';
-  const baseHtml = `
-    <div class="field">
-      <div class="fline"></div>
-      <div class="base${ms.bases[0]?' on':''}" style="left:88%;top:50%">1B</div>
-      <div class="base${ms.bases[1]?' on':''}" style="left:50%;top:12%">2B</div>
-      <div class="base${ms.bases[2]?' on':''}" style="left:12%;top:50%">3B</div>
-    </div>
-    <div class="fmeta"><div>攻撃: ${esc(offense)}</div><div>打者: ${esc(currentBatter)}</div></div>
-  `;
-  const result = ms.finished ? `<div class="match-result"><div class="label ${ms.result.outcome==='win'?'win':ms.result.outcome==='lose'?'lose':'draw'}">${esc(ms.result.outcome.toUpperCase())}</div><div class="stat"><span>スコア</span><strong>${score}</strong></div><div class="stat"><span>相手</span><strong>${esc(ms.result.oppName)}</strong></div><div class="stat"><span>MVP</span><strong>${esc(ms.result.mvp||'—')}</strong></div><div class="stat"><span>獲得CR</span><strong>${ms.result.credits}</strong></div></div>` : '';
+  const pScore = pTot(ms);
+  const nScore = nTot(ms);
+  const score = `${pScore} - ${nScore}`;
+  const isLead = pScore > nScore;
+  const oppTeam = NPC_TEAMS[ms.oppId];
+  // イニング表示
+  const mbHalf = !ms.finished && typeof ms.score.p[ms.inning-1] === 'number' ? '裏' : '表';
+  const inningText = ms.finished ? '試合終了' : `${ms.inning}回${mbHalf}`;
+  const outsText = ms.finished ? '' : `${ms.outs}OUT`;
+  // 試合終了結果
+  const result = ms.finished ? `<div class="mb-result-wrap"><div class="mb-result-label ${ms.result.outcome==='win'?'win':ms.result.outcome==='lose'?'lose':'draw'}">${esc(ms.result.outcome==='win'?'🏆 WIN':ms.result.outcome==='lose'?'LOSE':'DRAW')}</div><div class="mb-result-stat"><span>最終スコア</span><strong>${score}</strong></div><div class="mb-result-stat"><span>相手チーム</span><strong>${esc(ms.result.oppName)}</strong></div><div class="mb-result-stat"><span>MVP</span><strong>${esc(ms.result.mvp||'—')}</strong></div><div class="mb-result-stat"><span>獲得CR</span><strong>+${ms.result.credits}</strong></div><div class="btnrow" style="margin-top:10px"><button class="btn pri" onclick="closeMatch()">試合を閉じる</button></div></div>` : '';
+  // PA カード(フィールドビュー込み)
   const paCard = renderLastPACard(ms);
-  const fxControls = ['off','simple','full'].map(l=>`<button class="btn${liveFxLevel()===l?' pri':''}" onclick="setLiveFxLevel('${l}')">${liveFxLabel(l)}</button>`).join('');
-  const actionButtons = ms.finished
+  // 常時表示の試合進行コントロール(直近打席の有無に関係なく必ず出す)
+  const liveControls = ms.finished
     ? `<button class="btn pri" onclick="closeMatch()">試合を閉じる</button>`
-    : `<button class="btn pri" onclick="UI.liveFxBurst=false;advanceOnePA()">次の打席へ</button><button class="btn" onclick="UI.liveFxBurst=true;advanceToInningEnd()">次のイニングまで</button><button class="btn" onclick="UI.liveFxBurst=true;advanceThreeInnings()">3イニング進行</button><button class="btn" onclick="UI.liveFxBurst=true;advanceToGameEnd()">試合終了まで</button>`;
-  const logItems = ms.log.slice(-18);
-  let currentGroup = 0;
-  const log = logItems.map(item => {
-    const text = (item.half==='sys'? '' : halfLabel(item.inn,item.half)) + item.text;
-    const isImpact = /◆|ホームラン|逆転|同点|ピンチ|チャンス|サヨナラ|勝利|敗北|四球|得点/.test(text);
-    const group = item.inn<=3 ? 1 : item.inn<=6 ? 2 : 3;
-    let marker = '';
-    if(group !== currentGroup){
-      currentGroup = group;
-      marker = `<p class="log-sep">${group===1?'1回表〜3回裏':'4回表〜6回裏'}</p>`;
-    }
-    const label = isImpact ? `<span class="log-label">${/ホームラン/.test(text)?'HOMERUN':/逆転|勝利/.test(text)?'CLUTCH':/同点|ピンチ/.test(text)?'PINCH':'CHANCE'}</span>` : '';
-    const cls = [item.hl ? 'hl' : '', isImpact ? 'impact' : ''].filter(Boolean).join(' ');
-    return marker + `<p${cls?` class="${cls}"`:''}>${label}${esc(text)}</p>`;
+    : `<button class="btn pri" onclick="UI.liveFxBurst=false;advanceOnePA()">次の打席へ ▶</button>`
+      + `<button class="btn" onclick="UI.liveFxBurst=true;advanceToInningEnd()">イニング終了まで</button>`
+      + `<button class="btn" onclick="UI.liveFxBurst=true;advanceToGameEnd()">試合終了まで</button>`
+      + `<button class="btn" onclick="openLiveFullscreen()">全画面LIVE</button>`;
+  // 演出レベルコントロール
+  const fxControls = ['off','simple','full'].map(l=>`<button class="btn sm${liveFxLevel()===l?' pri':''}" onclick="setLiveFxLevel('${l}')">${liveFxLabel(l)}</button>`).join('');
+  // ログ(直近エントリをテロップ風に)
+  const logItems = ms.log.slice(-12);
+  const logHtml = logItems.map(item => {
+    const tagText = item.half!=='sys' ? halfLabel(item.inn,item.half) : '';
+    const isImpact = /◆|ホームラン|逆転|同点|サヨナラ|勝利|得点/.test(item.text);
+    return `<div class="mb-log-entry${isImpact?' impact':''}"><span class="mb-inn-tag">${esc(tagText)}</span>${esc(item.text)}</div>`;
   }).join('');
   main.innerHTML = `
-    <section class="panel"><div class="ph"><div><span class="eyebrow">試合</span><h2>${esc(NPC_TEAMS[ms.oppId].name)} 戦</h2></div><div class="sub">${status}</div></div>
-      <div class="kv"><b>スコア</b><span>${score}</span></div>
+    <div class="match-broadcast">
+      ${!ms.finished ? `
+      <div class="mb-scorebar">
+        <div class="mb-team away">
+          <small>AWAY</small>
+          <b>${esc(oppTeam.name)}</b>
+        </div>
+        <div class="mb-score-center">
+          <div class="mb-scorebox${isLead?' lead':''}">
+            <span>${nScore}</span><i>-</i><span>${pScore}</span>
+          </div>
+          <div class="mb-situation">
+            <span class="mb-live">LIVE</span>
+            <span class="mb-inn">${inningText}</span>
+            ${outsText?`<span class="mb-outs">${outsText}</span>`:''}
+          </div>
+        </div>
+        <div class="mb-team home">
+          <small>HOME</small>
+          <b>${esc(save.team.name)}</b>
+        </div>
+      </div>` : ''}
+      <div class="mb-controls">${liveControls}</div>
       ${result}
       ${paCard}
-      <div class="btnrow"><span class="note">ライブ演出</span>${fxControls}</div>
-      ${!ms.finished ? `<div class="field-card">${baseHtml}</div>` : ''}
-      <div class="btnrow">${actionButtons}</div>
-    </section>
-    <section class="panel"><div class="ph"><div><span class="eyebrow">ログ</span><h2>直近プレイ</h2></div></div><div class="log">${log || '<p>まだプレイされていません。</p>'}</div></section>
+      <div class="mb-log-bar">${logHtml||'<div class="mb-log-entry">まだプレイされていません。</div>'}</div>
+      <div class="mb-fx-bar"><span>演出:</span>${fxControls}</div>
+    </div>
   `;
 }
 
@@ -4115,6 +5476,8 @@ function render(){
   else if(UI.screen==='save') renderSave();
   else renderHome();
   renderSide();
+  renderHRCinematic();
+  renderLiveFullscreen();
   renderModal();
 }
 
