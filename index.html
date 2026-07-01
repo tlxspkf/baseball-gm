@@ -286,21 +286,41 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .match-result .label.draw{background:rgba(148,132,255,.14);color:var(--pu)}
 .match-result .stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,196,77,.18)}
 .match-result .stat:last-child{border-bottom:none}
-.pa-card{border:1px solid rgba(63,217,255,.28);border-radius:12px;background:linear-gradient(180deg,rgba(63,217,255,.1),rgba(9,15,28,.96));padding:12px;margin:10px 0;box-shadow:0 0 14px rgba(63,217,255,.1)}
+.pa-card{border:1px solid rgba(63,217,255,.28);border-radius:12px;background:linear-gradient(180deg,rgba(63,217,255,.1),rgba(9,15,28,.96));padding:12px;margin:10px 0;box-shadow:0 0 14px rgba(63,217,255,.1);overflow:hidden}
 .pa-card .pa-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
 .pa-card .pa-head strong{font-size:15px;color:#eef7ff}
 .pa-card .pa-result{font-size:16px;font-weight:900;color:var(--imp);line-height:1.35;margin:8px 0}
+.pa-title-group{display:grid;gap:3px;min-width:0}
+.pa-title-main{font-size:15px;font-weight:900;color:#eef7ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa-title-sub{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa-score-pill{font-family:var(--num);font-size:16px;font-weight:950;color:#fff;background:rgba(255,196,77,.12);border:1px solid rgba(255,196,77,.35);border-radius:8px;padding:4px 10px;white-space:nowrap}
+.pa-summary{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:12px;align-items:start;margin-top:8px}
+.pa-mainline{display:grid;gap:8px;min-width:0}
+.pa-result-card{border:1px solid rgba(255,196,77,.32);border-radius:10px;background:linear-gradient(90deg,rgba(255,196,77,.16),rgba(3,8,18,.78));padding:10px 12px;min-width:0}
+.pa-result-label{font-size:11px;color:var(--mut);font-weight:800;letter-spacing:.08em;margin-bottom:3px}
+.pa-result-text{font-size:clamp(18px,2.2vw,26px);font-weight:950;color:var(--imp);line-height:1.15;overflow-wrap:anywhere}
+.pa-context{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.pa-context .kv,.pa-grid .kv{border:1px solid rgba(72,180,255,.12);border-radius:8px;background:rgba(3,8,18,.36);padding:6px 8px;min-width:0}
+.pa-context .kv b,.pa-grid .kv b{display:block;font-size:10px;color:var(--mut);margin-bottom:2px}
+.pa-context .kv span,.pa-grid .kv span{display:block;color:#eaf8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa-state-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.pa-state{border:1px solid rgba(72,180,255,.16);border-radius:8px;background:rgba(4,10,20,.55);padding:7px 8px;min-width:0}
+.pa-state b{display:block;font-size:10px;color:var(--mut);margin-bottom:2px}
+.pa-state span{display:block;font-family:var(--num);font-weight:900;color:#f4fbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa-sidebox{display:grid;gap:8px;min-width:0}
+.pa-flow{display:grid;gap:6px}
+.pa-move-card{border:1px solid rgba(63,217,255,.16);border-radius:8px;background:rgba(63,217,255,.06);padding:7px 8px;font-size:12px;color:#d9e6f7;line-height:1.45;min-width:0}
+.pa-move-card b{color:#f3fbff;margin-right:4px}
 .live-result-banner{display:flex;align-items:center;justify-content:center;text-align:center;min-height:42px;margin:4px 0 8px;padding:8px 12px;border-radius:8px;border:1px solid rgba(63,217,255,.24);background:linear-gradient(90deg,rgba(63,217,255,.14),rgba(255,255,255,.04));font-family:var(--num);font-size:clamp(24px,3.6vw,38px);font-weight:950;line-height:1;letter-spacing:0;color:#f3fdff;text-shadow:0 0 16px rgba(63,217,255,.42);box-shadow:inset 0 0 20px rgba(63,217,255,.06);animation:liveResultPop .42s ease-out var(--pa-callout-delay,var(--result-delay,1.9s)) both}
 .live-result-banner.gold{border-color:rgba(255,196,77,.56);background:linear-gradient(90deg,rgba(255,196,77,.24),rgba(255,138,61,.08));color:var(--imp);text-shadow:0 0 18px rgba(255,196,77,.58);box-shadow:0 0 18px rgba(255,196,77,.16),inset 0 0 24px rgba(255,196,77,.08)}
 .live-result-banner.out{border-color:rgba(255,122,107,.5);background:linear-gradient(90deg,rgba(255,122,107,.2),rgba(255,255,255,.03));color:#ffd8d2;text-shadow:0 0 16px rgba(255,122,107,.46)}
 .live-result-banner.safe{border-color:rgba(84,224,165,.42);background:linear-gradient(90deg,rgba(84,224,165,.18),rgba(63,217,255,.08));color:#eafff7;text-shadow:0 0 16px rgba(84,224,165,.38)}
 @keyframes liveResultPop{0%{opacity:0;transform:translateY(7px) scale(.88)}60%{opacity:1;transform:translateY(0) scale(1.04)}100%{opacity:1;transform:translateY(0) scale(1)}}
 .pa-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;font-size:12px}
-.pa-grid .kv{border-bottom:1px dashed rgba(72,180,255,.1)}
 .pa-move{font-size:12px;color:#d9e6f7;line-height:1.6;margin-top:8px}
 .pa-chiprow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .pa-chip{font-family:var(--num);font-size:10px;border:1px solid rgba(63,217,255,.28);border-radius:999px;padding:2px 8px;color:var(--cy);background:rgba(63,217,255,.06)}
-.pa-stage-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(134px,196px);gap:12px;align-items:start;margin:8px 0 10px}
+.pa-stage-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(134px,196px);gap:12px;align-items:start;margin:8px 0 10px;min-width:0}
 .live-pa-stage{border:1px solid rgba(63,217,255,.18);border-radius:10px;background:linear-gradient(180deg,rgba(6,14,28,.92),rgba(4,10,20,.96));padding:12px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:0;perspective:1000px;perspective-origin:50% 66%}
 .lpv-statbar{display:flex;gap:8px;width:100%;justify-content:center}
 .lpv-statbar>div{flex:1 1 0;min-width:0;text-align:center;border:1px solid rgba(72,180,255,.16);border-radius:8px;background:rgba(4,10,20,.5);padding:4px 6px}
@@ -317,7 +337,7 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .live-pa-stage.anim-simple .live-pa-trace,.live-pa-stage.important .live-pa-trace{animation-duration:.34s;box-shadow:none}
 .live-pa-stage.anim-simple .live-pa-ball,.live-pa-stage.important .live-pa-ball{animation-duration:.34s;box-shadow:0 0 8px rgba(255,196,77,.5)}
 .live-pa-stage.important{border-color:rgba(255,196,77,.2);background:linear-gradient(180deg,rgba(255,196,77,.06),rgba(4,10,20,.96))}
-.live-pa-field{position:relative;width:100%;max-width:380px;aspect-ratio:1;border-radius:50%;overflow:hidden;margin:0 auto;justify-self:center;background:radial-gradient(ellipse at 50% 78%,rgba(157,106,54,.46) 0 22%,transparent 23%),radial-gradient(ellipse at 50% 43%,rgba(38,126,92,.48) 0 61%,transparent 62%),linear-gradient(180deg,rgba(6,28,32,.92),rgba(5,13,26,.96));border:1px solid rgba(63,217,255,.16)}
+.live-pa-field{position:relative;width:100%;max-width:430px;aspect-ratio:1;border-radius:50%;overflow:hidden;margin:0 auto;justify-self:center;background:radial-gradient(ellipse at 50% 78%,rgba(157,106,54,.46) 0 22%,transparent 23%),radial-gradient(ellipse at 50% 43%,rgba(38,126,92,.48) 0 61%,transparent 62%),linear-gradient(180deg,rgba(6,28,32,.92),rgba(5,13,26,.96));border:1px solid rgba(63,217,255,.16)}
 .live-pa-field::before{content:'';position:absolute;left:9%;top:7%;width:82%;height:72%;border-top:2px solid rgba(63,217,255,.18);border-radius:50%;box-shadow:0 -10px 22px rgba(0,0,0,.28);pointer-events:none;z-index:1}
 .live-pa-field::after{content:'';position:absolute;left:50%;top:83%;width:112px;height:112px;transform:translate(-50%,-50%) rotate(45deg);border-left:1px solid rgba(255,244,214,.36);border-top:1px solid rgba(255,244,214,.36);pointer-events:none;z-index:1}
 .lpf-stands,.lpf-fence,.lpf-grass,.lpf-dirt,.lpf-foul-line,.lpf-mound-ring,.lpf-stadium-light{position:absolute;pointer-events:none}
@@ -472,13 +492,20 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .pa-live-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
 .pa-live-actions .btn{flex:1 1 auto;min-width:96px}
 /* --- %ベース打球(共通座標: 打球線/着弾/守備/コールアウトと一致) --- */
-.lpb-trace{position:absolute;left:var(--hx,50%);top:var(--hy,84%);height:0;width:var(--len,40%);border-top:2px solid var(--bc,#eaf8ff);transform:rotate(var(--rot,-90deg));transform-origin:left center;opacity:.55;z-index:4;pointer-events:none;box-shadow:0 0 6px var(--bc,#eaf8ff);animation:lpbTrace var(--bdur,.6s) ease-out var(--bdelay,.65s) both}
-.lpb-trace.grounder{border-top-style:dashed;opacity:.45}
-.lpb-ball{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:9px;height:9px;border-radius:50%;background:#fff7d1;transform:translate(-50%,-50%);z-index:6;pointer-events:none;box-shadow:0 0 10px rgba(255,247,209,.85);opacity:1;animation:lpbBall3d var(--bdur,.6s) cubic-bezier(.2,.7,.35,1) var(--bdelay,.65s) both}
-.lpb-shadow{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:12px;height:5px;border-radius:50%;background:rgba(0,0,0,.5);transform:translate(-50%,-50%);filter:blur(1px);opacity:.42;z-index:3;pointer-events:none;animation:lpbShadow var(--bdur,.6s) ease-out var(--bdelay,.65s) both}
-.lpb-shadow.grounder{opacity:.3}
-@keyframes lpbShadow{0%{left:var(--hx);top:var(--hy);opacity:0}15%{opacity:.42}100%{left:var(--tx);top:var(--ty);opacity:.42}}
-.lpb-land{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,.7);background:var(--bc,#eaf8ff);transform:translate(-50%,-50%);z-index:5;pointer-events:none;opacity:.82;animation:lpbLand .4s ease-out var(--ldelay,1.25s) both}
+.lpb-trace{position:absolute;left:var(--hx,50%);top:var(--hy,84%);height:var(--arc,0px);width:var(--len,40%);border-top:var(--tw,2px) solid var(--bc,#eaf8ff);border-radius:50% 50% 0 0;transform:rotate(var(--rot,-90deg)) translateY(var(--ashift,0px));transform-origin:left center;opacity:.62;z-index:4;pointer-events:none;box-shadow:0 0 var(--glow,6px) var(--bc,#eaf8ff);animation:lpbTrace var(--bdur,.6s) ease-out var(--bdelay,.65s) both}
+.lpb-trace.grounder{border-top-style:dashed;opacity:.68;filter:drop-shadow(0 1px 0 rgba(255,255,255,.12))}
+.lpb-trace.liner{opacity:.84}
+.lpb-trace.fly,.lpb-trace.homer{border-top-style:solid}
+.lpb-trace.homer{box-shadow:0 0 30px rgba(255,196,77,.9),0 0 8px rgba(255,255,255,.75)}
+.lpb-ball{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:var(--bs,9px);height:var(--bs,9px);border-radius:50%;background:#fff7d1;transform:translate(-50%,-50%);z-index:6;pointer-events:none;box-shadow:0 0 calc(10px + var(--pw,0)*10px) rgba(255,247,209,.85);opacity:1;animation:lpbBall3d var(--bdur,.6s) cubic-bezier(.2,.7,.35,1) var(--bdelay,.65s) both}
+.lpb-ball.grounder{background:#f7f0df}
+.lpb-ball.homer{background:#fff0a8;box-shadow:0 0 28px rgba(255,196,77,.98),0 0 10px rgba(255,255,255,.9)}
+.lpb-shadow{position:absolute;left:var(--tx,50%);top:calc(var(--ty,40%) + var(--sd,0px));width:var(--sw,12px);height:var(--sh,5px);border-radius:50%;background:rgba(0,0,0,.54);transform:translate(-50%,-50%);filter:blur(var(--sblur,1px));opacity:var(--so,.42);z-index:3;pointer-events:none;animation:lpbShadow var(--bdur,.6s) ease-out var(--bdelay,.65s) both}
+.lpb-shadow.grounder{opacity:.5}
+@keyframes lpbShadow{0%{left:var(--hx);top:var(--hy);opacity:0}15%{opacity:var(--so,.42)}100%{left:var(--tx);top:calc(var(--ty) + var(--sd,0px));opacity:var(--so,.42)}}
+.lpb-land{position:absolute;left:var(--tx,50%);top:var(--ty,40%);width:var(--ls,12px);height:var(--ls,12px);border-radius:50%;border:var(--lw,1px) solid rgba(255,255,255,.7);background:radial-gradient(circle,rgba(255,255,255,.9) 0 18%,var(--bc,#eaf8ff) 28%,rgba(255,255,255,0) 66%);transform:translate(-50%,-50%);z-index:5;pointer-events:none;opacity:.82;animation:lpbLand .4s ease-out var(--ldelay,1.25s) both}
+.lpb-land.grounder{border-style:dashed;background:rgba(231,243,255,.2)}
+.lpb-land.homer{background:radial-gradient(circle,rgba(255,255,255,.98) 0 14%,rgba(255,196,77,.92) 25%,rgba(255,196,77,.2) 66%,transparent 72%);box-shadow:0 0 22px rgba(255,196,77,.9)}
 @keyframes lpbTrace{0%{opacity:0;clip-path:inset(0 100% 0 0)}25%{opacity:.9}100%{opacity:.55;clip-path:inset(0 0 0 0)}}
 @keyframes lpbBall3d{0%{left:var(--hx);top:var(--hy);opacity:0;transform:translate(-50%,-50%) translateZ(0)}12%{opacity:1}50%{left:var(--mx);top:var(--my);transform:translate(-50%,-50%) translateZ(var(--peakz,40px))}100%{left:var(--tx);top:var(--ty);opacity:1;transform:translate(-50%,-50%) translateZ(0)}}
 @keyframes lpbLand{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}60%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}100%{opacity:.85;transform:translate(-50%,-50%) scale(1)}}
@@ -488,6 +515,9 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .live-pa-stage.anim-off .lpt-throw{opacity:.5}
 .live-pa-field.is-score{box-shadow:inset 0 0 26px rgba(255,196,77,.22)}
 .live-pa-field.is-score .live-pa-home{background:var(--imp);border-color:#fff2bd;box-shadow:0 0 18px rgba(255,196,77,.78)}
+.live-pa-field.bt-homer .lpf-fence{border-top-color:rgba(255,196,77,.86);box-shadow:0 -2px 0 rgba(255,247,209,.5),0 -8px 20px rgba(255,196,77,.24),inset 0 16px 22px rgba(0,0,0,.34)}
+.live-pa-field.bt-fly .lpf-fence,.live-pa-field.bd-deep .lpf-fence{border-top-color:rgba(117,238,255,.52)}
+.live-pa-field.bt-grounder .lpf-dirt{box-shadow:inset 0 0 22px rgba(65,35,14,.3),0 0 18px rgba(190,122,58,.1)}
 /* --- 3Dフィールド(放送カメラ風の傾き。面ごと傾けて座標/アニメは不変) --- */
 .live-pa-field.field3d{transform:rotateX(22deg);transform-style:preserve-3d;overflow:visible;transform-origin:50% 80%;margin-top:4px;margin-bottom:-7%;box-shadow:0 18px 30px rgba(0,0,0,.45),inset 0 0 26px rgba(63,217,255,.06)}
 .live-pa-field.field3d.is-score{box-shadow:0 18px 30px rgba(0,0,0,.45),inset 0 0 30px rgba(255,196,77,.24)}
@@ -604,7 +634,13 @@ table.sb td.cur{background:rgba(63,217,255,.12)}
 .mode-cine .live-pa-field.is-score{box-shadow:inset 0 0 40px rgba(255,196,77,.34);animation:cineScorePulse 1.4s ease-out .9s 1}
 @keyframes cineScorePulse{0%{box-shadow:inset 0 0 0 rgba(255,196,77,0)}40%{box-shadow:inset 0 0 60px rgba(255,196,77,.5)}100%{box-shadow:inset 0 0 40px rgba(255,196,77,.3)}}
 @media (max-width:980px){.mode-full .lpf-minimap{width:82px}.mode-full .lpf-replay-title b{font-size:16px}}
-@media (max-width:760px){.pa-stage-row{grid-template-columns:1fr}.live-pa-field{max-width:300px}.lpa-zonewrap{max-width:140px}.mode-full .lpf-minimap{display:none}}
+@media (max-width:900px){
+  .pa-summary{grid-template-columns:1fr}
+}
+@media (max-width:1100px){
+  .pa-summary{grid-template-columns:1fr}
+}
+@media (max-width:760px){.pa-stage-row{grid-template-columns:1fr}.live-pa-field{max-width:300px}.lpa-zonewrap{max-width:140px}.mode-full .lpf-minimap{display:none}.pa-context,.pa-state-grid{grid-template-columns:1fr}.pa-card .pa-head{align-items:flex-start}.pa-score-pill{font-size:14px}}
 .pitch-card{margin-top:10px;border-top:1px solid rgba(72,180,255,.14);padding-top:10px;display:grid;grid-template-columns:132px 1fr;gap:10px;align-items:start}
 .pitch-zone{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:2px;width:132px;aspect-ratio:1;background:rgba(3,8,16,.72);border:1px solid rgba(72,180,255,.18);border-radius:8px;padding:6px}
 .pitch-cell{position:relative;border:1px solid rgba(72,180,255,.08);border-radius:4px;background:rgba(255,255,255,.02);min-width:0}
@@ -901,9 +937,7 @@ textarea.io{
 .lfs-linescore td.hit{color:var(--cy);font-weight:900}
 .lfs-main{display:grid;grid-template-columns:minmax(112px,168px) minmax(0,1.6fr) minmax(112px,168px);gap:8px;align-items:stretch;min-height:0}
 .lfs-field-zone{position:relative;display:grid;place-items:center;min-width:0;min-height:0}
-.lfs-stage{width:100%;height:100%;display:grid;place-items:center;min-height:0}
-.lfs-stage[data-stage="chase"]{place-items:stretch}
-.lfs-stage[data-stage="chase"] .ball-replay{min-height:0;height:100%;border-radius:14px}
+.lfs-stage{position:relative;width:100%;height:100%;display:grid;place-items:center;min-height:0}
 .lfs-result-callout{position:absolute;left:50%;top:32%;z-index:7;width:min(70%,560px);pointer-events:none;text-align:center;transform:translate(-50%,-50%);animation:lfsTelop 1.08s cubic-bezier(.16,.9,.2,1) calc(var(--pa-callout-delay,var(--result-delay,1.9s)) + .24s) both}
 .lfs-result-callout::before{content:"";position:absolute;left:50%;top:50%;width:92%;height:70%;border-radius:999px;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,rgba(63,217,255,.14),rgba(63,217,255,0) 70%);opacity:.58;z-index:-1}
 .lfs-result-main{display:inline-block;max-width:100%;padding:6px 16px;border:1px solid rgba(255,255,255,.2);border-radius:9px;background:linear-gradient(90deg,rgba(3,8,16,.56),rgba(8,22,38,.28),rgba(3,8,16,.56));font-family:var(--num);font-size:clamp(28px,4.6vw,62px);font-weight:950;line-height:.95;letter-spacing:0;color:#f5fdff;text-shadow:0 0 16px rgba(63,217,255,.52),0 2px 0 rgba(0,0,0,.26);box-shadow:0 12px 24px rgba(0,0,0,.24),inset 0 0 20px rgba(255,255,255,.04)}
@@ -914,8 +948,6 @@ textarea.io{
 .lfs-result-callout.hr .lfs-result-main{background:linear-gradient(90deg,rgba(255,255,255,.14),rgba(255,196,77,.2),rgba(255,255,255,.1));font-size:clamp(32px,5vw,68px)}
 .lfs-result-callout.comeback::before,.lfs-result-callout.tie::before,.lfs-result-callout.hr::before{background:radial-gradient(ellipse at center,rgba(255,196,77,.24),rgba(164,123,255,.12) 44%,rgba(255,196,77,0) 72%)}
 @keyframes lfsTelop{0%{opacity:0;transform:translate(-50%,-45%) scale(.78)}22%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}45%{transform:translate(-50%,-50%) scale(.99)}100%{opacity:.96;transform:translate(-50%,-50%) scale(1)}}
-.lfs-bottom-result{min-width:0;max-width:260px;pointer-events:none;flex:0 1 260px}
-.lfs-bottom-result .live-result-banner{font-size:clamp(15px,1.65vw,24px);min-height:32px;margin:0;padding:5px 10px;animation:liveResultPop .42s ease-out var(--pa-callout-delay,var(--result-delay,1.9s)) both}
 .lfs-stats-panel{position:relative;z-index:2;min-width:0;height:100%;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(63,217,255,.24);border-radius:10px;background:linear-gradient(180deg,rgba(4,11,22,.9),rgba(4,11,22,.76));box-shadow:0 18px 40px rgba(0,0,0,.34),0 0 22px rgba(63,217,255,.1);padding:9px}
 .lfs-stats-panel.away{border-color:rgba(255,255,255,.2);box-shadow:0 18px 40px rgba(0,0,0,.34),0 0 18px rgba(164,123,255,.1)}
 .lfs-stats-panel.home{border-color:rgba(63,217,255,.3)}
@@ -978,7 +1010,7 @@ textarea.io{
 @keyframes ballReplayCamera{0%{transform:translateY(3%) scale(.985)}100%{transform:translateY(-1.5%) scale(1.025)}}
 @keyframes ballReplayNoFlightCamera{0%{transform:translateY(1%) scale(.995)}100%{transform:translateY(0) scale(1)}}
 @media (max-width:720px){.ball-replay{min-height:190px}.ball-replay-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ball-replay-stat:nth-child(n+5){display:none}}
-.lfs-bottom{display:grid;grid-template-columns:minmax(120px,260px) minmax(0,1fr) auto;align-items:center;gap:8px;border:1px solid rgba(72,180,255,.16);border-radius:10px;background:rgba(4,11,22,.76);padding:7px 8px}
+.lfs-bottom{display:grid;grid-template-columns:minmax(190px,300px) minmax(0,1fr) auto;align-items:center;gap:8px;border:1px solid rgba(72,180,255,.16);border-radius:10px;background:rgba(4,11,22,.76);padding:7px 8px}
 .lfs-desc{min-width:0;color:#cfe6ff;font-size:13px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lfs-playbar{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:7px;min-width:0;padding:5px 8px;border:1px solid rgba(63,217,255,.18);border-radius:8px;background:linear-gradient(90deg,rgba(63,217,255,.08),rgba(255,255,255,.025))}
 .lfs-play-badge{font-family:var(--num);font-size:12px;font-weight:950;letter-spacing:.08em;color:#f5fdff}
@@ -995,6 +1027,48 @@ textarea.io{
 .live-fullscreen.replay-no-batted-ball .lfs-field-zone{align-items:center}
 .live-fullscreen.replay-no-batted-ball .lfs-result-callout{top:42%;width:min(74%,520px)}
 .live-fullscreen.replay-no-batted-ball .lfs-result-callout::before{background:radial-gradient(ellipse at center,rgba(63,217,255,.18),rgba(164,123,255,.08) 48%,rgba(63,217,255,0) 74%)}
+.live-pa-stage.mode-full.replay-no-batted-ball{display:block;min-height:0;perspective:none}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-stage{position:relative;width:100%;height:100%;min-height:min(430px,58vh);display:grid;grid-template-columns:minmax(150px,.75fr) minmax(220px,1.15fr) minmax(150px,.75fr);gap:10px;align-items:stretch;border:1px solid rgba(63,217,255,.22);border-radius:16px;overflow:hidden;background:radial-gradient(80% 72% at 50% 30%,rgba(63,217,255,.14),transparent 60%),linear-gradient(180deg,rgba(2,7,16,.97),rgba(4,12,24,.94));box-shadow:0 24px 54px rgba(0,0,0,.48),inset 0 0 32px rgba(63,217,255,.07);padding:12px}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-stage::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(63,217,255,.04) 1px,transparent 1px),linear-gradient(180deg,rgba(63,217,255,.035) 1px,transparent 1px);background-size:44px 44px;opacity:.7;pointer-events:none}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-panel,.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-center{position:relative;z-index:1;min-width:0;border:1px solid rgba(72,180,255,.16);border-radius:10px;background:rgba(3,8,18,.64);box-shadow:inset 0 0 18px rgba(63,217,255,.04)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-panel{display:flex;flex-direction:column;gap:8px;padding:10px;overflow:hidden}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-center{display:grid;place-items:center;padding:12px;overflow:hidden}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-kicker{font-family:var(--num);font-size:10px;font-weight:900;letter-spacing:.16em;color:var(--mut)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-kicker-note{margin-top:-4px;font-family:var(--num);font-size:10px;font-weight:800;color:#9fd8ff;opacity:.85}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-abs-status{position:relative;height:13px;margin-bottom:2px;font-family:var(--num);font-size:10px;font-weight:900;letter-spacing:.14em;text-align:center}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-abs-step{position:absolute;inset:0;opacity:0;color:#9fd8ff}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-abs-step.p1{animation:lfnbAbsIn .01s linear var(--pa-pitch-delay,.15s) forwards,lfnbAbsOut .01s linear var(--pa-contact-delay,.5s) forwards}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-abs-step.p2{color:#ffd766;animation:lfnbAbsIn .01s linear var(--pa-label-delay,.9s) forwards}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-pitch-zonecheck{fill:none;stroke:#ffd766;stroke-width:1.1;opacity:0;animation:lfnbZoneCheck .5s ease-out var(--pa-label-delay,.9s) both}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-title{font-family:var(--num);font-size:clamp(28px,4.8vw,62px);font-weight:950;line-height:.95;color:#f7fdff;text-align:center;text-shadow:0 0 20px rgba(63,217,255,.28)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-sub{color:#cfe6ff;font-weight:850;line-height:1.35;text-align:center}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-zonewrap{position:relative;width:min(72%,320px);aspect-ratio:1;margin:auto;display:grid;place-items:center}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-zone{position:absolute;left:21%;top:18%;width:58%;height:58%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);border:2px solid rgba(223,248,255,.72);border-radius:4px;background:rgba(3,8,18,.42);box-shadow:0 0 26px rgba(63,217,255,.2),inset 0 0 16px rgba(63,217,255,.12)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-zone span{border-right:1px solid rgba(223,248,255,.18);border-bottom:1px solid rgba(223,248,255,.18)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-zone span:nth-child(3n){border-right:0}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-zone span:nth-child(n+7){border-bottom:0}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-pitch-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 9px rgba(63,217,255,.44))}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-pitch-path{fill:none;stroke:#dff8ff;stroke-width:1.8;stroke-linecap:round;stroke-dasharray:160;stroke-dashoffset:160;animation:lfnbPitchDraw .78s cubic-bezier(.16,.78,.24,1) var(--pa-pitch-delay,.12s) forwards}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-pitch-ball{fill:#fff7d1;stroke:#fff;stroke-width:.6;filter:drop-shadow(0 0 7px rgba(255,196,77,.9));opacity:0;animation:lfnbPitchPop .28s ease-out calc(var(--pa-pitch-delay,.12s) + .55s) forwards}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-call{display:inline-flex;align-items:center;justify-content:center;justify-self:center;min-width:120px;padding:7px 12px;border:1px solid rgba(255,196,77,.45);border-radius:8px;background:rgba(255,196,77,.12);font-family:var(--num);font-weight:950;color:#fff5cf;box-shadow:0 0 18px rgba(255,196,77,.12);animation:lfsFlowLabel .32s ease-out var(--pa-callout-delay,.9s) both}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-list{display:grid;gap:6px;overflow:auto;min-height:0}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-row,.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-kv{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:7px;align-items:center;border:1px solid rgba(72,180,255,.12);border-radius:8px;background:rgba(255,255,255,.035);padding:7px 8px;color:#eaf7ff;font-size:12px}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-row.final{border-color:rgba(255,196,77,.38);background:rgba(255,196,77,.08)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-row b,.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-kv b{font-family:var(--num);font-size:12px;color:#fff}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-row span,.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-kv span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-badge{display:inline-flex;justify-content:center;border:1px solid rgba(63,217,255,.22);border-radius:999px;padding:3px 7px;font-family:var(--num);font-size:10px;font-weight:900;color:#dff8ff;background:rgba(63,217,255,.08);white-space:nowrap}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-mini-zone{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:2px;width:100%;aspect-ratio:1;border:1px solid rgba(72,180,255,.16);border-radius:8px;background:rgba(3,8,18,.5);padding:5px}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-cell{position:relative;border:1px solid rgba(255,255,255,.045);border-radius:3px;background:rgba(255,255,255,.025)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-cell.s{background:rgba(63,217,255,.075);border-color:rgba(63,217,255,.14)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-dot{position:absolute;left:50%;top:50%;width:14px;height:14px;display:grid;place-items:center;transform:translate(-50%,-50%);border-radius:50%;background:#3fd9ff;color:#02101d;font-family:var(--num);font-size:8px;font-weight:950;box-shadow:0 0 10px rgba(63,217,255,.55)}
+.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-dot.final{width:18px;height:18px;background:#ffd76a;box-shadow:0 0 14px rgba(255,196,77,.78)}
+@keyframes lfnbPitchDraw{to{stroke-dashoffset:0}}
+@keyframes lfnbPitchPop{to{opacity:1}}
+@keyframes lfnbAbsIn{to{opacity:1}}
+@keyframes lfnbAbsOut{to{opacity:0}}
+@keyframes lfnbZoneCheck{0%{opacity:0;r:3.1}35%{opacity:.9;r:3.1}100%{opacity:0;r:9}}
+@media (max-width:980px){.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-stage{grid-template-columns:minmax(120px,.7fr) minmax(200px,1.2fr) minmax(120px,.7fr);gap:8px;padding:10px}.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-title{font-size:clamp(24px,5vw,46px)}}
+@media (max-width:720px){.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-stage{grid-template-columns:1fr;min-height:0;overflow:auto}.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-center{min-height:260px}.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-panel{max-height:180px}.live-pa-stage.mode-full.replay-no-batted-ball .lfnb-zonewrap{width:min(68%,230px)}}
 @media (max-width:1180px){
   .lfs-main{grid-template-columns:minmax(112px,160px) minmax(0,1.55fr) minmax(112px,160px);gap:7px}
   .lfs-batstats table{font-size:11px}
@@ -1016,7 +1090,6 @@ textarea.io{
   .lfs-batstats th,.lfs-batstats td{padding:4px}
   .lfs-batstats .col-rbi,.lfs-batstats .col-sb{display:none}
   .lfs-data-panel{width:min(360px,52%);max-height:min(58vh,390px)}
-  .lfs-bottom-result{min-width:0}
   .lfs-bottom{align-items:stretch}
   .lfs-desc{white-space:normal}
   .mode-full .lpv-statbar{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -1035,10 +1108,117 @@ textarea.io{
 }
 
 /* ============================================================
+   全画面LIVE 強化: 球場を主役に / 投手・打者カード / 迫力演出
+============================================================ */
+/* 球場を主役にする: 中央列を広げ、サイドはコンパクトカードに */
+.lfs-main{grid-template-columns:minmax(120px,196px) minmax(0,2.3fr) minmax(120px,196px)}
+.live-pa-stage.mode-full .live-pa-field{max-width:min(70vh,620px);max-height:68vh}
+.live-pa-stage.mode-full{gap:6px}
+
+/* 投手 / 打者 コンパクトカード */
+.lfs-card{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px;min-width:0;border:1px solid rgba(63,217,255,.26);border-radius:12px;background:linear-gradient(180deg,rgba(6,14,28,.94),rgba(4,10,20,.82));box-shadow:0 14px 32px rgba(0,0,0,.34),0 0 20px rgba(63,217,255,.08);padding:11px 11px 12px}
+.lfs-card.pitch{border-left:4px solid rgba(63,217,255,.7)}
+.lfs-card.bat{border-left:4px solid rgba(255,196,77,.78)}
+.lfs-card-role{font-family:var(--num);font-size:10px;letter-spacing:.14em;color:var(--mut);font-weight:800}
+.lfs-card.bat .lfs-card-role{color:#ffd98a}
+.lfs-card-name{font-size:clamp(15px,1.55vw,21px);font-weight:900;line-height:1.1;color:#f3fbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 0 12px rgba(63,217,255,.22)}
+.lfs-card-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.lfs-card.pitch .lfs-card-stats{grid-template-columns:1fr 1fr 1fr}
+.lfs-card-stat{min-width:0;text-align:center;border:1px solid rgba(72,180,255,.16);border-radius:8px;background:rgba(3,8,18,.5);padding:5px 4px}
+.lfs-card-stat span{display:block;font-size:9px;letter-spacing:.06em;color:var(--mut);white-space:nowrap}
+.lfs-card-stat b{font-family:var(--num);font-size:clamp(16px,1.5vw,22px);font-weight:900;color:#eaf8ff;line-height:1.05}
+.lfs-card-stat small{font-size:9px;color:var(--mut);font-weight:700;margin-left:1px}
+.lfs-card.bat .lfs-card-stat b{color:#fff3d6}
+.lfs-card-gauge{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:6px;margin-top:auto}
+.lfs-card-gauge-label{font-family:var(--num);font-size:9px;letter-spacing:.08em;color:var(--mut)}
+.lfs-card-gauge-bar{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.lfs-card-gauge-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#3fffc4,#3fd9ff)}
+.lfs-card-gauge.mid .lfs-card-gauge-bar i{background:linear-gradient(90deg,#ffd766,#ffac4d)}
+.lfs-card-gauge.low .lfs-card-gauge-bar i{background:linear-gradient(90deg,#ff8a6b,#ff646d)}
+.lfs-card-gauge b{font-family:var(--num);font-size:12px;font-weight:900;color:#eaf8ff}
+
+/* HUD: BSO・走者ダイヤを大きく読みやすく */
+.lfs-dot{width:12px;height:12px}
+.lfs-count{font-size:13px}
+.lfs-count b{font-size:15px}
+.lfs-diamond{width:46px;height:32px}
+.lfs-base-dot{width:14px;height:14px}
+.lfs-base-dot.b1{right:3px;top:13px}.lfs-base-dot.b2{left:50%;top:1px;margin-left:-7px}.lfs-base-dot.b3{left:3px;top:13px}
+.lfs-b-situation .tag{font-size:13px;padding:5px 10px}
+
+/* 打球を太く・発光・残像つきに(細い線をやめる) */
+.lpb-trace{border-top-width:var(--tw,4px);opacity:.74;box-shadow:0 0 var(--glow,14px) var(--bc,#eaf8ff),0 0 4px var(--bc,#eaf8ff)}
+.lpb-trace.grounder{border-top-width:var(--tw,6px);border-top-style:dashed;opacity:.7}
+.lpb-trace.liner{border-top-width:var(--tw,5px)}
+.lpb-trace.fly{border-top-width:var(--tw,4px)}
+.lpb-trace.homer{border-top-width:var(--tw,6px);box-shadow:0 0 26px rgba(255,196,77,.9),0 0 9px rgba(255,255,255,.88)}
+.lpb-ball{width:var(--bs,12px);height:var(--bs,12px);box-shadow:0 0 calc(12px + var(--pw,0)*12px) var(--bc,#fff7d1),0 0 6px #fff}
+.lpb-ball.grounder{width:var(--bs,10px);height:var(--bs,10px)}
+.lpb-ball.homer{width:var(--bs,16px);height:var(--bs,16px);box-shadow:0 0 30px rgba(255,196,77,.98),0 0 11px #fff}
+.lpb-land{width:var(--ls,16px);height:var(--ls,16px);opacity:.9;box-shadow:0 0 18px var(--bc,#eaf8ff)}
+.lpb-land.homer,.lpb-land.fly{width:var(--ls,22px);height:var(--ls,22px)}
+/* 追従リプレイの打球軌道を太く発光 */
+.ball-replay-path.hit{stroke-width:4.5;filter:drop-shadow(0 0 8px rgba(255,196,77,.9))}
+.ball-replay-path.glow{stroke-width:11;stroke:rgba(255,196,77,.28)}
+.ball-replay-ball{filter:drop-shadow(0 0 8px rgba(255,196,77,.95))}
+.ball-replay-impact{width:52px;height:52px}
+
+/* インパクト/得点フラッシュ + 本塁打の画面揺れ */
+.lfs-impact-flash{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;border-radius:14px;background:radial-gradient(circle at 50% 62%,rgba(255,247,209,.55),transparent 58%);animation:lfsImpactFlash .5s ease-out var(--flash-delay,1.2s) both}
+.lfs-impact-flash.score{background:radial-gradient(circle at 50% 62%,rgba(63,217,255,.5),transparent 58%)}
+.lfs-impact-flash.hr{background:radial-gradient(circle at 50% 58%,rgba(255,196,77,.62),rgba(164,123,255,.2) 42%,transparent 64%);animation-duration:.8s}
+@keyframes lfsImpactFlash{0%{opacity:0}18%{opacity:1}100%{opacity:0}}
+.live-fullscreen.fx-hr .lfs-stage{animation:lfsShake .6s cubic-bezier(.36,.07,.19,.97) var(--shake-delay,1.3s) both}
+.live-fullscreen.fx-hr .lfs-field-zone{animation:lfsZoneGlow 1.4s ease-out 1.3s both}
+@keyframes lfsShake{0%,100%{transform:translate(0,0)}12%{transform:translate(-5px,3px)}28%{transform:translate(6px,-3px)}44%{transform:translate(-5px,-2px)}60%{transform:translate(4px,3px)}76%{transform:translate(-2px,-1px)}}
+@keyframes lfsZoneGlow{0%{filter:brightness(1)}22%{filter:brightness(1.35) saturate(1.2)}100%{filter:brightness(1)}}
+@media (prefers-reduced-motion:reduce){.lfs-impact-flash,.live-fullscreen.fx-hr .lfs-stage,.live-fullscreen.fx-hr .lfs-field-zone{animation:none}}
+
+@media (max-width:980px){
+  .lfs-main{grid-template-columns:minmax(108px,160px) minmax(0,1.9fr) minmax(108px,160px)}
+  .lfs-card{padding:9px}
+  .lfs-card.pitch .lfs-card-stats{grid-template-columns:1fr 1fr 1fr}
+}
+@media (max-width:720px){
+  .lfs-main{grid-template-columns:1fr 1fr}
+  .lfs-card{grid-row:2}
+}
+
+/* ============================================================
+   全画面LIVE: 1プレー観戦画面としての再設計
+   ・追跡カメラを別モードに分けず、中央ステージ内のインセットに統合
+   ・投球→打撃→打球→守備→走者→結果の流れを帯(lfs-flow)で見せる
+============================================================ */
+.lfs-track-inset{position:absolute;left:8px;top:8px;z-index:4;width:min(34%,200px);pointer-events:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.4))}
+.lfs-track-inset-label{display:flex;align-items:center;gap:5px;margin-bottom:3px;font-family:var(--num);font-size:9px;font-weight:800;letter-spacing:.1em;color:#dff6ff;text-shadow:0 0 8px rgba(63,217,255,.4)}
+.lfs-track-inset-label::before{content:'';width:6px;height:6px;border-radius:50%;background:#ff6b6b;box-shadow:0 0 6px rgba(255,107,107,.85);animation:lfsTrackRec 1.4s ease-in-out infinite}
+.lfs-track-inset .ball-replay{min-height:0;height:118px;border-radius:8px;border-color:rgba(63,217,255,.32)}
+.lfs-track-inset .ball-replay-stats,.lfs-track-inset .ball-replay-result{display:none}
+.lfs-track-inset .ball-replay-label{font-size:8px;padding:2px 4px;max-width:60px}
+@keyframes lfsTrackRec{0%,100%{opacity:1}50%{opacity:.25}}
+@media (max-width:720px){.lfs-track-inset{display:none}}
+
+.lfs-flow-slot{min-width:0;display:flex;align-items:center}
+.lfs-flow{display:flex;align-items:flex-start;justify-content:space-between;width:100%;gap:0}
+.lfs-flow-step{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:0 0 auto}
+.lfs-flow-step b{font-size:9px;font-weight:800;letter-spacing:.02em;color:var(--mut);white-space:nowrap}
+.lfs-flow-dot{display:block;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22)}
+.lfs-flow-step:not(.skip) .lfs-flow-dot{animation:lfsFlowLight .32s ease-out var(--fd,0s) both}
+.lfs-flow-step:not(.skip) b{animation:lfsFlowLabel .32s ease-out var(--fd,0s) both}
+.lfs-flow-step:last-child:not(.skip) .lfs-flow-dot{animation-name:lfsFlowLightGold}
+.lfs-flow-step.skip{opacity:.3}
+.lfs-flow-line{flex:1 1 auto;height:1px;min-width:4px;margin-top:4px;background:rgba(255,255,255,.14)}
+.lfs-flow-line:not(.skip){background:linear-gradient(90deg,rgba(63,217,255,.12),rgba(63,217,255,.55))}
+@keyframes lfsFlowLight{0%{background:rgba(255,255,255,.14);box-shadow:none;transform:scale(1)}50%{transform:scale(1.4)}100%{background:#3fd9ff;box-shadow:0 0 9px rgba(63,217,255,.85);transform:scale(1)}}
+@keyframes lfsFlowLightGold{0%{background:rgba(255,255,255,.14);box-shadow:none;transform:scale(1)}50%{transform:scale(1.55)}100%{background:#ffd76a;box-shadow:0 0 12px rgba(255,196,77,.9);transform:scale(1)}}
+@keyframes lfsFlowLabel{0%{color:var(--mut)}100%{color:#eaf8ff}}
+@media (prefers-reduced-motion:reduce){.lfs-flow-dot,.lfs-flow-step b,.lfs-track-inset-label::before{animation:none}}
+
+/* ============================================================
    試合中継画面 (BROADCAST MATCH)
 ============================================================ */
-.match-broadcast{display:grid;gap:8px}
-.mb-scorebar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;border:1px solid rgba(72,180,255,.24);border-radius:12px;padding:10px 14px;background:linear-gradient(180deg,rgba(5,12,26,.95),rgba(3,8,18,.88));box-shadow:0 4px 18px rgba(0,0,0,.28),0 0 14px rgba(63,217,255,.06)}
+.match-broadcast{display:grid;gap:10px;min-width:0}
+.mb-scorebar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;border:1px solid rgba(72,180,255,.24);border-radius:12px;padding:10px 14px;background:linear-gradient(180deg,rgba(5,12,26,.95),rgba(3,8,18,.88));box-shadow:0 4px 18px rgba(0,0,0,.28),0 0 14px rgba(63,217,255,.06);min-width:0}
 .mb-team{min-width:0}
 .mb-team.home{text-align:right}
 .mb-team small{display:block;font-family:var(--num);font-size:9px;letter-spacing:.18em;color:var(--mut);margin-bottom:3px}
@@ -1053,6 +1233,22 @@ textarea.io{
 .mb-live{font-family:var(--num);font-size:9px;letter-spacing:.26em;font-weight:800;background:linear-gradient(90deg,var(--bl),var(--pu));color:#fff;padding:2px 8px;border-radius:3px;transform:skewX(-12deg)}
 .mb-inn{font-family:var(--num);font-size:12px;font-weight:800;color:#eaf8ff;background:rgba(63,217,255,.1);border:1px solid rgba(63,217,255,.22);border-radius:6px;padding:2px 8px}
 .mb-outs{font-family:var(--num);font-size:11px;color:var(--warn)}
+.mb-game-grid{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:8px;min-width:0}
+.mb-status-card{border:1px solid rgba(72,180,255,.16);border-radius:10px;background:rgba(4,10,22,.68);padding:8px 10px;min-width:0}
+.mb-status-card b{display:block;font-size:10px;letter-spacing:.08em;color:var(--mut);margin-bottom:5px}
+.mb-status-card strong{display:block;font-family:var(--num);font-size:16px;color:#f3fbff;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mb-status-card span{display:block;font-size:11px;color:#d9e6f7;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mb-base-line{display:flex;align-items:center;gap:8px;min-width:0}
+.mb-base-diamond{position:relative;width:42px;height:30px;flex:0 0 auto}
+.mb-base-dot{position:absolute;width:12px;height:12px;transform:rotate(45deg);border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.08)}
+.mb-base-dot.on{background:var(--imp);border-color:#fff2bd;box-shadow:0 0 10px rgba(255,196,77,.55)}
+.mb-base-dot.b1{right:2px;bottom:3px}.mb-base-dot.b2{left:15px;top:1px}.mb-base-dot.b3{left:2px;bottom:3px}
+.mb-bso{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mb-count{display:inline-flex;align-items:center;gap:4px;font-family:var(--num);font-size:10px;color:#d8ebff}
+.mb-count b{display:inline;margin:0;color:var(--mut);font-size:10px}
+.mb-dot{width:8px;height:8px;border-radius:50%;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.08)}
+.mb-dot.on{background:var(--cy);border-color:rgba(185,247,255,.85);box-shadow:0 0 8px rgba(63,217,255,.55)}
+.mb-count.out .mb-dot.on{background:var(--warn);border-color:rgba(255,170,155,.9);box-shadow:0 0 8px rgba(255,122,107,.45)}
 .mb-log-bar{border:1px solid rgba(72,180,255,.12);border-radius:10px;background:rgba(2,6,14,.82);padding:6px 12px;max-height:90px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .mb-log-entry{display:flex;align-items:baseline;gap:6px;padding:2px 0;border-bottom:1px dashed rgba(72,180,255,.07);font-size:11.5px;line-height:1.5;color:#c8daf2}
 .mb-log-entry:last-child{border-bottom:none}
@@ -1061,9 +1257,11 @@ textarea.io{
 .mb-log-entry.impact .mb-inn-tag::before{content:'◆ ';color:var(--imp)}
 .mb-fx-bar{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--mut);flex-wrap:wrap}
 .mb-fx-bar .btn{min-height:30px;padding:3px 8px;font-size:11px}
-.mb-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;border:1px solid rgba(72,180,255,.18);border-radius:12px;background:rgba(4,10,22,.72);padding:8px 12px;box-shadow:0 0 14px rgba(63,217,255,.08)}
-.mb-controls .btn{min-height:38px;padding:6px 14px;font-size:13px}
-.mb-controls .btn.pri{font-weight:700}
+.mb-controls{display:grid;grid-template-columns:minmax(180px,1.2fr) minmax(0,2fr);gap:8px;align-items:stretch;border:1px solid rgba(72,180,255,.18);border-radius:12px;background:rgba(4,10,22,.72);padding:8px 12px;box-shadow:0 0 14px rgba(63,217,255,.08);min-width:0}
+.mb-controls .btn{min-height:38px;padding:6px 12px;font-size:13px;white-space:normal;line-height:1.2}
+.mb-controls .btn.pri{font-weight:800;min-height:44px;font-size:14px;box-shadow:0 0 16px rgba(63,217,255,.2)}
+.mb-secondary-controls{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap;min-width:0}
+.mb-secondary-controls .btn{flex:1 1 120px;max-width:190px}
 .mb-result-wrap{border:1px solid rgba(255,196,77,.25);border-radius:14px;padding:14px;background:rgba(255,221,146,.06);box-shadow:0 0 18px rgba(255,196,77,.12)}
 .mb-result-label{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:999px;background:rgba(63,217,255,.12);color:#b9f7ff;font-weight:700;margin-bottom:10px;font-size:14px}
 .mb-result-label.win{background:rgba(63,217,255,.18);color:#b9f7ff}
@@ -1071,6 +1269,28 @@ textarea.io{
 .mb-result-label.draw{background:rgba(148,132,255,.14);color:var(--pu)}
 .mb-result-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,196,77,.18);font-size:13px}
 .mb-result-stat:last-child{border-bottom:none}
+@media (max-width:900px){
+  .mb-game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mb-status-card.bases{grid-column:1 / -1}
+  .mb-controls{grid-template-columns:1fr}
+  .mb-secondary-controls{justify-content:stretch}
+  .mb-secondary-controls .btn{max-width:none}
+}
+@media (max-width:1100px){
+  .mb-game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mb-status-card.bases{grid-column:1 / -1}
+  .mb-controls{grid-template-columns:1fr}
+  .mb-secondary-controls{justify-content:stretch}
+  .mb-secondary-controls .btn{max-width:none}
+}
+@media (max-width:760px){
+  .mb-scorebar{grid-template-columns:1fr;gap:8px;text-align:center}
+  .mb-team.home,.mb-team.away{text-align:center}
+  .mb-team.home b,.mb-team.away b{border-left:0;border-right:0;padding-left:0;padding-right:0}
+  .mb-game-grid{grid-template-columns:1fr}
+  .mb-controls{padding:8px}
+  .mb-secondary-controls .btn{flex-basis:100%}
+}
 
 /* ============================================================
    ホームHQ画面
@@ -3748,6 +3968,51 @@ function liveFSPlayBar(evt){
   const cls = `lfs-desc lfs-playbar ${info.bannerCls}`;
   return `<div class="${esc(cls)}"><span class="lfs-play-badge">${esc(info.label)}</span><span class="lfs-play-main">${esc(actor)}: ${esc(main)}</span><span class="lfs-play-sub">${esc(info.sub || fieldMetaText(evt))}</span></div>`;
 }
+// 全画面LIVE専用: 投球→打撃→打球→守備→走者→結果の流れを帯で見せる(表示専用)。
+// 遅延は livePATimeline() が既に計算した値をそのまま使い、新しい時間軸やRNGは作らない。
+function liveFSFlowSteps(evt, hasBall, tm){
+  tm = tm || {};
+  const id = evt && (evt.resultId || evt.result);
+  const moves = Array.isArray(evt && evt.runnerMovements) ? evt.runnerMovements : [];
+  const hasMoves = moves.length > 0;
+  if(!hasBall){
+    let judge = 'CALL';
+    let result = 'RESULT';
+    if(id === 'K'){ judge = 'STRIKE 3'; result = 'STRIKEOUT'; }
+    else if(id === 'BB' || id === 'IBB'){ judge = 'BALL 4'; result = 'WALK'; }
+    else if(id === 'HBP'){ judge = 'HIT BY PITCH'; result = 'ON BASE'; }
+    else if(id === 'CI'){ judge = 'INTERFERENCE'; result = 'ON BASE'; }
+    const steps = [
+      {label:'PITCH', delay:tm.pitchDelay ?? 0},
+      {label:'ZONE CHECK', delay:tm.contactDelay ?? tm.pitchDelay ?? 0},
+      {label:judge, delay:tm.labelDelay ?? tm.calloutDelay ?? 0},
+      {label:result, delay:tm.calloutDelay ?? 0},
+      ...(hasMoves ? [{label:'RUNNERS', delay:tm.runBase ?? tm.calloutDelay ?? 0}] : []),
+    ];
+    const parts = steps.map((s,i)=>{
+      const step = `<span class="lfs-flow-step" style="--fd:${Number(s.delay||0).toFixed(2)}s" title="${esc(s.label)}"><i class="lfs-flow-dot"></i><b>${esc(s.label)}</b></span>`;
+      const line = i < steps.length-1 ? `<span class="lfs-flow-line"></span>` : '';
+      return step + line;
+    }).join('');
+    return `<div class="lfs-flow" aria-label="No batted ball live flow">${parts}</div>`;
+  }
+  const noSwing = !hasBall && ['BB','IBB','HBP','CI'].includes(id); // 四球/死球等は投球判定が主役
+  const steps = [
+    {label:'投球', on:true, delay:tm.pitchDelay ?? 0},
+    {label:noSwing ? '判定' : '打撃', on:true, delay:tm.contactDelay ?? 0},
+    {label:'打球', on:hasBall, delay:tm.ballDelay ?? 0},
+    {label:'守備', on:hasBall, delay:tm.reactDelay || tm.throwDelay || tm.ballDelay || 0},
+    {label:'走者', on:hasMoves, delay:tm.runBase ?? 0},
+    {label:'結果', on:true, delay:tm.calloutDelay ?? 0}
+  ];
+  const parts = steps.map((s,i)=>{
+    const step = `<span class="lfs-flow-step${s.on?'':' skip'}" style="--fd:${Number(s.delay||0).toFixed(2)}s" title="${esc(s.label)}"><i class="lfs-flow-dot"></i><b>${esc(s.label)}</b></span>`;
+    const nextOn = i < steps.length-1 ? steps[i+1].on : true;
+    const line = i < steps.length-1 ? `<span class="lfs-flow-line${(s.on && nextOn)?'':' skip'}"></span>` : '';
+    return step + line;
+  }).join('');
+  return `<div class="lfs-flow" aria-label="投球から結果までの流れ">${parts}</div>`;
+}
 function baseSnapText(bases){
   const b=Array.isArray(bases)?bases:[null,null,null];
   const names=['1塁','2塁','3塁'];
@@ -4205,7 +4470,7 @@ function renderBallTrackingReplay(evt,ms,chart){
     ? 'M 50 45 C 50 56 50 64 50 72'
     : `M 50 45 C 50 57 ${zone.x} ${Math.max(58,zone.y-8).toFixed(1)} ${zone.x} ${zone.y}`;
   const imp = hasBall ? livePASvgPoint(livePAImpactPoint(evt)) : zone;
-  const lift = evt && (evt.traj === 'homer' || evt.resultId === 'HR') ? 18 : evt && evt.traj === 'fly' ? 12 : evt && evt.traj === 'liner' ? 6 : 0;
+  const lift = evt && (evt.traj === 'homer' || evt.resultId === 'HR') ? 30 : evt && evt.traj === 'fly' ? 20 : evt && evt.traj === 'liner' ? 5 : 0;
   const cx = +((50 + imp.x) / 2).toFixed(1);
   const cy = +(((72 + imp.y) / 2) - lift).toFixed(1);
   const hitPath = `M 50 72 C 50 62 ${cx} ${cy} ${imp.x} ${imp.y}`;
@@ -4417,7 +4682,8 @@ function livePAImpactPoint(evt){
   const base=LIVE_ZONE_LAND[zone] || LIVE_ZONE_LAND.CF;
   let x=base[0], y=base[1];
   const depth=evt && evt.depth;
-  if(depth==='deep' || depth==='overFence'){ y-=6; x=50+(x-50)*1.12; }
+  if(depth==='overFence'){ y-=10; x=50+(x-50)*1.2; }
+  else if(depth==='deep'){ y-=6; x=50+(x-50)*1.12; }
   else if(depth==='shallow'){ y+=6; x=50+(x-50)*0.9; }
   return {x:+x.toFixed(1), y:+y.toFixed(1)};
 }
@@ -4425,23 +4691,39 @@ function livePAImpactPoint(evt){
 function livePABattedFx(evt, animate, tm){
   const ball=liveSafeBallFromEvent(evt);
   if(!ball) return '';
-  const traj=ball.traj||evt.traj||'liner';
+  const id=evt.resultId;
+  const depth=evt.depth || '';
+  const zone=evt.fieldZone || '';
+  const traj=(id==='HR' || depth==='overFence') ? 'homer' : (ball.traj||evt.traj||'liner');
   const imp=livePAImpactPoint(evt);
   const hx=50, hy=84;
   const dx=imp.x-hx, dy=imp.y-hy;
   const len=Math.max(1,Math.sqrt(dx*dx+dy*dy)).toFixed(1);
   const rot=Math.round(Math.atan2(dy,dx)*180/Math.PI);
   // 高さはZ方向の放物線(--peakz)で表現。地面の軌道(中間点)は直進にする。
-  const peakz = traj==='homer'?84 : traj==='fly'?60 : traj==='liner'?22 : traj==='grounder'?0 : 32;
-  const mx=((hx+imp.x)/2).toFixed(1), my=((hy+imp.y)/2).toFixed(1);
-  const id=evt.resultId;
+  const depthLift = depth==='overFence' ? 18 : depth==='deep' ? 10 : depth==='shallow' ? -4 : 0;
+  const powerLift = clampN(((evt.batterPower||50)-50)/4, -4, 12);
+  const arc = traj==='homer' ? 42+depthLift+powerLift : traj==='fly' ? 29+depthLift+powerLift*.6 : traj==='liner' ? 6+Math.max(0,depthLift*.25) : 0;
+  const midYDrop = traj==='grounder' ? 0 : traj==='liner' ? 3 : traj==='fly' ? 12+Math.max(0,depthLift*.35) : 18+Math.max(0,depthLift*.45);
+  const peakz = traj==='homer'?96+depthLift+powerLift : traj==='fly'?66+depthLift+powerLift*.5 : traj==='liner'?22 : traj==='grounder'?1 : 32;
+  const mx=((hx+imp.x)/2).toFixed(1), my=(((hy+imp.y)/2)-midYDrop).toFixed(1);
   const hit=['1B','2B','3B','HR'].includes(id);
   const bc = id==='HR'?'var(--imp)' : hit?'var(--cy)':'rgba(231,243,255,.9)';
   const pw = clampN(((evt.batterPower||50)-40)/38,0,1).toFixed(2); // パワーで打球発光を強める
+  const tw = traj==='grounder' ? 6 : traj==='liner' ? 5 : traj==='fly' ? 4 : 6;
+  const bs = traj==='grounder' ? 10 : traj==='liner' ? 12 : traj==='fly' ? 13 : 16;
+  const ls = traj==='grounder' ? 15 : traj==='liner' ? 16 : traj==='fly' ? 24 : 30;
+  const sw = traj==='grounder' ? 24 : traj==='liner' ? 18 : traj==='fly' ? 28 : 36;
+  const sh = traj==='grounder' ? 8 : traj==='liner' ? 6 : traj==='fly' ? 7 : 8;
+  const sd = traj==='grounder' ? 1 : traj==='liner' ? 4 : traj==='fly' ? 13 : 18;
+  const sblur = traj==='grounder' ? 1 : traj==='liner' ? 2 : traj==='fly' ? 3 : 4;
+  const so = traj==='grounder' ? .48 : traj==='liner' ? .38 : traj==='fly' ? .28 : .24;
+  const glow = traj==='grounder' ? 8 : traj==='liner' ? 15 : traj==='fly' ? 18 : 28;
   const bdelay=(tm.ballDelay||0.65).toFixed(2), ldelay=(tm.landDelay||1.25).toFixed(2);
   const bdur=Math.max(0.3,(Number(tm.landDelay||1.25)-Number(tm.ballDelay||0.65))).toFixed(2);
-  const style=`--hx:${hx}%;--hy:${hy}%;--tx:${imp.x}%;--ty:${imp.y}%;--mx:${mx}%;--my:${my}%;--len:${len}%;--rot:${rot}deg;--bc:${bc};--pw:${pw};--peakz:${peakz}px;--bdelay:${bdelay}s;--ldelay:${ldelay}s;--bdur:${bdur}s`;
-  return `<span class="lpb-trace ${esc(traj)}" style="${style}"></span><span class="lpb-shadow ${esc(traj)}" style="${style}"></span><span class="lpb-ball ${esc(traj)}" style="${style}"></span><span class="lpb-land ${esc(traj)}" style="${style}"></span>`;
+  const style=`--hx:${hx}%;--hy:${hy}%;--tx:${imp.x}%;--ty:${imp.y}%;--mx:${mx}%;--my:${my}%;--len:${len}%;--rot:${rot}deg;--bc:${bc};--pw:${pw};--peakz:${peakz}px;--arc:${arc.toFixed(1)}px;--ashift:${(-arc/2).toFixed(1)}px;--tw:${tw}px;--bs:${bs}px;--ls:${ls}px;--sw:${sw}px;--sh:${sh}px;--sd:${sd}px;--sblur:${sblur}px;--so:${so};--glow:${glow}px;--bdelay:${bdelay}s;--ldelay:${ldelay}s;--bdur:${bdur}s`;
+  const cls=`${traj} depth-${depth||'mid'} zone-${zone||'NA'}${id==='HR'?' result-hr':''}`;
+  return `<span class="lpb-trace ${esc(cls)}" style="${style}"></span><span class="lpb-shadow ${esc(cls)}" style="${style}"></span><span class="lpb-ball ${esc(cls)}" style="${style}"></span><span class="lpb-land ${esc(cls)}" style="${style}"></span>`;
 }
 // 返球線(表示専用): 外野打球後、runnerMovements から返球先を推定
 function livePAReturnThrow(evt, animate, tm){
@@ -4525,6 +4807,78 @@ function livePAStatBar(evt, hasBall, chart){
   return cells ? `<div class="lpv-statbar">${cells}</div>` : '';
 }
 // 配球チャート(小さめの補助表示): ゾーン＋球マーク＋メタ＋簡易ログ
+function liveFSNoBattedBallJudge(evt, fin){
+  const id = evt && (evt.resultId || evt.result);
+  if(id === 'K') return {label:'STRIKE 3', title:'STRIKEOUT', badge:'K'};
+  if(id === 'BB' || id === 'IBB') return {label:'BALL 4', title:'WALK', badge:'BB'};
+  if(id === 'HBP') return {label:'HIT BY PITCH', title:'ON BASE', badge:'HBP'};
+  if(id === 'CI') return {label:'INTERFERENCE', title:'ON BASE', badge:'CI'};
+  return {label:(fin && fin.call) || 'CALL', title:paResultLabel(evt), badge:String(id || 'PLAY')};
+}
+function renderLiveFSNoBattedBallStage(evt, opts, stageClass, stageStyle, chart, tm, paKey){
+  const fin = chart && chart.final;
+  const info = liveFSResultInfo(evt);
+  const judge = liveFSNoBattedBallJudge(evt, fin);
+  const pitches = chart && Array.isArray(chart.pitches) ? chart.pitches : [];
+  // 三振の時だけ ABS風(投球->ゾーン確認->判定確定)の軽量演出を出す。表示専用で試合結果には無関係。
+  const isK = (evt && (evt.resultId || evt.result)) === 'K';
+  const seqNote = pitches.length ? `${pitches.length} PITCH ${judge.badge || '-'}` : 'NO CHART';
+  const zoneNo = fin && Number.isFinite(Number(fin.zone)) ? Number(fin.zone) : 12;
+  const col = ((zoneNo % 5) + 5) % 5;
+  const row = Math.max(0, Math.min(4, Math.floor(zoneNo / 5)));
+  const zx = +(30 + col * 10).toFixed(1);
+  const zy = +(24 + row * 8.5).toFixed(1);
+  const zoneCells = Array.from({length:25},(_,i)=>{
+    const c=i%5,r=Math.floor(i/5), strike=c>=1&&c<=3&&r>=1&&r<=3;
+    const dots = pitches.filter(p=>Number(p.zone)===i).map(p=>`<span class="lfnb-dot${p.final?' final':''}">${esc(String(p.no))}</span>`).join('');
+    return `<span class="lfnb-cell${strike?' s':''}">${dots}</span>`;
+  }).join('');
+  const rows = pitches.map(p=>{
+    const call = p.final ? judge.label : p.call;
+    const badge = p.final ? judge.badge : p.count;
+    return `<div class="lfnb-row${p.final?' final':''}"><b>${esc(String(p.no))}</b><span>${esc(call)} / ${esc(p.type || '-')}</span><i class="lfnb-badge">${esc(String(badge || ''))}</i></div>`;
+  }).join('');
+  const basesBefore = evt.baseBeforeText || (Array.isArray(evt.basesBefore) ? formatBaseState(evt.basesBefore) : '-');
+  const basesAfter = evt.baseAfterText || (Array.isArray(evt.basesAfter) ? formatBaseState(evt.basesAfter) : '-');
+  const scored = evt.scoringSummary || formatRunnerMovements(evt.runnerMovements,'scored');
+  const advanced = evt.advanceSummary || formatRunnerMovements(evt.runnerMovements,'advanced');
+  const movement = Array.isArray(evt.runnerMovements) && evt.runnerMovements.length
+    ? movementText(evt.runnerMovements)
+    : (scored || advanced || 'No runner advance');
+  return `
+    <div class="${esc(stageClass)}" data-pa-seq="${esc(paKey)}" style="${esc(stageStyle)}" aria-label="No batted ball fullscreen live stage">
+      <div class="lfnb-stage">
+        <div class="lfnb-panel">
+          <div class="lfnb-kicker">REPLAY SEQUENCE</div>
+          <div class="lfnb-kicker-note">${esc(seqNote)}</div>
+          <div class="lfnb-mini-zone" aria-label="Pitch zone">${zoneCells}</div>
+          <div class="lfnb-list">${rows || '<div class="lfnb-row final"><b>-</b><span>No pitch chart</span><i class="lfnb-badge">CALL</i></div>'}</div>
+        </div>
+        <div class="lfnb-center">
+          ${isK ? `<div class="lfnb-abs-status" aria-hidden="true"><span class="lfnb-abs-step p1">PITCH</span><span class="lfnb-abs-step p2">ZONE CHECK</span></div>` : ''}
+          <div class="lfnb-zonewrap">
+            <svg class="lfnb-pitch-svg" viewBox="0 0 100 100" aria-hidden="true">
+              <path class="lfnb-pitch-path" d="M 50 92 C 50 72 ${zx} ${Math.max(20,zy-13).toFixed(1)} ${zx} ${zy}"></path>
+              ${isK ? `<circle class="lfnb-pitch-zonecheck" cx="${zx}" cy="${zy}" r="3.1"></circle>` : ''}
+              <circle class="lfnb-pitch-ball" cx="${zx}" cy="${zy}" r="3.1"></circle>
+            </svg>
+            <div class="lfnb-zone">${Array.from({length:9},()=>'<span></span>').join('')}</div>
+          </div>
+          <div class="lfnb-call">${esc(judge.label)}</div>
+          <div class="lfnb-title">${esc(judge.title)}</div>
+          <div class="lfnb-sub">${esc(info.sub || evt.resultText || evt.resultSummary || '')}</div>
+        </div>
+        <div class="lfnb-panel">
+          <div class="lfnb-kicker">RESULT</div>
+          <div class="lfnb-title">${esc(info.label)}</div>
+          <div class="lfnb-kv"><b>Before</b><span>${esc(basesBefore)}</span><i class="lfnb-badge">BASE</i></div>
+          <div class="lfnb-kv"><b>After</b><span>${esc(basesAfter)}</span><i class="lfnb-badge">BASE</i></div>
+          <div class="lfnb-kv"><b>Move</b><span>${esc(movement)}</span><i class="lfnb-badge">RUN</i></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
 function livePAMiniChart(chart, evt){
   if(!chart || !chart.pitches || !chart.pitches.length) return '';
   const cells=Array.from({length:25},(_,i)=>{ const c=i%5,r=Math.floor(i/5); const strike=c>=1&&c<=3&&r>=1&&r<=3; return `<span class="lpa-cell${strike?' s':''}"></span>`; }).join('');
@@ -4611,6 +4965,8 @@ function renderLivePAStage(evt,opts){
   const ball = liveSafeBallFromEvent(evt);
   const hasBall = !!(ball && typeof ball.x === 'number' && typeof ball.y === 'number');
   const noBattedBall = !hasBall;
+  const battedTrajClass = hasBall ? ((evt.resultId==='HR' || evt.depth==='overFence') ? ' bt-homer' : ` bt-${evt.traj||'liner'}`) : '';
+  const battedDepthClass = hasBall ? ` bd-${evt.depth||'mid'}` : '';
   const stageClass = `live-pa-stage anim-${level}${important?' important':''}${cinematic?' mode-cine':''}${fullscreen?' mode-full':''}${noBattedBall?' replay-no-batted-ball':''}`;
   const chart = opts.chart || livePAChart(evt, opts.ms);
   const tm = livePATimeline(evt, hasBall);
@@ -4634,6 +4990,9 @@ function renderLivePAStage(evt,opts){
     `--land-delay:${tm.landDelay}s`,
     `--result-delay:${tm.calloutDelay}s`
   ].join(';');
+  if(fullscreen && !hasBall){
+    return renderLiveFSNoBattedBallStage(evt, opts, stageClass, stageStyle, chart, tm, paKey);
+  }
   const zone = `<span class="live-pa-szone">${Array.from({length:9},()=>'<span></span>').join('')}</span>`;
   const fielders = livePAFielders(evt, hasBall, animate, tm.reactDelay, opts.ms);
   const battedFx = hasBall ? livePABattedFx(evt, animate, tm) : '';
@@ -4670,7 +5029,7 @@ function renderLivePAStage(evt,opts){
       ${bigMode ? '' : livePAResultBanner(evt,'inline')}
       ${statBar}
       ${useFullscreenReplayFrame ? `<div class="${esc(replayFrameClass)}"><div class="lpf-camera" style="${esc(cameraStyle)}">` : ''}
-      <div class="live-pa-field field3d${moveCount?' has-moves':''}${hasBall?' has-ball':' no-batted-ball'}${evt.runs?' is-score':''}">
+      <div class="live-pa-field field3d${moveCount?' has-moves':''}${hasBall?' has-ball':' no-batted-ball'}${evt.runs?' is-score':''}${battedTrajClass}${battedDepthClass}">
         <span class="lpf-stands"></span>
         <span class="lpf-stadium-light"></span>
         <span class="lpf-grass"></span>
@@ -4803,6 +5162,77 @@ function liveFSBatAvg(t){
 function liveFSStatCell(v, cls=''){
   const c = cls ? ` class="${cls}"` : '';
   return `<td${c}>${v === null || v === undefined ? '-' : esc(String(v))}</td>`;
+}
+// 全画面LIVE用: 現在対戦中の投手/打者の情報を読み取り(新規生成なし)
+function liveFSPitcherInfo(ms,evt){
+  const half = evt && evt.half;
+  let name = liveFSPitcherName(ms,evt);
+  let velo='-',ctrl='-',brk='-',sta=null,role='';
+  try{
+    if(half==='top'){ // 自軍(HOME)が守備 → 自軍投手
+      const p=getPlayer(ms.pitcher);
+      if(p&&p.ab){ velo=p.ab.velocity; ctrl=p.ab.control; brk=p.ab.breaking; }
+      if(p&&p.role) role=(ROLE_INFO&&ROLE_INFO[p.role])||p.role;
+      sta = ms.stamina && typeof ms.stamina[ms.pitcher]==='number' ? ms.stamina[ms.pitcher] : null;
+    }else{ // 相手が守備 → 相手投手
+      const pit=oppData(ms.oppId).pit;
+      if(pit){ velo=pit.velocity; ctrl=pit.control; brk=pit.breaking; }
+      sta = typeof ms.npcStamina==='number' ? ms.npcStamina : null;
+    }
+  }catch(e){}
+  return {name,velo,ctrl,brk,sta,role};
+}
+function liveFSBatterInfo(ms,evt){
+  const name = (evt && (evt.batterName||evt.actor)) || '-';
+  let avg='-',hr='-',trait='';
+  const pw = Number(evt && evt.batterPower);
+  const sp = Number(evt && evt.batterSpeed);
+  try{
+    const pid=(ms.order||[]).find(id=>{ const p=getPlayer(id); return p&&p.name===name; });
+    if(pid){
+      const t=ms.bstats[pid]||zeroBat();
+      avg=liveFSBatAvg(t); hr=t.hr||0;
+      const p=getPlayer(pid);
+      if(p&&p.type) trait=typeTrait(p.type)||'';
+    }
+  }catch(e){}
+  return {name,avg,hr,pw:Number.isFinite(pw)?pw:'-',sp:Number.isFinite(sp)?sp:'-',trait};
+}
+function liveFSStaminaGauge(sta){
+  if(sta===null||sta===undefined||isNaN(sta)) return '';
+  const v=Math.max(0,Math.min(100,Math.round(sta)));
+  const cls=v>=60?'ok':v>=30?'mid':'low';
+  return `<div class="lfs-card-gauge ${cls}"><span class="lfs-card-gauge-label">STAMINA</span><div class="lfs-card-gauge-bar"><i style="width:${v}%"></i></div><b>${v}</b></div>`;
+}
+function renderLiveFSMatchupCard(ms,evt,kind){
+  if(kind==='pitch'){
+    const p=liveFSPitcherInfo(ms,evt);
+    const stat=(lbl,val,unit)=>`<div class="lfs-card-stat"><span>${lbl}</span><b>${esc(String(val))}${unit?`<small>${unit}</small>`:''}</b></div>`;
+    return `<div class="lfs-card pitch">
+      <div class="lfs-card-role">PITCHER${p.role?` · ${esc(p.role)}`:''}</div>
+      <div class="lfs-card-name">${esc(p.name)}</div>
+      <div class="lfs-card-stats">
+        ${stat('球速',p.velo)}
+        ${stat('変化',p.brk)}
+        ${stat('制球',p.ctrl)}
+      </div>
+      ${liveFSStaminaGauge(p.sta)}
+    </div>`;
+  }
+  const b=liveFSBatterInfo(ms,evt);
+  const stat=(lbl,val,unit)=>`<div class="lfs-card-stat"><span>${lbl}</span><b>${esc(String(val))}${unit?`<small>${unit}</small>`:''}</b></div>`;
+  return `<div class="lfs-card bat">
+    <div class="lfs-card-role">BATTER${b.trait?` · ${esc(b.trait)}`:''}</div>
+    <div class="lfs-card-name">${esc(b.name)}</div>
+    <div class="lfs-card-stats">
+      ${stat('打率',b.avg)}
+      ${stat('本塁打',b.hr)}
+    </div>
+    <div class="lfs-card-stats">
+      ${stat('パワー',b.pw)}
+      ${stat('走力',b.sp)}
+    </div>
+  </div>`;
 }
 function renderLiveFSBattingStats(ms,evt,side='p'){
   const current = evt && (evt.batterName || evt.actor);
@@ -4996,44 +5426,51 @@ function renderLiveFullscreen(){
   const fsHasBall = !!(fsBall && typeof fsBall.x === 'number' && typeof fsBall.y === 'number');
   const fsTimeline = livePATimeline(evt, fsHasBall);
   const fsTimelineStyle = `--pa-callout-delay:${fsTimeline.calloutDelay}s;--result-delay:${fsTimeline.calloutDelay}s`;
-  const result = livePAResultBanner(evt,'inline');
   const resultCallout = liveFSResultCallout(evt, fsTimelineStyle);
   const playBar = liveFSPlayBar(evt);
   const chart = livePAChart(evt,ms);
   const stage = renderLivePAStage(evt,{mode:'fullscreen',ms,chart,key:`fs:${livePAEventKey(evt)}`});
-  const chaseStage = renderBallTrackingReplay(evt,ms,chart);
   const stageMode = (UI.liveStageMode==='field') ? 'field' : 'chase';
+  const showTrackInset = stageMode==='chase' && fsHasBall;
+  const chaseStage = showTrackInset ? renderBallTrackingReplay(evt,ms,chart) : '';
+  const flowSteps = liveFSFlowSteps(evt, fsHasBall, fsTimeline);
   const lineScore = renderLiveFSLineScore(ms);
   const broadcastBoard = renderLiveFSBroadcastBoard(ms,evt,{scoreSnap,inning,half,outs,bases,batter,pitcher,chart});
-  const awayStats = renderLiveFSBattingStats(ms,evt,'n');
-  const homeStats = renderLiveFSBattingStats(ms,evt,'p');
+  const pitchCard = renderLiveFSMatchupCard(ms,evt,'pitch');
+  const batCard = renderLiveFSMatchupCard(ms,evt,'bat');
   const dataPanel = UI.liveDataOpen ? renderLiveFSDataPanel(ms,evt,chart) : '';
   const canAdvance = !ms.finished && !ms.pendingDecision;
+  const rinfo = liveFSResultInfo(evt);
+  const fxCls = rinfo.kind==='hr' ? ' fx-hr' : (rinfo.runs>0 ? ' fx-score' : '');
+  const impactFlash = (fsHasBall || rinfo.runs>0 || rinfo.kind==='hr')
+    ? `<div class="lfs-impact-flash ${rinfo.kind==='hr'?'hr':rinfo.runs>0?'score':'hit'}" style="--flash-delay:${(fsTimeline.landDelay||fsTimeline.contactDelay||1.2)}s"></div>`
+    : '';
   root.className='show';
   root.innerHTML = `
-    <div class="live-fullscreen${fsHasBall?'':' replay-no-batted-ball'}" role="dialog" aria-label="Live game view">
+    <div class="live-fullscreen${fsHasBall?'':' replay-no-batted-ball'}${fxCls}" role="dialog" aria-label="Live game view">
       <div class="lfs-top">
         ${broadcastBoard}
         ${lineScore}
       </div>
       <div class="lfs-main">
-        ${awayStats}
+        ${pitchCard}
         <div class="lfs-field-zone">
-          <div class="lfs-stage" data-stage="${stageMode}">${stageMode==='chase'?chaseStage:stage}</div>
+          ${impactFlash}
+          <div class="lfs-stage">${stage}${showTrackInset ? `<div class="lfs-track-inset"><div class="lfs-track-inset-label">追跡カメラ</div>${chaseStage}</div>` : ''}</div>
           ${resultCallout}
           ${dataPanel}
         </div>
-        ${homeStats}
+        ${batCard}
       </div>
       <div class="lfs-bottom">
-        <div class="lfs-bottom-result" style="${esc(fsTimelineStyle)}">${result}</div>
+        <div class="lfs-flow-slot">${flowSteps}</div>
         ${playBar}
         <div class="lfs-actions">
-          <button class="btn" onclick="toggleLiveStageMode()">${stageMode==='chase'?'FIELD':'REPLAY'}</button>
-          <button class="btn" onclick="toggleLiveData()">${UI.liveDataOpen?'HIDE DATA':'DATA'}</button>
-          <button class="btn pri" ${canAdvance?'':'disabled'} onclick="advanceLiveFullscreenOne()">NEXT PA</button>
-          <button class="btn" ${canAdvance?'':'disabled'} onclick="skipLiveFullscreen()">SKIP</button>
-          <button class="btn ghost" onclick="closeLiveFullscreen()">CLOSE</button>
+          <button class="btn" onclick="toggleLiveStageMode()">${stageMode==='chase'?'追跡カメラを隠す':'追跡カメラを表示'}</button>
+          <button class="btn" onclick="toggleLiveData()">${UI.liveDataOpen?'データを隠す':'データ'}</button>
+          <button class="btn pri" ${canAdvance?'':'disabled'} onclick="advanceLiveFullscreenOne()">次の打席 ▶</button>
+          <button class="btn" ${canAdvance?'':'disabled'} onclick="skipLiveFullscreen()">スキップ</button>
+          <button class="btn ghost" onclick="closeLiveFullscreen()">通常画面へ</button>
         </div>
       </div>
     </div>
@@ -5079,8 +5516,8 @@ function renderLastPACard(ms){
   const score=evt.scoreAfter && typeof evt.scoreAfter.p==='number' && typeof evt.scoreAfter.n==='number' ? `${evt.scoreAfter.p} - ${evt.scoreAfter.n}` : `${pTot(ms)} - ${nTot(ms)}`;
   const inning=evt.inning ? `${evt.inning}回${cineHalfText(evt.half)}` : '回不明';
   const outs=typeof evt.outsAfter==='number' ? `${evt.outsAfter}アウト` : 'アウト不明';
-  const bases=baseSnapText(evt.basesAfter);
   const basesBefore=baseSnapText(evt.basesBefore);
+  const basesAfter=baseSnapText(evt.basesAfter);
   const baseBeforeText=evt.baseBeforeText || formatBaseState(evt.basesBefore);
   const baseAfterText=evt.baseAfterText || formatBaseState(evt.basesAfter);
   const scoredText=evt.scoringSummary || formatRunnerMovements(evt.runnerMovements,'scored');
@@ -5095,27 +5532,49 @@ function renderLastPACard(ms){
   const hasBatted = livePAHasBattedBall(evt);
   const battedRow = hasBatted ? `<div class="kv"><b>打球</b><span>${esc(fieldMetaText(evt))}</span></div>` : '';
   const dirChips = hasBatted ? `<span class="pa-chip">${esc(paDirectionLabel(evt))}</span><span class="pa-chip">${esc(paTrajectoryLabel(evt))}</span>` : '';
-  const scoredLine = (scoredText && scoredText!=='なし') ? `<div class="pa-move"><b>生還:</b> ${esc(scoredText)}</div>` : '';
-  const advancedLine = (advancedText && advancedText!=='なし') ? `<div class="pa-move"><b>進塁:</b> ${esc(advancedText)}</div>` : '';
+  const scoredLine = (scoredText && scoredText!=='なし') ? `<div class="pa-move-card"><b>生還</b>${esc(scoredText)}</div>` : '';
+  const advancedLine = (advancedText && advancedText!=='なし') ? `<div class="pa-move-card"><b>進塁</b>${esc(advancedText)}</div>` : '';
+  const moveHtml = scoredLine || advancedLine ? `<div class="pa-flow">${scoredLine}${advancedLine}</div>` : `<div class="pa-move-card"><b>走者</b>大きな進塁なし</div>`;
   return `
     <div class="pa-card">
-      <div class="pa-head"><strong>${esc(inning)} / ${esc(evt.half==='top'?'相手攻撃':'自軍攻撃')}</strong><span class="num">${esc(score)}</span></div>
+      <div class="pa-head">
+        <div class="pa-title-group">
+          <div class="pa-title-main">${esc(inning)} / ${esc(evt.half==='top'?'相手攻撃':'自軍攻撃')}</div>
+          <div class="pa-title-sub">${esc(evt.batterName||evt.actor||'—')} vs ${esc(evt.pitcherName||evt.pitcher||'—')}</div>
+        </div>
+        <span class="pa-score-pill">${esc(score)}</span>
+      </div>
       <div class="pa-stage-row">
         ${renderLivePAStage(evt,liveOpts)}
         ${livePAMiniChart(chart,evt)}
       </div>
       <div class="pa-live-actions"><button class="btn sm" onclick="openLiveFullscreen()">LIVE VIEW</button></div>
-      <div class="pa-result">${esc(evt.resultText || evt.result || '結果不明')}</div>
-      <div class="pa-grid">
-        <div class="kv"><b>打者</b><span>${esc(evt.batterName||evt.actor||'—')}</span></div>
-        <div class="kv"><b>投手</b><span>${esc(evt.pitcherName||evt.pitcher||'—')}</span></div>
-        <div class="kv"><b>アウト</b><span>${esc(outs)}</span></div>
-        <div class="kv"><b>得点</b><span>${runs}</span></div>
-        <div class="kv"><b>塁状況</b><span>${esc(baseAfterText)}</span></div>
-        ${battedRow}
+      <div class="pa-summary">
+        <div class="pa-mainline">
+          <div class="pa-result-card">
+            <div class="pa-result-label">RESULT</div>
+            <div class="pa-result-text">${esc(evt.resultText || evt.result || '結果不明')}</div>
+          </div>
+          <div class="pa-context">
+            <div class="kv"><b>打者</b><span>${esc(evt.batterName||evt.actor||'—')}</span></div>
+            <div class="kv"><b>投手</b><span>${esc(evt.pitcherName||evt.pitcher||'—')}</span></div>
+            ${battedRow}
+            <div class="kv"><b>イベント</b><span>${esc(paResultLabel(evt))}</span></div>
+          </div>
+        </div>
+        <div class="pa-sidebox">
+          <div class="pa-state-grid">
+            <div class="pa-state"><b>アウト</b><span>${esc(outs)}</span></div>
+            <div class="pa-state"><b>得点</b><span>${runs}</span></div>
+            <div class="pa-state"><b>塁状況</b><span>${esc(baseAfterText)}</span></div>
+          </div>
+          <div class="pa-grid">
+            <div class="kv"><b>打席前</b><span>${esc(baseBeforeText)} / ${esc(basesBefore)}</span></div>
+            <div class="kv"><b>打席後</b><span>${esc(baseAfterText)} / ${esc(basesAfter)}</span></div>
+          </div>
+          ${moveHtml}
+        </div>
       </div>
-      ${scoredLine}
-      ${advancedLine}
       <div class="pa-chiprow">
         <span class="pa-chip">${esc(paResultLabel(evt))}</span>
         ${dirChips}
@@ -5156,20 +5615,66 @@ function renderMatch(){
   const isLead = pScore > nScore;
   const oppTeam = NPC_TEAMS[ms.oppId];
   // イニング表示
-  const mbHalf = !ms.finished && typeof ms.score.p[ms.inning-1] === 'number' ? '裏' : '表';
+  const curHalf = ms.half || inferMatchHalf(ms);
+  const mbHalf = curHalf==='bottom' ? '裏' : '表';
   const inningText = ms.finished ? '試合終了' : `${ms.inning}回${mbHalf}`;
   const outsText = ms.finished ? '' : `${ms.outs}OUT`;
+  const bsoChart = ms.lastPAEvent ? livePAChart(ms.lastPAEvent,ms) : null;
+  const finalCount = bsoChart && bsoChart.final && typeof bsoChart.final.count === 'string' ? bsoChart.final.count : '0-0';
+  const countMatch = finalCount.match(/^(\d+)-(\d+)/);
+  const balls = countMatch ? Number(countMatch[1])||0 : 0;
+  const strikes = countMatch ? Number(countMatch[2])||0 : 0;
+  const countDots = (label,filled,total,cls)=>`<span class="mb-count ${cls}"><b>${label}</b>${Array.from({length:total},(_,i)=>`<span class="mb-dot${i<filled?' on':''}"></span>`).join('')}</span>`;
+  const baseName = r => {
+    if(!r) return '';
+    if(r.name) return r.name;
+    if(r.pid){ const p=getPlayer(r.pid); return p ? p.name : ''; }
+    return String(r);
+  };
+  const currentBases = Array.isArray(ms.bases) ? ms.bases : [null,null,null];
+  const baseNames = currentBases.map(baseName).filter(Boolean).join(' / ');
+  const basesText = formatBaseState(currentBases);
+  const sideText = curHalf==='bottom' ? '自軍攻撃' : '相手攻撃';
+  const statusBoard = !ms.finished ? `
+    <div class="mb-game-grid">
+      <div class="mb-status-card">
+        <b>INNING</b>
+        <strong>${esc(inningText)}</strong>
+        <span>${esc(sideText)} / ${esc(outsText)}</span>
+      </div>
+      <div class="mb-status-card">
+        <b>LAST BSO</b>
+        <div class="mb-bso">
+          ${countDots('B',Math.min(balls,3),3,'ball')}
+          ${countDots('S',Math.min(strikes,2),2,'strike')}
+          ${countDots('O',Math.min(ms.outs||0,2),2,'out')}
+        </div>
+      </div>
+      <div class="mb-status-card bases">
+        <b>RUNNERS</b>
+        <div class="mb-base-line">
+          <span class="mb-base-diamond">
+            <span class="mb-base-dot b3${currentBases[2]?' on':''}"></span>
+            <span class="mb-base-dot b2${currentBases[1]?' on':''}"></span>
+            <span class="mb-base-dot b1${currentBases[0]?' on':''}"></span>
+          </span>
+          <span>${esc(basesText)}${baseNames?` / ${esc(baseNames)}`:''}</span>
+        </div>
+      </div>
+    </div>` : '';
   // 試合終了結果
-  const result = ms.finished ? `<div class="mb-result-wrap"><div class="mb-result-label ${ms.result.outcome==='win'?'win':ms.result.outcome==='lose'?'lose':'draw'}">${esc(ms.result.outcome==='win'?'🏆 WIN':ms.result.outcome==='lose'?'LOSE':'DRAW')}</div><div class="mb-result-stat"><span>最終スコア</span><strong>${score}</strong></div><div class="mb-result-stat"><span>相手チーム</span><strong>${esc(ms.result.oppName)}</strong></div><div class="mb-result-stat"><span>MVP</span><strong>${esc(ms.result.mvp||'—')}</strong></div><div class="mb-result-stat"><span>獲得CR</span><strong>+${ms.result.credits}</strong></div><div class="btnrow" style="margin-top:10px"><button class="btn pri" onclick="closeMatch()">試合を閉じる</button></div></div>` : '';
+  const result = ms.finished ? `<div class="mb-result-wrap"><div class="mb-result-label ${ms.result.outcome==='win'?'win':ms.result.outcome==='lose'?'lose':'draw'}">${esc(ms.result.outcome==='win'?'WIN':ms.result.outcome==='lose'?'LOSE':'DRAW')}</div><div class="mb-result-stat"><span>最終スコア</span><strong>${score}</strong></div><div class="mb-result-stat"><span>相手チーム</span><strong>${esc(ms.result.oppName)}</strong></div><div class="mb-result-stat"><span>MVP</span><strong>${esc(ms.result.mvp||'—')}</strong></div><div class="mb-result-stat"><span>獲得CR</span><strong>+${ms.result.credits}</strong></div><div class="btnrow" style="margin-top:10px"><button class="btn pri" onclick="closeMatch()">試合を閉じる</button></div></div>` : '';
   // PA カード(フィールドビュー込み)
   const paCard = renderLastPACard(ms);
   // 常時表示の試合進行コントロール(直近打席の有無に関係なく必ず出す)
   const liveControls = ms.finished
     ? `<button class="btn pri" onclick="closeMatch()">試合を閉じる</button>`
     : `<button class="btn pri" onclick="UI.liveFxBurst=false;advanceOnePA()">次の打席へ ▶</button>`
+      + `<div class="mb-secondary-controls">`
       + `<button class="btn" onclick="UI.liveFxBurst=true;advanceToInningEnd()">イニング終了まで</button>`
       + `<button class="btn" onclick="UI.liveFxBurst=true;advanceToGameEnd()">試合終了まで</button>`
-      + `<button class="btn" onclick="openLiveFullscreen()">全画面LIVE</button>`;
+      + `<button class="btn" onclick="openLiveFullscreen()">全画面LIVE</button>`
+      + `</div>`;
   // 演出レベルコントロール
   const fxControls = ['off','simple','full'].map(l=>`<button class="btn sm${liveFxLevel()===l?' pri':''}" onclick="setLiveFxLevel('${l}')">${liveFxLabel(l)}</button>`).join('');
   // ログ(直近エントリをテロップ風に)
@@ -5202,6 +5707,7 @@ function renderMatch(){
           <b>${esc(save.team.name)}</b>
         </div>
       </div>` : ''}
+      ${statusBoard}
       <div class="mb-controls">${liveControls}</div>
       ${result}
       ${paCard}
